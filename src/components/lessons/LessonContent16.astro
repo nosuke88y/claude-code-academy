@@ -1,0 +1,114 @@
+---
+// Ch.4 Lesson 3: コミットメッセージの自動生成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">良いコミットメッセージとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      コミットメッセージは「何を変えたか」「なぜ変えたか」を記録するものです。
+      未来の自分やチームメンバーが変更履歴を見たときに、すぐに理解できるメッセージが理想です。
+    </p>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="text-center mb-3"><span class="text-3xl">❌</span><h3 class="text-sm font-semibold text-red-500 mt-2">悪い例</h3></div>
+        <div class="space-y-2">
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">fix</code></div>
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">update</code></div>
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">修正した</code></div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-center mb-3"><span class="text-3xl">⭕</span><h3 class="text-sm font-semibold text-primary mt-2">良い例</h3></div>
+        <div class="space-y-2">
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">fix: ログインボタンが反応しない問題を修正</code></div>
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">feat: ユーザープロフィール画面を追加</code></div>
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">docs: READMEにセットアップ手順を追加</code></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeの /commit コマンド</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeには、変更内容を自動で分析し、適切なコミットメッセージを生成する機能があります。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">方法 1: スラッシュコマンド</div>
+      <code class="text-sm text-green-400 font-mono">/commit</code>
+    </div>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">方法 2: 自然言語で依頼</div>
+      <code class="text-sm text-green-400 font-mono">「変更内容をコミットして」</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeは git diff の内容を読んで、変更内容を正確に把握した上でメッセージを生成します。人間より正確なメッセージが書けることも多いです。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Conventional Commits</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Conventional Commitsは、コミットメッセージの書き方を統一するためのルールです。
+      Claude Codeはこの形式でメッセージを生成してくれます。
+    </p>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-success-bg text-success-dark px-2 py-1 rounded font-mono whitespace-nowrap">feat:</code>
+        <span class="text-xs text-gray-600">新しい機能の追加</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded font-mono whitespace-nowrap">fix:</code>
+        <span class="text-xs text-gray-600">バグの修正</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded font-mono whitespace-nowrap">docs:</code>
+        <span class="text-xs text-gray-600">ドキュメントの変更</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded font-mono whitespace-nowrap">style:</code>
+        <span class="text-xs text-gray-600">コードスタイルの変更（動作に影響なし）</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded font-mono whitespace-nowrap">refactor:</code>
+        <span class="text-xs text-gray-600">リファクタリング（機能変更なし）</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践してみよう</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">ファイルを変更する</h4>
+          <p class="text-xs text-gray-500 mt-0.5">Claude Codeに「index.html のタイトルを変更して」と依頼</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">変更内容を確認</h4>
+          <p class="text-xs text-gray-500 mt-0.5">「変更内容を教えて」でどこが変わったか確認</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">コミットを依頼</h4>
+          <p class="text-xs text-gray-500 mt-0.5"><code class="bg-base-bg px-1 py-0.5 rounded text-xs">/commit</code> または「コミットして」で自動コミット</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">4</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">コミット履歴を確認</h4>
+          <p class="text-xs text-gray-500 mt-0.5">「コミット履歴を見せて」でメッセージが正しく記録されているか確認</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

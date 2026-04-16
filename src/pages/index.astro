@@ -116,24 +116,54 @@ import RightPanel from '../components/RightPanel.astro';
     if (data.streak > 0) fire.classList.remove('hidden'); else fire.classList.add('hidden');
 
     // 右パネル更新
-    const ch1Done = isChDone(data, 'ch1');
     const statusTitle = document.getElementById('status-title');
     const statusDesc = document.getElementById('status-desc');
     const statusBtn = document.getElementById('status-btn');
     const statusBtn2 = document.getElementById('status-btn2');
 
-    if (ch1Done) {
-      statusTitle.textContent = 'Ch.1 完了！ 🎉';
-      statusDesc.textContent = 'おめでとうございます！Claude Codeの基礎を理解しました。Ch.2「環境構築」に進みましょう。';
-      statusBtn.textContent = 'Ch.2 へ進む（準備中）';
+    // 現在進行中のチャプターを特定
+    const chNames = { ch1: 'Claude Codeとは何か', ch2: '環境構築', ch3: '基本コマンドとプロンプト設計', ch4: 'Git連携', ch5: '実践演習I', ch6: '実践演習II' };
+    const chTotals = { ch1: 4, ch2: 4, ch3: 5, ch4: 5, ch5: 6, ch6: 6 };
+    const firstLessons = { ch1: 'ch1-l1', ch2: 'ch2-l1', ch3: 'ch3-l1', ch4: 'ch4-l1', ch5: 'ch5-l1', ch6: 'ch6-l1' };
+
+    let currentCh = null;
+    for (const ch of CH_ORDER) {
+      if (!isChDone(data, ch)) { currentCh = ch; break; }
+    }
+
+    if (!currentCh && chapDone === 6) {
+      // 全チャプター完了
+      statusTitle.textContent = '全チャプター完了！ 🎓';
+      statusDesc.textContent = 'おめでとうございます！全6チャプターをクリアしました。Claude Codeマスターです！';
+      statusBtn.textContent = '🎉 コースを振り返る';
       statusBtn.href = '/';
       statusBtn2.classList.add('hidden');
-    } else if (totalDone > 0) {
-      statusTitle.textContent = `Ch.1 — ${chCompleted(data, 'ch1')}/4 レッスン完了`;
-      statusDesc.textContent = '引き続きCh.1のレッスンを進めましょう。全4レッスンを完了するとCh.2が解放されます。';
-      statusBtn.textContent = '▶ 続きを学習する';
-      statusBtn.href = '/lesson/ch1-l1';
-      statusBtn2.classList.add('hidden');
+    } else if (currentCh) {
+      const done = chCompleted(data, currentCh);
+      const prevCh = CH_ORDER[CH_ORDER.indexOf(currentCh) - 1];
+      const prevDone = !prevCh || isChDone(data, prevCh);
+
+      if (prevDone && done > 0) {
+        statusTitle.textContent = `${currentCh.replace('ch', 'Ch.')} — ${done}/${chTotals[currentCh]} レッスン完了`;
+        statusDesc.textContent = `「${chNames[currentCh]}」を進めましょう。全${chTotals[currentCh]}レッスン完了で次のチャプターが解放されます。`;
+        statusBtn.textContent = '▶ 続きを学習する';
+        statusBtn.href = `/lesson/${firstLessons[currentCh]}`;
+        statusBtn2.classList.add('hidden');
+      } else if (prevDone && done === 0) {
+        const prevChName = prevCh ? chNames[prevCh] : '';
+        statusTitle.textContent = prevCh ? `${prevCh.replace('ch', 'Ch.')} 完了！ 🎉` : '学習を始めましょう！';
+        statusDesc.textContent = prevCh ? `「${prevChName}」を完了しました。${currentCh.replace('ch', 'Ch.')}「${chNames[currentCh]}」に進みましょう。` : `Claude Codeの基礎から実践まで、6つのチャプターで学びます。`;
+        statusBtn.textContent = `▶ ${currentCh.replace('ch', 'Ch.')} を始める`;
+        statusBtn.href = `/lesson/${firstLessons[currentCh]}`;
+        statusBtn2.classList.add('hidden');
+      } else {
+        // まだ前のチャプターが未完了
+        statusTitle.textContent = '学習を始めましょう！';
+        statusDesc.textContent = 'Claude Codeの基礎から実践まで、6つのチャプターで学びます。';
+        statusBtn.textContent = '▶ Ch.1 を始める';
+        statusBtn.href = '/lesson/ch1-l1';
+        statusBtn2.classList.remove('hidden');
+      }
     }
 
     document.getElementById('streak-num').textContent = data.streak > 0 ? `🔥 ${data.streak}日` : '0日';

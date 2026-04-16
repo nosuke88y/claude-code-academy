@@ -1,0 +1,88 @@
+---
+// Ch.5 Lesson 1: プロジェクト設計とClaude Codeへの依頼方法
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロジェクトを始める前に</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      いきなりClaude Codeに「アプリを作って」と依頼するよりも、まず設計を考えてから段階的に進める方が良い結果になります。
+      ここでは、TODOアプリを例にプロジェクト設計の考え方を学びます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">「いきなり全部作って」より「段階的に作って」の方が、品質の高いアプリが完成します。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">設計で考える3つのこと</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🎯</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">1. ゴール</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">何を作るのか？誰が使うのか？</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2 mt-2"><code class="text-[11px] text-gray-600">例: タスク管理ができるシンプルなTODOアプリ。自分用。</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔧</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">2. 技術選定</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">どんな技術で作るか？</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2 mt-2"><code class="text-[11px] text-gray-600">例: HTML + CSS + JavaScript（フレームワークなし）</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📋</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">3. 機能一覧</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">どんな機能が必要か？</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2 mt-2 space-y-1">
+          <code class="text-[11px] text-gray-600 block">• タスクの追加</code>
+          <code class="text-[11px] text-gray-600 block">• タスクの完了/未完了の切り替え</code>
+          <code class="text-[11px] text-gray-600 block">• タスクの削除</code>
+          <code class="text-[11px] text-gray-600 block">• 残りタスク件数の表示</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">段階的な依頼のフロー</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📐</div><div class="text-xs font-medium text-gray-900">設計</div><div class="text-[10px] text-gray-400">CLAUDE.md作成</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">🎨</div><div class="text-xs font-medium text-gray-900">見た目</div><div class="text-[10px] text-gray-400">HTML/CSS</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">⚙️</div><div class="text-xs font-medium text-gray-900">機能</div><div class="text-[10px] text-gray-400">JavaScript</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-success-bg flex items-center justify-center text-2xl mx-auto mb-2">🚀</div><div class="text-xs font-medium text-gray-900">公開</div><div class="text-[10px] text-gray-400">デプロイ</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="text-center mb-2"><span class="text-2xl">❌</span></div>
+        <h3 class="text-sm font-semibold text-red-500 text-center mb-2">一括依頼</h3>
+        <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">「TODOアプリを全部作って」</code></div>
+        <p class="text-[10px] text-gray-400 mt-2">結果が予測しにくく、修正が大変</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-center mb-2"><span class="text-2xl">⭕</span></div>
+        <h3 class="text-sm font-semibold text-primary text-center mb-2">段階的依頼</h3>
+        <div class="bg-primary-bg rounded-lg px-3 py-2 space-y-1">
+          <code class="text-[11px] text-primary block">1.「HTMLとCSSで見た目を作って」</code>
+          <code class="text-[11px] text-primary block">2.「JSで機能を追加して」</code>
+          <code class="text-[11px] text-primary block">3.「デプロイして」</code>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-2">各段階で確認・修正できる</p>
+      </div>
+    </div>
+  </section>
+</div>

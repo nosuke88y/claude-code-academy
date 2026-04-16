@@ -1,0 +1,50 @@
+---
+// Ch.5 Lesson 5: Vercelへのデプロイ
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">デプロイとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">デプロイとは、作ったアプリをインターネットに公開して、誰でもアクセスできるようにすることです。</p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 Vercelとは</p>
+      <p class="text-sm text-gray-700">Vercelは、無料でWebサイトを公開できるサービスです。GitHubと連携すると、コードを更新するだけで自動的にデプロイされます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">デプロイの手順</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">GitHubリポジトリを作成</h4>
+          <div class="bg-white rounded-xl border border-primary-border p-4 mt-2"><p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「このプロジェクトをGitリポジトリにして、GitHubにプッシュして」</p></div>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">Vercelにサインアップ</h4><p class="text-xs text-gray-500 mt-0.5">vercel.com にアクセスし、GitHubアカウントで登録</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">リポジトリをインポート</h4><p class="text-xs text-gray-500 mt-0.5">「Add New Project」→ GitHubリポジトリを選択</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">4</div>
+        <div><h4 class="text-sm font-medium text-gray-900">デプロイ実行</h4><p class="text-xs text-gray-500 mt-0.5">「Deploy」をクリック → 数秒で公開完了</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">5</div>
+        <div><h4 class="text-sm font-medium text-gray-900">URLを確認</h4><p class="text-xs text-gray-500 mt-0.5">your-app.vercel.app のようなURLが発行されます</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">更新方法</h2>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">💡 自動デプロイ</p>
+      <p class="text-sm text-gray-700">Vercel + GitHub連携後は、<code class="bg-white px-1.5 py-0.5 rounded text-primary text-xs">git push</code> するだけで自動的にデプロイされます。Claude Codeに「変更をプッシュして」と頼むだけでOK！</p>
+    </div>
+  </section>
+</div>

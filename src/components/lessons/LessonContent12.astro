@@ -1,0 +1,96 @@
+---
+// Ch.3 Lesson 4: コンテキストの渡し方 — @記法
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">@記法とは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      @記法は、Claude Codeに特定のファイルやフォルダを「これを見て」と指示する方法です。
+      コンテキスト（状況情報）を正確に伝えることで、より的確な回答が得られます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeは賢いですが、すべてのファイルを一度に覚えているわけではありません。@記法で「このファイルを見て」と伝えましょう。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">@記法の基本</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📄</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">ファイルを指定する</h3><span class="text-[10px] text-gray-400">@ファイルパス で特定ファイルを参照</span></div>
+        </div>
+        <div class="bg-gray-900 rounded-xl p-4 mt-3">
+          <code class="text-sm text-green-400 font-mono">@src/index.html を見て、ナビゲーションを追加して</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📁</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">フォルダを指定する</h3><span class="text-[10px] text-gray-400">@フォルダパス でフォルダ全体を参照</span></div>
+        </div>
+        <div class="bg-gray-900 rounded-xl p-4 mt-3">
+          <code class="text-sm text-green-400 font-mono">@src/components/ のスタイルを統一して</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">CLAUDE.md — 自動コンテキスト</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      プロジェクトのルートにある CLAUDE.md は、Claude Codeが自動的に読み込むファイルです。@記法なしでもAIに伝わります。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-3">CLAUDE.md に書くべきこと</h3>
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 p-2 rounded-lg bg-base-bg"><span class="text-primary text-xs">✓</span><span class="text-xs text-gray-600">プロジェクトの概要と目的</span></div>
+        <div class="flex items-center gap-2 p-2 rounded-lg bg-base-bg"><span class="text-primary text-xs">✓</span><span class="text-xs text-gray-600">技術スタック</span></div>
+        <div class="flex items-center gap-2 p-2 rounded-lg bg-base-bg"><span class="text-primary text-xs">✓</span><span class="text-xs text-gray-600">ディレクトリ構成のルール</span></div>
+        <div class="flex items-center gap-2 p-2 rounded-lg bg-base-bg"><span class="text-primary text-xs">✓</span><span class="text-xs text-gray-600">コーディングスタイルや命名規則</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践例</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">特定ファイルの分析</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「@package.json の依存関係を確認して、使っていないパッケージを教えて」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">複数ファイルの参照</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「@src/Header.html と @src/Footer.html を見て、デザインを統一して」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">フォルダの分析</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「@src/ フォルダの構成を分析して、改善点を教えて」</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">コンテキストウィンドウ</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">AIが一度に処理できる情報量には上限があります。</p>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm shrink-0">👍</div>
+          <div><h4 class="text-sm font-medium text-gray-900">効率的な使い方</h4><p class="text-xs text-gray-500 mt-0.5">必要なファイルだけを@指定して的を絞った依頼をする</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-sm shrink-0">👎</div>
+          <div><h4 class="text-sm font-medium text-gray-900">非効率な使い方</h4><p class="text-xs text-gray-500 mt-0.5">全体を読ませてから「何か改善して」と曖昧に頼む</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mt-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 覚えておこう</p>
+      <p class="text-sm text-gray-700">コンテキストが溢れそうになったら <code class="bg-white px-1.5 py-0.5 rounded text-primary text-xs">/compact</code> で会話を要約できます。</p>
+    </div>
+  </section>
+</div>

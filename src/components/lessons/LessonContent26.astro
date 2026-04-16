@@ -1,0 +1,50 @@
+---
+// Ch.6 Lesson 2: CSVデータ処理スクリプト作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">CSVデータを自動処理しよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">CSV（カンマ区切り）ファイルは、ExcelやGoogleスプレッドシートからエクスポートできるデータ形式です。Node.jsスクリプトで自動集計してみましょう。</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 1: サンプルデータを作成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「売上サンプルCSVを作って。列は: 日付,商品名,カテゴリ,金額,数量。20行くらいのデータで」</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 2: 集計スクリプトを作成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「このCSVを読み込んで、カテゴリ別の合計売上と件数を計算するNode.jsスクリプトを作って」</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 3: 結果を見やすく出力</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">追加依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「集計結果をテーブル形式でコンソールに表示して。合計行も付けて」</p>
+    </div>
+    <div class="bg-gray-900 rounded-xl p-5">
+      <div class="text-xs text-gray-400 mb-2">実行</div>
+      <code class="text-sm text-green-400 font-mono">$ node aggregate.js</code>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 4: HTMLレポートを生成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">レポート生成</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「集計結果をグラフ付きHTMLレポートとして出力して。ブラウザで見られるように」</p>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">💡 応用</p>
+      <p class="text-sm text-gray-700">毎月の売上データCSVをこのスクリプトに渡すだけで、自動的にレポートが生成されるようになります。</p>
+    </div>
+  </section>
+</div>

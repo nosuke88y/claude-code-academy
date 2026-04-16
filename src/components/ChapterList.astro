@@ -12,11 +12,62 @@ const chapters = [
       { id: "l4", name: "理解度チェックテスト", type: "クイズ" },
     ],
   },
-  { id: "ch2", title: "Ch.2 — 環境構築（インストール〜認証）", meta: "4レッスン · 約45分 · Ch.1完了で解放", totalLessons: 4, lessons: [] },
-  { id: "ch3", title: "Ch.3 — 基本コマンドとプロンプト設計", meta: "5レッスン · 約60分 · Ch.2完了で解放", totalLessons: 5, lessons: [] },
-  { id: "ch4", title: "Ch.4 — Gitとの連携・バージョン管理", meta: "5レッスン · 約60分 · Ch.3完了で解放", totalLessons: 5, lessons: [] },
-  { id: "ch5", title: "Ch.5 — 実践演習 I：Webアプリを作る", meta: "6レッスン · 約90分 · Ch.4完了で解放", totalLessons: 6, lessons: [] },
-  { id: "ch6", title: "Ch.6 — 実践演習 II：業務自動化ツール", meta: "6レッスン · 約90分 · Ch.5完了で解放", totalLessons: 6, lessons: [] },
+  {
+    id: "ch2", title: "Ch.2 — 環境構築（インストール〜認証）",
+    meta: "4レッスン · 約45分 · Ch.1完了で解放", totalLessons: 4,
+    lessons: [
+      { id: "l1", name: "Node.js / npmのインストール", type: "ハンズオン" },
+      { id: "l2", name: "Claude Codeのインストールと認証", type: "ハンズオン" },
+      { id: "l3", name: "VS Code連携の設定", type: "ハンズオン" },
+      { id: "l4", name: "動作確認テスト", type: "クイズ" },
+    ],
+  },
+  {
+    id: "ch3", title: "Ch.3 — 基本コマンドとプロンプト設計",
+    meta: "5レッスン · 約60分 · Ch.2完了で解放", totalLessons: 5,
+    lessons: [
+      { id: "l1", name: "CLIの基本操作 — help / init", type: "ハンズオン" },
+      { id: "l2", name: "ファイル生成・編集・削除を依頼する", type: "ハンズオン" },
+      { id: "l3", name: "プロンプト設計の原則", type: "読み物" },
+      { id: "l4", name: "コンテキストの渡し方 — @記法", type: "ハンズオン" },
+      { id: "l5", name: "理解度チェックテスト", type: "クイズ" },
+    ],
+  },
+  {
+    id: "ch4", title: "Ch.4 — Gitとの連携・バージョン管理",
+    meta: "5レッスン · 約60分 · Ch.3完了で解放", totalLessons: 5,
+    lessons: [
+      { id: "l1", name: "Gitの基本とClaude Codeとの連携", type: "読み物" },
+      { id: "l2", name: "ブランチ戦略とClaude Codeの使い方", type: "解説" },
+      { id: "l3", name: "コミットメッセージの自動生成", type: "ハンズオン" },
+      { id: "l4", name: "PRレビューをClaude Codeに依頼する", type: "ハンズオン" },
+      { id: "l5", name: "理解度チェックテスト", type: "クイズ" },
+    ],
+  },
+  {
+    id: "ch5", title: "Ch.5 — 実践演習 I：Webアプリを作る",
+    meta: "6レッスン · 約90分 · Ch.4完了で解放", totalLessons: 6,
+    lessons: [
+      { id: "l1", name: "プロジェクト設計とClaude Codeへの依頼方法", type: "読み物" },
+      { id: "l2", name: "TODOアプリのHTML/CSS作成", type: "ハンズオン" },
+      { id: "l3", name: "JavaScriptの機能実装", type: "ハンズオン" },
+      { id: "l4", name: "バグ修正とリファクタリング依頼", type: "ハンズオン" },
+      { id: "l5", name: "Vercelへのデプロイ", type: "ハンズオン" },
+      { id: "l6", name: "演習課題", type: "プロジェクト" },
+    ],
+  },
+  {
+    id: "ch6", title: "Ch.6 — 実践演習 II：業務自動化ツール",
+    meta: "6レッスン · 約90分 · Ch.5完了で解放", totalLessons: 6,
+    lessons: [
+      { id: "l1", name: "業務自動化の設計思想", type: "読み物" },
+      { id: "l2", name: "CSVデータ処理スクリプト作成", type: "ハンズオン" },
+      { id: "l3", name: "スプレッドシート連携ツール", type: "ハンズオン" },
+      { id: "l4", name: "Slack通知ボットの作成", type: "ハンズオン" },
+      { id: "l5", name: "複数ツールの組み合わせ", type: "ハンズオン" },
+      { id: "l6", name: "最終演習課題", type: "プロジェクト" },
+    ],
+  },
 ];
 ---
 

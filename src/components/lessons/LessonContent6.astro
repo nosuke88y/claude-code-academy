@@ -1,0 +1,102 @@
+---
+// Ch.2 Lesson 2: Claude Codeのインストールと認証
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeをインストールしよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Node.jsの準備ができたら、いよいよClaude Codeをインストールします。
+      npmコマンド1行で完了します。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">インストール手順</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">ターミナルを開く</h4>
+          <p class="text-xs text-gray-500 mt-0.5">Windows: PowerShell / Mac: Terminal / VS Code: 統合ターミナル</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">インストールコマンドを実行</h4>
+          <div class="bg-gray-900 rounded-xl p-4 mt-2">
+            <code class="text-sm text-green-400 font-mono">$ npm install -g @anthropic-ai/claude-code</code>
+          </div>
+          <p class="text-xs text-gray-400 mt-2"><code class="bg-base-bg px-1 py-0.5 rounded text-xs">-g</code> はグローバルインストール（どこからでも使える）を意味します</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">インストール確認</h4>
+          <div class="bg-gray-900 rounded-xl p-4 mt-2">
+            <div class="space-y-1">
+              <code class="text-sm text-green-400 font-mono block">$ claude --version</code>
+              <code class="text-sm text-gray-500 font-mono block">claude-code v1.x.x</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">初回起動と認証</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      初めて <code class="bg-base-bg px-1.5 py-0.5 rounded text-gray-700 text-xs">claude</code> を起動すると、認証が求められます。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">claudeコマンドで起動</h4>
+          <div class="bg-gray-900 rounded-xl p-4 mt-2">
+            <code class="text-sm text-green-400 font-mono">$ claude</code>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">ブラウザが開いて認証画面が表示される</h4>
+          <p class="text-xs text-gray-500 mt-0.5">Anthropicアカウントでログイン（未登録の場合は新規作成）</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">認証完了！</h4>
+          <p class="text-xs text-gray-500 mt-0.5">ターミナルに戻ると、Claude Codeが使える状態になっています</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mt-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 認証方式</p>
+      <p class="text-sm text-gray-700">Claude Codeは、Anthropicアカウント（claude.ai）または APIキーで認証できます。初心者の方はアカウント認証がおすすめです。</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">トラブルシューティング</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">「permission denied」エラー</h3>
+        <p class="text-xs text-gray-600">Windowsは管理者としてPowerShellを実行。Mac/Linuxはnvmを使っていれば発生しません。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">認証画面が開かない</h3>
+        <p class="text-xs text-gray-600">ターミナルに表示されるURLを手動でブラウザにコピー&ペーストしてください。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">「claude: command not found」</h3>
+        <p class="text-xs text-gray-600">ターミナルを再起動してください。それでもダメなら <code class="bg-base-bg px-1 py-0.5 rounded text-xs">npm list -g</code> でインストール確認。</p>
+      </div>
+    </div>
+  </section>
+</div>

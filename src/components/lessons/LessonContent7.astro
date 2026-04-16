@@ -1,0 +1,113 @@
+---
+// Ch.2 Lesson 3: VS Code連携の設定
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">VS Codeとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      VS Code（Visual Studio Code）は、Microsoftが開発した無料のコードエディタです。
+      Claude Codeと組み合わせると、コード編集とAI操作を同じ画面でスムーズに行えます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">VS CodeにはClaude Code拡張機能があり、エディタ内で直接Claude Codeを操作できます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">VS Codeのインストール</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">公式サイトからダウンロード</h4>
+          <p class="text-xs text-gray-500 mt-0.5">code.visualstudio.com にアクセスし、お使いのOS用をダウンロード</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">インストーラーを実行</h4>
+          <p class="text-xs text-gray-500 mt-0.5">デフォルト設定でインストール（「PATHに追加」にチェックを入れる）</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">VS Codeを起動</h4>
+          <p class="text-xs text-gray-500 mt-0.5">スタートメニューまたはアプリケーションから起動</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">おすすめの初期設定</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🇯🇵</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">日本語化</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">拡張機能で「Japanese Language Pack」を検索してインストール → VS Codeを再起動</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔤</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">フォントサイズの調整</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">設定（Ctrl+,）→「Font Size」で文字の大きさを変更。14〜16pxがおすすめです。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🎨</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">テーマの変更</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">Ctrl+K → Ctrl+T でカラーテーマを選択。好みの見た目に変更できます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Code拡張機能のインストール</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">拡張機能パネルを開く</h4>
+          <p class="text-xs text-gray-500 mt-0.5">左サイドバーの四角いアイコンをクリック、またはCtrl+Shift+X</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">「Claude Code」を検索</h4>
+          <p class="text-xs text-gray-500 mt-0.5">Anthropic公式の拡張機能を選択</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">「Install」をクリック</h4>
+          <p class="text-xs text-gray-500 mt-0.5">インストール後、サイドバーにClaude Codeのアイコンが表示されます</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">VS Code + Claude Code の作業フロー</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📂</div><div class="text-xs font-medium text-gray-900">フォルダを開く</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">💬</div><div class="text-xs font-medium text-gray-900">Claude Codeに依頼</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">👀</div><div class="text-xs font-medium text-gray-900">変更を確認</div></div>
+        <div class="text-gray-300 text-lg mx-2">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-success-bg flex items-center justify-center text-2xl mx-auto mb-2">✅</div><div class="text-xs font-medium text-gray-900">承認＆保存</div></div>
+      </div>
+    </div>
+  </section>
+</div>

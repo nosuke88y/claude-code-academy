@@ -1,0 +1,107 @@
+---
+// Ch.3 Lesson 1: CLIの基本操作 — help / init
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeを起動しよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      環境構築が完了したら、いよいよClaude Codeを使い始めましょう。
+      まずはターミナルで基本的なコマンドを覚えます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">Claude CodeはCLI（コマンドラインインターフェース）ツールです。ターミナルに <code class="bg-white px-1.5 py-0.5 rounded text-primary text-xs">claude</code> と入力するだけで起動できます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">基本コマンド</h2>
+    <div class="space-y-3">
+      <div class="bg-gray-900 rounded-xl p-5">
+        <div class="text-xs text-gray-400 mb-2">Claude Codeの起動</div>
+        <code class="text-sm text-green-400 font-mono">$ claude</code>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-5">
+        <div class="text-xs text-gray-400 mb-2">ヘルプの表示</div>
+        <code class="text-sm text-green-400 font-mono">$ claude --help</code>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-5">
+        <div class="text-xs text-gray-400 mb-2">バージョン確認</div>
+        <code class="text-sm text-green-400 font-mono">$ claude --version</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロジェクトの初期化 — claude init</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      <code class="bg-base-bg px-1.5 py-0.5 rounded text-gray-700 text-xs">claude init</code> は、プロジェクトに <strong>CLAUDE.md</strong> を作成するコマンドです。
+      CLAUDE.mdはプロジェクトの「説明書」で、Claude Codeがあなたのプロジェクトを理解するために読みます。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="space-y-1">
+        <code class="text-sm text-green-400 font-mono block">$ mkdir my-project</code>
+        <code class="text-sm text-green-400 font-mono block">$ cd my-project</code>
+        <code class="text-sm text-green-400 font-mono block">$ claude init</code>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">CLAUDE.md に書くこと</h3>
+      <ul class="text-xs text-gray-600 space-y-2 list-none p-0">
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>プロジェクトの概要（何を作っているか）</span></li>
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>使っている技術スタック</span></li>
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>ファイル構成のルール</span></li>
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>コーディング規約やスタイルガイド</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">よく使うスラッシュコマンド</h2>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/help</code>
+        <span class="text-xs text-gray-600">使えるコマンド一覧を表示</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/clear</code>
+        <span class="text-xs text-gray-600">会話履歴をクリアして最初からやり直す</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/compact</code>
+        <span class="text-xs text-gray-600">会話を要約してコンテキストを節約</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/commit</code>
+        <span class="text-xs text-gray-600">変更内容を自動でGitコミット</span>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
+        <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/review</code>
+        <span class="text-xs text-gray-600">コードレビューを依頼する</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践してみよう</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">空のフォルダを作成</h4><p class="text-xs text-gray-500 mt-0.5">デスクトップに test-project フォルダを作りましょう</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">ターミナルでフォルダに移動</h4><p class="text-xs text-gray-500 mt-0.5"><code class="bg-base-bg px-1 py-0.5 rounded text-xs">cd test-project</code> で移動</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">claude init を実行</h4><p class="text-xs text-gray-500 mt-0.5">CLAUDE.md が作成されたら成功です！</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">4</div>
+        <div><h4 class="text-sm font-medium text-gray-900">claude を起動して /help を試す</h4><p class="text-xs text-gray-500 mt-0.5">コマンド一覧を確認しましょう</p></div>
+      </div>
+    </div>
+  </section>
+</div>

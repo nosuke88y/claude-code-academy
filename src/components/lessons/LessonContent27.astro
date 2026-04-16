@@ -1,0 +1,57 @@
+---
+// Ch.6 Lesson 3: スプレッドシート連携ツール
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">スプレッドシートと連携しよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">Googleスプレッドシートのデータを自動で取得・加工する方法を学びます。APIを使う方法と、CSV経由の簡易的な方法があります。</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法1: CSV経由（簡易版）</h2>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 初心者はこちらがおすすめ</p>
+      <p class="text-sm text-gray-700">API設定が不要で、すぐに始められます。</p>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">スプレッドシートからCSVをダウンロード</h4><p class="text-xs text-gray-500 mt-0.5">ファイル → ダウンロード → CSV形式</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">Node.jsスクリプトで加工</h4><p class="text-xs text-gray-500 mt-0.5">前のレッスンで学んだCSV処理を適用</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">結果をCSVとして出力</h4><p class="text-xs text-gray-500 mt-0.5">加工結果をスプレッドシートにインポート</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法2: Google Sheets API（上級）</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「Google Sheets APIを使って、スプレッドシートのデータを取得するNode.jsスクリプトを作って。サービスアカウントで認証する方式で」</p>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-3">APIのセットアップ手順</h3>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">1.</span><span class="text-xs text-gray-600">Google Cloud Console でプロジェクトを作成</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">2.</span><span class="text-xs text-gray-600">Google Sheets API を有効化</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">3.</span><span class="text-xs text-gray-600">サービスアカウントの認証情報を取得</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">4.</span><span class="text-xs text-gray-600">スプレッドシートをサービスアカウントに共有</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践例: 在庫管理シートの自動更新</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「在庫管理CSVを読み込んで、在庫が10個以下の商品をリストアップし、発注リストCSVとして出力するスクリプトを作って」</p>
+    </div>
+  </section>
+</div>

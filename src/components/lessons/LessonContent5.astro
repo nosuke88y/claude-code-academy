@@ -1,0 +1,90 @@
+---
+// Ch.2 Lesson 1: Node.js / npmのインストール
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Node.jsとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Node.jsは、JavaScriptをパソコン上で実行するための環境です。
+      Claude CodeはNode.jsで作られているため、使うにはまずNode.jsのインストールが必要です。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">npm（Node Package Manager）はNode.jsと一緒にインストールされるパッケージ管理ツールです。Claude Codeのインストールに使います。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">OS別インストール手順</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🪟</div>
+        <div><h3 class="text-sm font-semibold text-gray-900">Windows</h3><span class="text-[10px] text-gray-400">公式インストーラーを使用</span></div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">1.</span><span class="text-xs text-gray-600">nodejs.org にアクセスして「LTS」版をダウンロード</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">2.</span><span class="text-xs text-gray-600">ダウンロードしたインストーラー（.msi）を実行</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">3.</span><span class="text-xs text-gray-600">「Next」を押して進み、デフォルト設定でインストール</span></div>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🍎</div>
+        <div><h3 class="text-sm font-semibold text-gray-900">Mac</h3><span class="text-[10px] text-gray-400">Homebrewまたは公式サイト</span></div>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-4 mb-2">
+        <div class="text-xs text-gray-400 mb-1">Homebrewを使う場合</div>
+        <code class="text-sm text-green-400 font-mono">$ brew install node</code>
+      </div>
+      <p class="text-xs text-gray-500">Homebrewが入っていない場合は、nodejs.org から直接ダウンロードしてもOKです。</p>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🐧</div>
+        <div><h3 class="text-sm font-semibold text-gray-900">Linux</h3><span class="text-[10px] text-gray-400">nvm（Node Version Manager）を推奨</span></div>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-4">
+        <div class="space-y-1">
+          <code class="text-sm text-green-400 font-mono block">$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</code>
+          <code class="text-sm text-green-400 font-mono block">$ nvm install --lts</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">インストールの確認</h2>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">バージョン確認</div>
+      <div class="space-y-1">
+        <code class="text-sm text-green-400 font-mono block">$ node -v</code>
+        <code class="text-sm text-gray-500 font-mono block">v22.x.x</code>
+        <code class="text-sm text-green-400 font-mono block mt-2">$ npm -v</code>
+        <code class="text-sm text-gray-500 font-mono block">10.x.x</code>
+      </div>
+    </div>
+    <div class="bg-success-bg rounded-xl p-5">
+      <p class="text-sm text-success-dark font-medium mb-1">✅ 成功の目安</p>
+      <p class="text-sm text-gray-700">バージョン番号が表示されればインストール成功です。</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">よくあるトラブルと対処法</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">「node: command not found」と表示される</h3>
+        <p class="text-xs text-gray-600">ターミナルを再起動してください。それでもダメな場合はPCを再起動しましょう。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">古いバージョンがインストールされている</h3>
+        <p class="text-xs text-gray-600">Node.js 18以上が必要です。公式サイトから最新LTSをダウンロードし直してください。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-1">権限エラーが出る（Mac/Linux）</h3>
+        <p class="text-xs text-gray-600">nvmを使ってインストールすると権限の問題を避けられます。</p>
+      </div>
+    </div>
+  </section>
+</div>

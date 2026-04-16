@@ -1,0 +1,66 @@
+---
+// Ch.5 Lesson 4: バグ修正とリファクタリング依頼
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">バグの伝え方</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">バグ（不具合）が見つかったとき、Claude Codeに的確に伝えるコツを学びましょう。</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="text-center mb-2"><span class="text-2xl">❌</span></div>
+        <h3 class="text-sm font-semibold text-red-500 text-center mb-2">曖昧な報告</h3>
+        <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">「動かない」</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-center mb-2"><span class="text-2xl">⭕</span></div>
+        <h3 class="text-sm font-semibold text-primary text-center mb-2">具体的な報告</h3>
+        <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">「追加ボタンを押してもリストに表示されない。コンソールにTypeError」</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">エラーメッセージの読み方</h2>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-red-400 mb-1">エラー例</div>
+      <code class="text-sm text-red-400 font-mono">TypeError: Cannot read properties of null (reading 'addEventListener')</code>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">TypeError</span><span class="text-xs text-gray-600">→ データの型が違う（存在しない要素を操作しようとした）</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">null</span><span class="text-xs text-gray-600">→ 対象の要素が見つからなかった</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">addEventListener</span><span class="text-xs text-gray-600">→ イベントリスナーを追加しようとした場所</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">バグ修正の依頼例</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">エラーメッセージを貼り付ける</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「このエラーを修正して: TypeError: Cannot read properties of null」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">症状を説明する</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「タスクを削除しても画面から消えない。コンソールにエラーは出ていない」</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">リファクタリングの依頼</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">リファクタリングとは、機能を変えずにコードを読みやすく整理することです。</p>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">コードの整理</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「このコードをもっと読みやすく整理して。重複しているロジックは関数にまとめて」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">コメントの追加</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「各関数に何をしているかのコメントを追加して」</p>
+      </div>
+    </div>
+  </section>
+</div>

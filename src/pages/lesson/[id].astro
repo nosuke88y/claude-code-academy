@@ -5,27 +5,99 @@ import LessonContent1 from '../../components/lessons/LessonContent1.astro';
 import LessonContent2 from '../../components/lessons/LessonContent2.astro';
 import LessonContent3 from '../../components/lessons/LessonContent3.astro';
 import LessonContent4 from '../../components/lessons/LessonContent4.astro';
+import LessonContent5 from '../../components/lessons/LessonContent5.astro';
+import LessonContent6 from '../../components/lessons/LessonContent6.astro';
+import LessonContent7 from '../../components/lessons/LessonContent7.astro';
+import LessonContent8 from '../../components/lessons/LessonContent8.astro';
+import LessonContent9 from '../../components/lessons/LessonContent9.astro';
+import LessonContent10 from '../../components/lessons/LessonContent10.astro';
+import LessonContent11 from '../../components/lessons/LessonContent11.astro';
+import LessonContent12 from '../../components/lessons/LessonContent12.astro';
+import LessonContent13 from '../../components/lessons/LessonContent13.astro';
+import LessonContent14 from '../../components/lessons/LessonContent14.astro';
+import LessonContent15 from '../../components/lessons/LessonContent15.astro';
+import LessonContent16 from '../../components/lessons/LessonContent16.astro';
+import LessonContent17 from '../../components/lessons/LessonContent17.astro';
+import LessonContent18 from '../../components/lessons/LessonContent18.astro';
+import LessonContent19 from '../../components/lessons/LessonContent19.astro';
+import LessonContent20 from '../../components/lessons/LessonContent20.astro';
+import LessonContent21 from '../../components/lessons/LessonContent21.astro';
+import LessonContent22 from '../../components/lessons/LessonContent22.astro';
+import LessonContent23 from '../../components/lessons/LessonContent23.astro';
+import LessonContent24 from '../../components/lessons/LessonContent24.astro';
+import LessonContent25 from '../../components/lessons/LessonContent25.astro';
+import LessonContent26 from '../../components/lessons/LessonContent26.astro';
+import LessonContent27 from '../../components/lessons/LessonContent27.astro';
+import LessonContent28 from '../../components/lessons/LessonContent28.astro';
+import LessonContent29 from '../../components/lessons/LessonContent29.astro';
+import LessonContent30 from '../../components/lessons/LessonContent30.astro';
 
-const lessonData = {
+const lessonData: Record<string, { chapter: string; title: string; type: string; duration: string; prev: string | null; next: string | null; isQuiz?: boolean; xpGain?: number }> = {
+  // Ch.1
   "ch1-l1": { chapter: "Ch.1", title: "AIコーディングとは？従来との違い", type: "読み物", duration: "約8分", prev: null, next: "ch1-l2" },
   "ch1-l2": { chapter: "Ch.1", title: "Claude Codeのアーキテクチャ概観", type: "解説", duration: "約8分", prev: "ch1-l1", next: "ch1-l3" },
   "ch1-l3": { chapter: "Ch.1", title: "ユースケース別活用マップ", type: "インタラクティブ", duration: "約7分", prev: "ch1-l2", next: "ch1-l4" },
-  "ch1-l4": { chapter: "Ch.1", title: "理解度チェックテスト", type: "クイズ", duration: "約7分", prev: "ch1-l3", next: null },
+  "ch1-l4": { chapter: "Ch.1", title: "理解度チェックテスト", type: "クイズ", duration: "約7分", prev: "ch1-l3", next: null, isQuiz: true },
+  // Ch.2
+  "ch2-l1": { chapter: "Ch.2", title: "Node.js / npmのインストール", type: "ハンズオン", duration: "約12分", prev: null, next: "ch2-l2" },
+  "ch2-l2": { chapter: "Ch.2", title: "Claude Codeのインストールと認証", type: "ハンズオン", duration: "約10分", prev: "ch2-l1", next: "ch2-l3" },
+  "ch2-l3": { chapter: "Ch.2", title: "VS Code連携の設定", type: "ハンズオン", duration: "約10分", prev: "ch2-l2", next: "ch2-l4" },
+  "ch2-l4": { chapter: "Ch.2", title: "動作確認テスト", type: "クイズ", duration: "約8分", prev: "ch2-l3", next: null, isQuiz: true },
+  // Ch.3
+  "ch3-l1": { chapter: "Ch.3", title: "CLIの基本操作 — help / init", type: "ハンズオン", duration: "約10分", prev: null, next: "ch3-l2" },
+  "ch3-l2": { chapter: "Ch.3", title: "ファイル生成・編集・削除を依頼する", type: "ハンズオン", duration: "約12分", prev: "ch3-l1", next: "ch3-l3" },
+  "ch3-l3": { chapter: "Ch.3", title: "プロンプト設計の原則", type: "読み物", duration: "約10分", prev: "ch3-l2", next: "ch3-l4" },
+  "ch3-l4": { chapter: "Ch.3", title: "コンテキストの渡し方 — @記法", type: "ハンズオン", duration: "約10分", prev: "ch3-l3", next: "ch3-l5" },
+  "ch3-l5": { chapter: "Ch.3", title: "理解度チェックテスト", type: "クイズ", duration: "約8分", prev: "ch3-l4", next: null, isQuiz: true },
+  // Ch.4
+  "ch4-l1": { chapter: "Ch.4", title: "Gitの基本とClaude Codeとの連携", type: "読み物", duration: "約10分", prev: null, next: "ch4-l2" },
+  "ch4-l2": { chapter: "Ch.4", title: "ブランチ戦略とClaude Codeの使い方", type: "解説", duration: "約10分", prev: "ch4-l1", next: "ch4-l3" },
+  "ch4-l3": { chapter: "Ch.4", title: "コミットメッセージの自動生成", type: "ハンズオン", duration: "約12分", prev: "ch4-l2", next: "ch4-l4" },
+  "ch4-l4": { chapter: "Ch.4", title: "PRレビューをClaude Codeに依頼する", type: "ハンズオン", duration: "約12分", prev: "ch4-l3", next: "ch4-l5" },
+  "ch4-l5": { chapter: "Ch.4", title: "理解度チェックテスト", type: "クイズ", duration: "約8分", prev: "ch4-l4", next: null, isQuiz: true },
+  // Ch.5
+  "ch5-l1": { chapter: "Ch.5", title: "プロジェクト設計とClaude Codeへの依頼方法", type: "読み物", duration: "約10分", prev: null, next: "ch5-l2" },
+  "ch5-l2": { chapter: "Ch.5", title: "TODOアプリのHTML/CSS作成", type: "ハンズオン", duration: "約15分", prev: "ch5-l1", next: "ch5-l3" },
+  "ch5-l3": { chapter: "Ch.5", title: "JavaScriptの機能実装", type: "ハンズオン", duration: "約15分", prev: "ch5-l2", next: "ch5-l4" },
+  "ch5-l4": { chapter: "Ch.5", title: "バグ修正とリファクタリング依頼", type: "ハンズオン", duration: "約12分", prev: "ch5-l3", next: "ch5-l5" },
+  "ch5-l5": { chapter: "Ch.5", title: "Vercelへのデプロイ", type: "ハンズオン", duration: "約10分", prev: "ch5-l4", next: "ch5-l6" },
+  "ch5-l6": { chapter: "Ch.5", title: "演習課題", type: "プロジェクト", duration: "約30分", prev: "ch5-l5", next: null },
+  // Ch.6
+  "ch6-l1": { chapter: "Ch.6", title: "業務自動化の設計思想", type: "読み物", duration: "約10分", prev: null, next: "ch6-l2" },
+  "ch6-l2": { chapter: "Ch.6", title: "CSVデータ処理スクリプト作成", type: "ハンズオン", duration: "約15分", prev: "ch6-l1", next: "ch6-l3" },
+  "ch6-l3": { chapter: "Ch.6", title: "スプレッドシート連携ツール", type: "ハンズオン", duration: "約15分", prev: "ch6-l2", next: "ch6-l4" },
+  "ch6-l4": { chapter: "Ch.6", title: "Slack通知ボットの作成", type: "ハンズオン", duration: "約15分", prev: "ch6-l3", next: "ch6-l5" },
+  "ch6-l5": { chapter: "Ch.6", title: "複数ツールの組み合わせ", type: "ハンズオン", duration: "約12分", prev: "ch6-l4", next: "ch6-l6" },
+  "ch6-l6": { chapter: "Ch.6", title: "最終演習課題", type: "プロジェクト", duration: "約30分", prev: "ch6-l5", next: null },
+};
+
+// レッスンIDとコンポーネントのマッピング
+const componentMap: Record<string, number> = {
+  "ch1-l1": 1, "ch1-l2": 2, "ch1-l3": 3, "ch1-l4": 4,
+  "ch2-l1": 5, "ch2-l2": 6, "ch2-l3": 7, "ch2-l4": 8,
+  "ch3-l1": 9, "ch3-l2": 10, "ch3-l3": 11, "ch3-l4": 12, "ch3-l5": 13,
+  "ch4-l1": 14, "ch4-l2": 15, "ch4-l3": 16, "ch4-l4": 17, "ch4-l5": 18,
+  "ch5-l1": 19, "ch5-l2": 20, "ch5-l3": 21, "ch5-l4": 22, "ch5-l5": 23, "ch5-l6": 24,
+  "ch6-l1": 25, "ch6-l2": 26, "ch6-l3": 27, "ch6-l4": 28, "ch6-l5": 29, "ch6-l6": 30,
 };
 
 export function getStaticPaths() {
   return [
-    { params: { id: "ch1-l1" } },
-    { params: { id: "ch1-l2" } },
-    { params: { id: "ch1-l3" } },
-    { params: { id: "ch1-l4" } },
-  ];
+    "ch1-l1","ch1-l2","ch1-l3","ch1-l4",
+    "ch2-l1","ch2-l2","ch2-l3","ch2-l4",
+    "ch3-l1","ch3-l2","ch3-l3","ch3-l4","ch3-l5",
+    "ch4-l1","ch4-l2","ch4-l3","ch4-l4","ch4-l5",
+    "ch5-l1","ch5-l2","ch5-l3","ch5-l4","ch5-l5","ch5-l6",
+    "ch6-l1","ch6-l2","ch6-l3","ch6-l4","ch6-l5","ch6-l6",
+  ].map(id => ({ params: { id } }));
 }
 
 const { id } = Astro.params;
 const lesson = lessonData[id] || { chapter: "Ch.1", title: "レッスン", type: "", duration: "", prev: null, next: null };
 const chId = id.split('-')[0];
 const lId = id.split('-')[1];
+const isQuiz = lesson.isQuiz || false;
+const compNum = componentMap[id] || 1;
 ---
 
 <Layout title={`${lesson.title} — Claude Code Academy`}>
@@ -51,13 +123,39 @@ const lId = id.split('-')[1];
     <h1 class="text-2xl font-semibold text-gray-900 mb-6">{lesson.title}</h1>
 
     <!-- レッスンコンテンツ -->
-    {id === "ch1-l1" && <LessonContent1 />}
-    {id === "ch1-l2" && <LessonContent2 />}
-    {id === "ch1-l3" && <LessonContent3 />}
-    {id === "ch1-l4" && <LessonContent4 />}
+    {compNum === 1 && <LessonContent1 />}
+    {compNum === 2 && <LessonContent2 />}
+    {compNum === 3 && <LessonContent3 />}
+    {compNum === 4 && <LessonContent4 />}
+    {compNum === 5 && <LessonContent5 />}
+    {compNum === 6 && <LessonContent6 />}
+    {compNum === 7 && <LessonContent7 />}
+    {compNum === 8 && <LessonContent8 />}
+    {compNum === 9 && <LessonContent9 />}
+    {compNum === 10 && <LessonContent10 />}
+    {compNum === 11 && <LessonContent11 />}
+    {compNum === 12 && <LessonContent12 />}
+    {compNum === 13 && <LessonContent13 />}
+    {compNum === 14 && <LessonContent14 />}
+    {compNum === 15 && <LessonContent15 />}
+    {compNum === 16 && <LessonContent16 />}
+    {compNum === 17 && <LessonContent17 />}
+    {compNum === 18 && <LessonContent18 />}
+    {compNum === 19 && <LessonContent19 />}
+    {compNum === 20 && <LessonContent20 />}
+    {compNum === 21 && <LessonContent21 />}
+    {compNum === 22 && <LessonContent22 />}
+    {compNum === 23 && <LessonContent23 />}
+    {compNum === 24 && <LessonContent24 />}
+    {compNum === 25 && <LessonContent25 />}
+    {compNum === 26 && <LessonContent26 />}
+    {compNum === 27 && <LessonContent27 />}
+    {compNum === 28 && <LessonContent28 />}
+    {compNum === 29 && <LessonContent29 />}
+    {compNum === 30 && <LessonContent30 />}
 
-    <!-- 完了ボタン + ナビゲーション（l4以外） -->
-    {id !== "ch1-l4" && (
+    <!-- 完了ボタン + ナビゲーション（クイズ以外） -->
+    {!isQuiz && (
       <div class="max-w-3xl mt-8 border-t border-base-border pt-6" id="lesson-footer" data-ch={chId} data-lesson={lId}>
         <button
           id="complete-btn"
@@ -85,7 +183,7 @@ const lId = id.split('-')[1];
 </Layout>
 
 <script>
-  // レッスン完了ボタンの処理（l4以外のレッスン用）
+  // レッスン完了ボタンの処理（クイズ以外のレッスン用）
   const footer = document.getElementById('lesson-footer');
   if (footer) {
     const STORAGE_KEY = 'cca-progress';

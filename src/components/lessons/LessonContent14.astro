@@ -1,0 +1,102 @@
+---
+// Ch.4 Lesson 1: Gitの基本とClaude Codeとの連携
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Gitとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Gitは、コードの変更履歴を記録・管理するためのツールです。
+      ゲームの「セーブポイント」のように、いつでも過去の状態に戻ることができます。
+      チーム開発では必須のツールですが、個人開発でも「元に戻せる安心感」は大きなメリットです。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">Gitを使えば「あの変更をする前に戻したい...」という悩みが解消されます。Claude CodeはGitと連携して、コミットやブランチ操作も自動で行えます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Git基本用語</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📦</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">リポジトリ（Repository）</h3>
+            <span class="text-[10px] text-gray-400">プロジェクトの保管場所</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">プロジェクトのすべてのファイルと変更履歴が保存される場所です。ローカル（自分のPC）とリモート（GitHub等）の2種類があります。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">💾</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">コミット（Commit）</h3>
+            <span class="text-[10px] text-gray-400">セーブポイントを作る</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">ファイルの変更内容を記録する操作です。「どこを変えたか」「なぜ変えたか」をメッセージと一緒に保存します。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🌿</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">ブランチ（Branch）</h3>
+            <span class="text-[10px] text-gray-400">並行作業用の分岐</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">メインのコードに影響を与えずに新機能を開発するための「分岐」です。完成したらメインに統合します。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔀</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">マージ（Merge）</h3>
+            <span class="text-[10px] text-gray-400">分岐を統合する</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">ブランチで開発した機能をメインブランチに取り込む操作です。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">⬆️</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">プッシュ / プル（Push / Pull）</h3>
+            <span class="text-[10px] text-gray-400">リモートとの同期</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">プッシュ = ローカルの変更をリモートにアップロード。プル = リモートの変更をローカルにダウンロード。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude CodeとGitの連携</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeは Git の操作も得意です。面倒なコマンドを覚えなくても、日本語で依頼するだけでGit操作ができます。
+    </p>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">できること 1: 状態の確認</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「今のブランチの変更内容を教えて」</p>
+        <p class="text-xs text-gray-400 mt-2">→ git status, git diff を実行して結果をわかりやすく説明</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">できること 2: コミット</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「変更内容をコミットして」</p>
+        <p class="text-xs text-gray-400 mt-2">→ 変更内容を分析して適切なコミットメッセージを自動生成</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">できること 3: ブランチ操作</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「新しいブランチ feature/add-login を作って」</p>
+        <p class="text-xs text-gray-400 mt-2">→ ブランチの作成・切り替え・マージを自動実行</p>
+      </div>
+    </div>
+  </section>
+</div>

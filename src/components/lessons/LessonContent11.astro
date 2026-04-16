@@ -1,0 +1,93 @@
+---
+// Ch.3 Lesson 3: プロンプト設計の原則
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロンプトとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      プロンプトとは、AIに出す「指示文」のことです。
+      プロンプトの書き方次第で結果の質が大きく変わります。
+      良いプロンプトを書けるようになることが、AIコーディング上達の鍵です。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">良いプロンプト vs 悪いプロンプト</h2>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="text-center mb-3"><span class="text-3xl">❌</span><h3 class="text-sm font-semibold text-red-500 mt-2">悪い例</h3></div>
+        <div class="space-y-2">
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">「いい感じのサイト作って」</code></div>
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">「なんかバグがある」</code></div>
+          <div class="bg-red-50 rounded-lg px-3 py-2"><code class="text-[11px] text-red-600">「もっときれいにして」</code></div>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-3">曖昧で、AIが何をすればいいか分からない</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-center mb-3"><span class="text-3xl">⭕</span><h3 class="text-sm font-semibold text-primary mt-2">良い例</h3></div>
+        <div class="space-y-2">
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">「名前・スキル・連絡先の3セクション構成の自己紹介サイトを作って」</code></div>
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">「追加ボタンをクリックしても表示されない。コンソールにTypeError」</code></div>
+          <div class="bg-primary-bg rounded-lg px-3 py-2"><code class="text-[11px] text-primary">「変数名をキャメルケースに統一して、JSDocコメントを追加して」</code></div>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-3">具体的で、AIが正確に対応できる</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロンプト設計の5原則</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🎯</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">1. 具体的に（What）</h3><span class="text-[10px] text-gray-400">何を作るか明確にする</span></div>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2"><code class="text-[11px] text-gray-600">例:「タスクの追加・完了・削除ができるTODOアプリを作って」</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔧</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">2. 制約を伝える（How）</h3><span class="text-[10px] text-gray-400">技術スタック・デザイン要件</span></div>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2"><code class="text-[11px] text-gray-600">例:「HTML + CSS + JavaScript で、フレームワークなし、青基調のデザインで」</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📋</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">3. 段階的に（Step by Step）</h3><span class="text-[10px] text-gray-400">大きなタスクは分割する</span></div>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2"><code class="text-[11px] text-gray-600">例:「まずHTMLの骨組みを作って。CSSは次のステップで」</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🧠</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">4. コンテキストを与える（Why）</h3><span class="text-[10px] text-gray-400">目的・背景を伝える</span></div>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2"><code class="text-[11px] text-gray-600">例:「社内の在庫管理をWebアプリに移行したい。非エンジニアが使うのでUIはシンプルに」</code></div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📄</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">5. 出力形式を示す</h3><span class="text-[10px] text-gray-400">ファイル構成・スタイル</span></div>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2"><code class="text-[11px] text-gray-600">例:「src/components/ に配置して。各ファイルにJSDocコメントを付けて」</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロンプトテンプレート</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <h3 class="text-sm font-semibold text-primary mb-3">万能テンプレート</h3>
+      <div class="bg-base-bg rounded-lg p-4 space-y-2">
+        <p class="text-xs text-gray-700"><strong>【目的】</strong>〇〇するための△△を作りたい</p>
+        <p class="text-xs text-gray-700"><strong>【技術】</strong>使いたい言語・フレームワーク</p>
+        <p class="text-xs text-gray-700"><strong>【機能】</strong>必要な機能をリストアップ</p>
+        <p class="text-xs text-gray-700"><strong>【デザイン】</strong>見た目の方向性</p>
+        <p class="text-xs text-gray-700"><strong>【その他】</strong>特に気をつけてほしいこと</p>
+      </div>
+    </div>
+  </section>
+</div>

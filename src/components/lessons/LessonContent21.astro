@@ -1,0 +1,64 @@
+---
+// Ch.5 Lesson 3: JavaScriptの機能実装
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">JavaScriptで動きをつけよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">HTML/CSSで見た目ができたら、JavaScriptで「動く」機能を追加します。</p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">JavaScriptの知識がなくても大丈夫。Claude Codeに「何をしたいか」を伝えれば、コードを書いてくれます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeへの依頼</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">機能追加の依頼例</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「このTODOアプリにJavaScriptで以下の機能を追加して：1. タスクの追加（Enterキーでも可）、2. 完了/未完了の切り替え（クリックで取り消し線）、3. タスクの削除（×ボタン）、4. 残りタスク件数の表示」</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeの作業過程</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-base-bg">
+          <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium">Read</span>
+          <span class="text-xs text-gray-600">index.html と style.css の現在の構造を確認</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-base-bg">
+          <span class="text-xs bg-primary-bg text-primary px-2 py-0.5 rounded font-medium">Write</span>
+          <span class="text-xs text-gray-600">script.js を新規作成（機能のコード）</span>
+        </div>
+        <div class="flex items-center gap-3 p-2 rounded-lg bg-base-bg">
+          <span class="text-xs bg-primary-bg text-primary px-2 py-0.5 rounded font-medium">Edit</span>
+          <span class="text-xs text-gray-600">index.html に script タグを追加</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">データの永続化</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">ブラウザを閉じてもデータが消えないようにしましょう。</p>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <div class="text-xs text-primary font-medium mb-2">追加依頼</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「localStorageを使って、タスクデータをブラウザに保存して。ページを更新しても消えないようにして」</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">動作確認チェックリスト</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3"><div class="w-5 h-5 rounded border-2 border-gray-300 shrink-0 mt-0.5"></div><p class="text-sm text-gray-900">テキスト入力＋追加ボタンでタスクが追加される</p></div>
+        <div class="flex items-start gap-3"><div class="w-5 h-5 rounded border-2 border-gray-300 shrink-0 mt-0.5"></div><p class="text-sm text-gray-900">Enterキーでもタスクが追加される</p></div>
+        <div class="flex items-start gap-3"><div class="w-5 h-5 rounded border-2 border-gray-300 shrink-0 mt-0.5"></div><p class="text-sm text-gray-900">タスクをクリックで完了/未完了が切り替わる</p></div>
+        <div class="flex items-start gap-3"><div class="w-5 h-5 rounded border-2 border-gray-300 shrink-0 mt-0.5"></div><p class="text-sm text-gray-900">×ボタンでタスクが削除される</p></div>
+        <div class="flex items-start gap-3"><div class="w-5 h-5 rounded border-2 border-gray-300 shrink-0 mt-0.5"></div><p class="text-sm text-gray-900">ページを更新してもデータが残っている</p></div>
+      </div>
+    </div>
+  </section>
+</div>
