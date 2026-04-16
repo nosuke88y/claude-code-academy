@@ -1,0 +1,18 @@
+---
+// 準備中ページの共通プレースホルダー
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+const { icon, title, description } = Astro.props;
+---
+
+<div class="flex flex-col items-center justify-center py-24">
+  <div class="text-6xl mb-6">{icon}</div>
+  <h2 class="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
+  <p class="text-sm text-gray-400 mb-6 text-center max-w-md">{description}</p>
+  <a href="/" class="px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">
+    ホームに戻る
+  </a>
+</div>

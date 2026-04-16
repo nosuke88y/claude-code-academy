@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import StatsGrid from '../components/StatsGrid.astro';
+import ChapterList from '../components/ChapterList.astro';
+import RightPanel from '../components/RightPanel.astro';
+---
+
+<Layout title="完全初心者コース — Claude Code Academy">
+  <Sidebar currentTrack="beginner" currentPage="home" />
+
+  <main class="ml-[260px] p-8 min-h-screen">
+    <div class="flex items-center justify-between mb-7">
+      <div>
+        <h1 class="text-[22px] font-semibold text-gray-900">完全初心者コース</h1>
+        <p class="text-sm text-gray-400 mt-1">Claude Code入門 → 実践プロジェクト演習まで · 6チャプター</p>
+      </div>
+    </div>
+
+    <StatsGrid />
+
+    <div class="grid grid-cols-[1fr_320px] gap-5">
+      <ChapterList />
+      <RightPanel />
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // 進捗管理 — vanilla JS
+  const STORAGE_KEY = 'cca-progress';
+  const COURSE = {
+    ch1: { total: 4 }, ch2: { total: 4 }, ch3: { total: 5 },
+    ch4: { total: 5 }, ch5: { total: 6 }, ch6: { total: 6 },
+  };
+  const CH_ORDER = ['ch1','ch2','ch3','ch4','ch5','ch6'];
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null };
+      return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null, ...JSON.parse(raw) };
+    } catch { return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null }; }
+  }
+
+  function chCompleted(data, chId) {
+    const ch = data.chapters[chId];
+    if (!ch) return 0;
+    return Object.values(ch.lessons || {}).filter(l => l.completed).length;
+  }
+
+  function isChDone(data, chId) {
+    return chCompleted(data, chId) >= (COURSE[chId]?.total || 999);
+  }
+
+  function updateUI() {
+    const data = load();
+    let totalDone = 0, chapDone = 0;
+    const totalLessons = Object.values(COURSE).reduce((s, c) => s + c.total, 0);
+
+    // チャプターごとの状態更新
+    CH_ORDER.forEach((chId, idx) => {
+      const card = document.querySelector(`[data-chapter="${chId}"]`);
+      if (!card) return;
+
+      const done = chCompleted(data, chId);
+      totalDone += done;
+      const total = COURSE[chId].total;
+      const completed = done >= total;
+      if (completed) chapDone++;
+
+      const prevDone = idx === 0 || isChDone(data, CH_ORDER[idx - 1]);
+      const unlocked = idx === 0 || prevDone;
+
+      const icon = card.querySelector('.ch-icon');
+      const badge = card.querySelector('.ch-badge');
+      const progress = card.querySelector('.ch-progress');
+
+      if (completed) {
+        icon.textContent = '✅'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-success-bg';
+        badge.textContent = '完了'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-success-bg text-success-dark';
+        card.className = card.className.replace('opacity-70', '');
+      } else if (unlocked) {
+        icon.textContent = '📘'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-primary-bg';
+        badge.textContent = done > 0 ? '進行中' : '未着手'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-primary-bg text-primary';
+        card.className = card.className.replace('opacity-70', '');
+      } else {
+        icon.textContent = '🔒'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-base-muted';
+        badge.textContent = '未開放'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-base-muted text-gray-400';
+        if (!card.className.includes('opacity-70')) card.className += ' opacity-70';
+      }
+
+      progress.style.width = total > 0 ? `${Math.round(done / total * 100)}%` : '0%';
+
+      // レッスン完了状態
+      card.querySelectorAll('[data-lesson]').forEach(row => {
+        const lid = row.dataset.lesson;
+        const isDone = !!data.chapters[chId]?.lessons?.[lid]?.completed;
+        const dot = row.querySelector('.lesson-dot');
+        const action = row.querySelector('.lesson-action');
+        if (isDone) {
+          dot.className = 'w-5 h-5 rounded-full bg-success flex items-center justify-center shrink-0 lesson-dot';
+          dot.innerHTML = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>';
+          if (action) { action.textContent = row.querySelector('.lesson-action')?.dataset?.type || '完了'; action.className = 'text-[11px] text-gray-400 lesson-action'; action.removeAttribute('href'); }
+        }
+      });
+    });
+
+    // ステータスカード更新
+    const pct = totalLessons > 0 ? Math.round(totalDone / totalLessons * 100) : 0;
+    document.getElementById('stat-chapters').textContent = `${chapDone} / ${CH_ORDER.length}`;
+    document.getElementById('stat-lessons').textContent = `${totalDone} / ${totalLessons}`;
+    document.getElementById('stat-percent').textContent = `${pct}%`;
+    document.getElementById('stat-streak').textContent = `${data.streak}日`;
+    const fire = document.getElementById('stat-streak-fire');
+    if (data.streak > 0) fire.classList.remove('hidden'); else fire.classList.add('hidden');
+
+    // 右パネル更新
+    const ch1Done = isChDone(data, 'ch1');
+    const statusTitle = document.getElementById('status-title');
+    const statusDesc = document.getElementById('status-desc');
+    const statusBtn = document.getElementById('status-btn');
+    const statusBtn2 = document.getElementById('status-btn2');
+
+    if (ch1Done) {
+      statusTitle.textContent = 'Ch.1 完了！ 🎉';
+      statusDesc.textContent = 'おめでとうございます！Claude Codeの基礎を理解しました。Ch.2「環境構築」に進みましょう。';
+      statusBtn.textContent = 'Ch.2 へ進む（準備中）';
+      statusBtn.href = '/';
+      statusBtn2.classList.add('hidden');
+    } else if (totalDone > 0) {
+      statusTitle.textContent = `Ch.1 — ${chCompleted(data, 'ch1')}/4 レッスン完了`;
+      statusDesc.textContent = '引き続きCh.1のレッスンを進めましょう。全4レッスンを完了するとCh.2が解放されます。';
+      statusBtn.textContent = '▶ 続きを学習する';
+      statusBtn.href = '/lesson/ch1-l1';
+      statusBtn2.classList.add('hidden');
+    }
+
+    document.getElementById('streak-num').textContent = data.streak > 0 ? `🔥 ${data.streak}日` : '0日';
+
+    // 実績更新
+    document.querySelectorAll('[data-ach]').forEach(el => {
+      const chId = el.dataset.ach;
+      if (isChDone(data, chId)) {
+        el.querySelector('.ach-note').textContent = '解放済み';
+        el.querySelector('.ach-note').className = 'text-[11px] text-success font-medium ach-note';
+        const bar = el.querySelector('.ach-bar');
+        if (bar) bar.classList.add('hidden');
+      }
+    });
+  }
+
+  // チャプター開閉
+  document.querySelectorAll('.chapter-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const card = toggle.closest('[data-chapter]');
+      const list = card?.querySelector('.lessons-list');
+      if (!list) return;
+      document.querySelectorAll('.lessons-list').forEach(l => {
+        if (l !== list) l.classList.add('hidden');
+      });
+      list.classList.toggle('hidden');
+    });
+  });
+
+  // 初期描画
+  updateUI();
+</script>

@@ -1,0 +1,23 @@
+---
+// ステータスカード4枚 — vanilla JSでlocalStorageから動的更新
+---
+
+<div class="grid grid-cols-4 gap-3.5 mb-7" id="stats-grid">
+  <div class="bg-white rounded-[10px] p-4 border border-base-border">
+    <div class="text-2xl font-semibold text-gray-900" id="stat-chapters">0 / 6</div>
+    <div class="text-xs text-gray-400 mt-1">チャプター完了</div>
+  </div>
+  <div class="bg-white rounded-[10px] p-4 border border-base-border">
+    <div class="text-2xl font-semibold text-gray-900" id="stat-lessons">0 / 30</div>
+    <div class="text-xs text-gray-400 mt-1">レッスン完了</div>
+  </div>
+  <div class="bg-white rounded-[10px] p-4 border border-base-border">
+    <div class="text-2xl font-semibold text-gray-900" id="stat-percent">0%</div>
+    <div class="text-xs text-gray-400 mt-1">全体進捗</div>
+  </div>
+  <div class="bg-white rounded-[10px] p-4 border border-base-border">
+    <div class="text-2xl font-semibold text-gray-900" id="stat-streak">0日</div>
+    <div class="text-xs text-gray-400 mt-1">連続学習</div>
+    <div class="text-[11px] text-success mt-1 hidden" id="stat-streak-fire">🔥 継続中</div>
+  </div>
+</div>

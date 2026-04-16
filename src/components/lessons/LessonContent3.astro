@@ -1,0 +1,286 @@
+---
+// Ch.1 Lesson 3: ユースケース別活用マップ
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">あなたに合った活用法を見つけよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-6">
+      Claude Codeは、あなたの経験やスキルに関わらず活用できます。
+      自分に近いタブを選んで、具体的な活用イメージを掴みましょう。
+    </p>
+
+    <!-- タブ -->
+    <div class="flex gap-2 mb-6 flex-wrap" id="use-tabs">
+      <button
+        class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-primary-bg text-primary border-primary-border"
+        data-tab="beginner"
+      >
+        🌱 初心者
+      </button>
+      <button
+        class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-transparent text-gray-500 border-base-border hover:bg-primary-bg hover:text-primary hover:border-primary-border"
+        data-tab="business"
+      >
+        💼 ビジネス職
+      </button>
+      <button
+        class="tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-transparent text-gray-500 border-base-border hover:bg-primary-bg hover:text-primary hover:border-primary-border"
+        data-tab="engineer"
+      >
+        ⚡ エンジニア
+      </button>
+    </div>
+
+    <!-- 初心者タブ -->
+    <div class="tab-content space-y-4" data-tab-content="beginner">
+      <!-- ユースケース1 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🌐</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Webサイトを作る</h3>
+            <span class="text-[10px] text-gray-400">プログラミング経験ゼロでもOK</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          自分のポートフォリオサイトや、お店の紹介ページなどを、AIに指示するだけで作れます。
+          デザインの調整やレスポンシブ対応もお任せできます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「シンプルな自己紹介サイトを作って。名前・スキル・連絡先を載せたい」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「このサイトをスマホでも見やすくして」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「お問い合わせフォームを追加して」</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ユースケース2 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📚</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">学習の助けにする</h3>
+            <span class="text-[10px] text-gray-400">コードを読んで理解を深める</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          プログラミングの学習中に、わからないコードの解説を頼んだり、
+          練習問題を作ってもらったりできます。マンツーマンの家庭教師のように使えます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「このコードが何をしているか、1行ずつ解説して」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「JavaScriptの配列操作の練習問題を3つ作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「forループとforEachの違いを具体例で教えて」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ビジネス職タブ -->
+    <div class="tab-content space-y-4 hidden" data-tab-content="business">
+      <!-- ユースケース1 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔄</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">業務の自動化</h3>
+            <span class="text-[10px] text-gray-400">繰り返し作業をスクリプト化</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          毎日やっている手作業（ファイル整理、データ変換、レポート作成など）を自動化するスクリプトを作れます。
+          エンジニアに依頼しなくても、自分で業務改善ができます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「毎朝のCSVファイルを自動で整形するスクリプトを作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「フォルダ内のファイル名を一括で日付順にリネームして」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「Excelの売上データをグラフ付きHTMLレポートに変換して」</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ユースケース2 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📊</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">データ分析</h3>
+            <span class="text-[10px] text-gray-400">データから示唆を引き出す</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          CSVやJSONなどのデータを分析し、集計・可視化するツールを素早く作れます。
+          Pythonのデータ分析ライブラリも、AIが適切に使ってくれます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「このCSVの売上データを月別に集計して棒グラフを作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「顧客データから離脱率の高いセグメントを分析して」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「アンケート結果をクロス集計してレポートにまとめて」</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ユースケース3 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🛠️</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">社内ツール作成</h3>
+            <span class="text-[10px] text-gray-400">必要なツールを自分で作る</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          タスク管理、在庫管理、日報入力など、チームに必要な簡易ツールを
+          Webアプリとして素早く作れます。外注不要で、すぐに使い始められます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「チーム用のタスク管理ボードを作って。ドラッグ&ドロップ対応で」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「会議室予約システムを作って。カレンダー表示付きで」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「日報をフォームで入力して一覧表示できるアプリを作って」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- エンジニアタブ -->
+    <div class="tab-content space-y-4 hidden" data-tab-content="engineer">
+      <!-- ユースケース1 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🚀</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">高速プロトタイピング</h3>
+            <span class="text-[10px] text-gray-400">アイデアを即座に形にする</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          新しいアイデアのプロトタイプを数分で作成できます。
+          フレームワークのセットアップからAPIの接続まで、面倒な初期設定をAIに任せて、
+          コアロジックに集中できます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「Next.js + Prisma + PostgreSQLでTodoアプリの雛形を作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「Stripe決済を組み込んだECサイトのMVPを作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「WebSocket使ったリアルタイムチャットの基盤を作って」</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ユースケース2 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔧</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">コードレビュー・リファクタリング</h3>
+            <span class="text-[10px] text-gray-400">コード品質を向上させる</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          既存コードの問題点を指摘してもらったり、より良い書き方に書き換えてもらえます。
+          プロジェクト全体の構造を理解した上で提案してくれるので、的確です。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「このファイルのコードをレビューして。改善点を指摘して」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「重複しているロジックを共通関数に切り出して」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「TypeScriptの型定義を追加して型安全にして」</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- ユースケース3 -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🐛</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">デバッグ</h3>
+            <span class="text-[10px] text-gray-400">バグの原因を素早く特定・修正</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          エラーメッセージを貼り付けるだけで、原因の調査から修正までを自動で行います。
+          Grepでコードベース全体を検索し、関連箇所を見つけてくれます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「このエラーの原因を調べて修正して: TypeError: Cannot read property...」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「ログイン後にリダイレクトされない問題を調査して」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600">「テストが落ちている原因を特定して直して」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- まとめ -->
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">📌 まとめ</p>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        Claude Codeは、プログラミング初心者からベテランエンジニアまで、あらゆるレベルの人に価値を提供します。
+        大切なのは「何を作りたいか」「何を解決したいか」を明確にすること。
+        技術的な実装はClaude Codeに任せて、あなたはアイデアと判断に集中しましょう。
+      </p>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // タブボタンのスタイル切り替え
+      const activeClasses = ['bg-primary-bg', 'text-primary', 'border-primary-border'];
+      const inactiveClasses = ['bg-transparent', 'text-gray-500', 'border-base-border'];
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove(...activeClasses);
+        b.classList.add(...inactiveClasses);
+      });
+      btn.classList.remove(...inactiveClasses);
+      btn.classList.add(...activeClasses);
+
+      // コンテンツの表示切り替え
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+      document.querySelector(`[data-tab-content="${btn.dataset.tab}"]`)?.classList.remove('hidden');
+    });
+  });
+</script>

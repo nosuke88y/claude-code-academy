@@ -1,0 +1,54 @@
+---
+// 右パネル — vanilla JSで動的更新
+const days = ["月", "火", "水", "木", "金", "土", "日"];
+const achievements = [
+  { id: "intro", icon: "📖", name: "入門完走", condition: "Ch.1完了で解放", chapterId: "ch1" },
+  { id: "env", icon: "🛠️", name: "環境構築マスター", condition: "Ch.2完了で解放", chapterId: "ch2" },
+  { id: "prompt", icon: "⚡", name: "プロンプトマスター", condition: "Ch.3完了で解放", chapterId: "ch3" },
+  { id: "project", icon: "🚀", name: "初プロジェクト完成", condition: "Ch.5完了で解放", chapterId: "ch5" },
+];
+---
+
+<div id="right-panel">
+  <!-- 現在のステータス -->
+  <div class="bg-white rounded-[10px] border border-primary-border p-[18px] mb-4" id="status-card">
+    <div class="text-[15px] font-semibold text-gray-900 mb-1.5" id="status-title">学習を始めましょう！</div>
+    <div class="text-[13px] text-gray-500 leading-relaxed mb-3.5" id="status-desc">
+      Claude Codeの基礎から実践まで、6つのチャプターで段階的に学べます。まずはCh.1から始めてみましょう。
+    </div>
+    <a href="/lesson/ch1-l1" class="block w-full py-2.5 bg-primary text-white border-none rounded-lg text-[13px] font-medium text-center no-underline hover:bg-primary-dark transition-colors mb-1.5" id="status-btn">
+      ▶ Ch.1 を始める
+    </a>
+    <a href="/courses" class="block w-full py-2 bg-transparent text-primary border border-primary-border rounded-lg text-[13px] text-center no-underline hover:bg-primary-bg transition-all" id="status-btn2">
+      コース一覧を見る
+    </a>
+  </div>
+
+  <!-- ストリーク -->
+  <div class="bg-gradient-to-br from-primary to-primary-light rounded-[10px] p-4 text-white">
+    <div class="text-[28px] font-bold" id="streak-num">0日</div>
+    <div class="text-xs opacity-80 mt-0.5">連続学習ストリーク</div>
+    <div class="flex gap-1.5 mt-3">
+      {days.map((day) => (
+        <div class="w-7 h-7 rounded-full flex items-center justify-center text-[10px] bg-white/20 text-white/70">{day}</div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 実績 -->
+  <div class="bg-white rounded-[10px] border border-base-border p-4 mt-4">
+    <div class="text-[13px] font-semibold text-gray-900 mb-3">🏆 実績・バッジ</div>
+    {achievements.map((ach) => (
+      <div class="flex items-center gap-2.5 mb-2.5" data-ach={ach.chapterId}>
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-base shrink-0 bg-base-muted">{ach.icon}</div>
+        <div class="flex-1">
+          <div class="text-xs font-medium text-gray-900">{ach.name}</div>
+          <div class="text-[11px] text-gray-400 ach-note">{ach.condition}</div>
+          <div class="h-[3px] bg-base-bar rounded-sm mt-1 ach-bar">
+            <div class="h-[3px] bg-primary rounded-sm" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

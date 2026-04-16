@@ -1,0 +1,203 @@
+---
+// Ch.1 Lesson 2: Claude Codeのアーキテクチャ概観
+---
+
+<div class="max-w-3xl">
+  <!-- 概要セクション -->
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeの全体像</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeは「ユーザー」「CLI（コマンドラインインターフェース）」「Claude AI」の3つの層で構成されています。
+      ユーザーが自然言語で指示を出すと、CLIがその指示をAIに渡し、AIが考えた結果をCLIが実行する、という流れで動きます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">CLIが「手足」、AIが「頭脳」の役割です。AIが直接ファイルを触るのではなく、CLIを通じて安全に操作します。</p>
+    </div>
+  </section>
+
+  <!-- アーキテクチャ図 -->
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">アーキテクチャ図</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <!-- ユーザー層 -->
+      <div class="text-center mb-4">
+        <div class="inline-block bg-base-bg rounded-xl border border-base-border px-8 py-4">
+          <span class="text-3xl block mb-1">👤</span>
+          <span class="text-sm font-semibold text-gray-900">ユーザー</span>
+          <span class="text-[10px] text-gray-400 block mt-0.5">自然言語で指示を出す</span>
+        </div>
+      </div>
+      <div class="text-center text-gray-300 text-2xl mb-4">↕</div>
+
+      <!-- CLI層 -->
+      <div class="text-center mb-4">
+        <div class="inline-block bg-primary-bg rounded-xl border border-primary-border px-6 py-4 w-full max-w-md">
+          <span class="text-3xl block mb-1">🖥️</span>
+          <span class="text-sm font-semibold text-primary">Claude Code CLI</span>
+          <span class="text-[10px] text-gray-500 block mt-1">指示の橋渡し＆ツール実行</span>
+          <div class="flex justify-center gap-3 mt-3">
+            <div class="bg-white rounded-lg border border-base-border px-3 py-2 text-center">
+              <span class="text-lg block">📂</span>
+              <span class="text-[10px] text-gray-600">ファイル操作</span>
+            </div>
+            <div class="bg-white rounded-lg border border-base-border px-3 py-2 text-center">
+              <span class="text-lg block">⚡</span>
+              <span class="text-[10px] text-gray-600">コマンド実行</span>
+            </div>
+            <div class="bg-white rounded-lg border border-base-border px-3 py-2 text-center">
+              <span class="text-lg block">🔍</span>
+              <span class="text-[10px] text-gray-600">コード検索</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center text-gray-300 text-2xl mb-4">↕</div>
+
+      <!-- AI層 -->
+      <div class="text-center">
+        <div class="inline-block bg-success-bg rounded-xl border border-green-200 px-8 py-4">
+          <span class="text-3xl block mb-1">🧠</span>
+          <span class="text-sm font-semibold text-success">Claude AI</span>
+          <span class="text-[10px] text-gray-500 block mt-0.5">コードの理解・生成・判断</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ツール詳細 -->
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">主要ツール一覧</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeは5つの主要ツールを使い分けて作業を進めます。それぞれの役割を見てみましょう。
+    </p>
+    <div class="space-y-3">
+      <!-- Read -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📖</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Read</h3>
+            <span class="text-[10px] text-gray-400">ファイル読み取りツール</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">ファイルの内容を読み取り、プロジェクトの構造やコードを理解します。編集前の確認にも使われます。</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600">例: src/index.html の内容を読んで構造を把握する</code>
+        </div>
+      </div>
+
+      <!-- Edit -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">✏️</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Edit</h3>
+            <span class="text-[10px] text-gray-400">ファイル編集ツール</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">既存ファイルの一部を安全に書き換えます。差分（変更した部分）だけを送るので効率的です。</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600">例: ヘッダーの色をblueからgreenに変更する</code>
+        </div>
+      </div>
+
+      <!-- Write -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📝</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Write</h3>
+            <span class="text-[10px] text-gray-400">ファイル作成ツール</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">新しいファイルを作成したり、ファイル全体を書き換えます。新機能の追加や設定ファイルの作成に使われます。</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600">例: 新しいコンポーネント UserCard.astro を作成する</code>
+        </div>
+      </div>
+
+      <!-- Bash -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">💻</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Bash</h3>
+            <span class="text-[10px] text-gray-400">コマンド実行ツール</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">ターミナルコマンドを実行します。npmインストール、Gitコミット、テスト実行などに使います。</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600">例: npm install で依存パッケージをインストールする</code>
+        </div>
+      </div>
+
+      <!-- Grep -->
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔍</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Grep</h3>
+            <span class="text-[10px] text-gray-400">コード検索ツール</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">プロジェクト全体から特定の文字列やパターンを高速検索します。変数の使用箇所やバグの原因調査に役立ちます。</p>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600">例: "fetchData" という関数がどこで使われているか検索する</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 処理フロー -->
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">処理フロー</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ユーザーが指示を出してから結果が返ってくるまで、内部では以下の6ステップが実行されます。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">ユーザーが指示を入力</h4>
+          <p class="text-xs text-gray-500 mt-0.5">「ヘッダーにナビゲーションを追加して」のように自然言語で入力します</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">CLIがAIにリクエスト送信</h4>
+          <p class="text-xs text-gray-500 mt-0.5">入力内容とプロジェクトのコンテキスト（状況情報）をまとめてAIに送ります</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">AIがプロジェクトを分析</h4>
+          <p class="text-xs text-gray-500 mt-0.5">関連ファイルを読み取り、既存のコード構造を理解します</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">4</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">AIが実行計画を策定</h4>
+          <p class="text-xs text-gray-500 mt-0.5">どのツールをどの順番で使うか、最適な手順を決めます</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">5</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">CLIがツールを実行</h4>
+          <p class="text-xs text-gray-500 mt-0.5">AIの計画に基づき、Read/Edit/Write/Bash/Grepなどのツールを順に実行します</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-success-bg flex items-center justify-center text-sm font-bold text-success shrink-0">6</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">結果をユーザーに表示</h4>
+          <p class="text-xs text-gray-500 mt-0.5">変更内容の要約と、何をしたかの説明がターミナルに表示されます</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

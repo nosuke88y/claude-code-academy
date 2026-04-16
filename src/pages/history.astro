@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Placeholder from '../components/Placeholder.astro';
+---
+
+<Layout title="学習記録 — Claude Code Academy">
+  <Sidebar currentPage="history" />
+  <main class="ml-[260px] p-8 min-h-screen">
+    <Placeholder
+      icon="📊"
+      title="学習記録"
+      description="学習時間・進捗グラフ・アクティビティ履歴を準備中です。"
+    />
+  </main>
+</Layout>

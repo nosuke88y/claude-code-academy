@@ -1,0 +1,87 @@
+---
+// サイドバー — 学習トラック選択・メニュー・ユーザーカード
+interface Props {
+  currentTrack?: string;
+  currentPage?: string;
+}
+const { currentTrack = "beginner", currentPage = "home" } = Astro.props;
+
+const tracks = [
+  { id: "beginner", name: "完全初心者コース", color: "bg-primary", href: "/" },
+  { id: "business", name: "ビジネス職コース", color: "bg-success", href: "/track/business" },
+  { id: "engineer", name: "エンジニアコース", color: "bg-warn", href: "/track/engineer" },
+];
+
+const menuItems = [
+  { id: "courses", label: "📚 コース一覧", href: "/courses" },
+  { id: "exercises", label: "📝 演習課題", href: "/exercises" },
+  { id: "achievements", label: "🏆 実績・バッジ", href: "/achievements" },
+  { id: "history", label: "📊 学習記録", href: "/history" },
+];
+---
+
+<aside class="w-[260px] bg-white border-r border-base-border h-screen fixed left-0 top-0 overflow-y-auto py-5 flex flex-col">
+  <!-- ロゴ -->
+  <a href="/" class="flex items-center gap-2.5 px-5 pb-5 border-b border-base-border mb-4 no-underline">
+    <div class="w-[34px] h-[34px] bg-primary rounded-lg flex items-center justify-center">
+      <span class="text-white text-base">CC</span>
+    </div>
+    <div>
+      <div class="text-sm font-semibold text-gray-900 leading-tight">Claude Code Academy</div>
+      <div class="text-[11px] text-gray-400">AI開発スキル学習</div>
+    </div>
+  </a>
+
+  <!-- 学習トラック -->
+  <div class="px-4 mb-3">
+    <div class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-1">学習トラック</div>
+    {tracks.map((track) => {
+      const isActive = currentTrack === track.id;
+      return (
+        <a
+          href={track.href}
+          class={`flex items-center gap-2 w-full py-2 px-2.5 rounded-[7px] text-[13px] text-left mb-0.5 transition-all no-underline ${
+            isActive
+              ? "bg-primary-bg text-primary font-medium"
+              : "bg-transparent text-gray-500 hover:bg-primary-bg hover:text-primary"
+          }`}
+        >
+          <div class={`w-2 h-2 rounded-full ${track.color} shrink-0`}></div>
+          {track.name}
+        </a>
+      );
+    })}
+  </div>
+
+  <!-- メニュー -->
+  <div class="px-4 mt-5">
+    <div class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-1">メニュー</div>
+    {menuItems.map((item) => {
+      const isActive = currentPage === item.id;
+      return (
+        <a
+          href={item.href}
+          class={`flex items-center gap-2 w-full py-2 px-2.5 rounded-[7px] text-[13px] text-left mb-0.5 transition-all no-underline ${
+            isActive
+              ? "bg-primary-bg text-primary font-medium"
+              : "bg-transparent text-gray-500 hover:bg-base-muted"
+          }`}
+        >
+          {item.label}
+        </a>
+      );
+    })}
+  </div>
+
+  <!-- スペーサー -->
+  <div class="flex-1"></div>
+
+  <!-- ユーザーカード -->
+  <div class="px-4 pt-4 border-t border-base-border flex items-center gap-2.5">
+    <div class="w-[34px] h-[34px] rounded-full bg-primary-pale flex items-center justify-center text-[13px] font-semibold text-primary-dark shrink-0">Y</div>
+    <div class="flex-1">
+      <div class="text-[13px] font-medium text-gray-900">Yunosuke</div>
+      <div class="text-[11px] text-gray-400">XP: <span class="text-primary font-medium">0</span> · Level 1</div>
+    </div>
+  </div>
+</aside>

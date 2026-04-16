@@ -1,0 +1,64 @@
+---
+// チャプター一覧 — vanilla JSで進捗状態を動的更新
+
+const chapters = [
+  {
+    id: "ch1", title: "Ch.1 — Claude Codeとは何か",
+    meta: "4レッスン · 約30分 · 読み物＋クイズ", totalLessons: 4,
+    lessons: [
+      { id: "l1", name: "AIコーディングとは？従来との違い", type: "読み物" },
+      { id: "l2", name: "Claude Codeのアーキテクチャ概観", type: "解説" },
+      { id: "l3", name: "ユースケース別活用マップ", type: "インタラクティブ" },
+      { id: "l4", name: "理解度チェックテスト", type: "クイズ" },
+    ],
+  },
+  { id: "ch2", title: "Ch.2 — 環境構築（インストール〜認証）", meta: "4レッスン · 約45分 · Ch.1完了で解放", totalLessons: 4, lessons: [] },
+  { id: "ch3", title: "Ch.3 — 基本コマンドとプロンプト設計", meta: "5レッスン · 約60分 · Ch.2完了で解放", totalLessons: 5, lessons: [] },
+  { id: "ch4", title: "Ch.4 — Gitとの連携・バージョン管理", meta: "5レッスン · 約60分 · Ch.3完了で解放", totalLessons: 5, lessons: [] },
+  { id: "ch5", title: "Ch.5 — 実践演習 I：Webアプリを作る", meta: "6レッスン · 約90分 · Ch.4完了で解放", totalLessons: 6, lessons: [] },
+  { id: "ch6", title: "Ch.6 — 実践演習 II：業務自動化ツール", meta: "6レッスン · 約90分 · Ch.5完了で解放", totalLessons: 6, lessons: [] },
+];
+---
+
+<div id="chapter-list">
+  <div class="flex items-center justify-between mb-3.5">
+    <div class="text-[15px] font-semibold text-gray-900">チャプター一覧</div>
+  </div>
+
+  {chapters.map((ch, idx) => (
+    <div
+      class="bg-white rounded-[10px] border border-base-border mb-2.5 overflow-hidden transition-all hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)]"
+      data-chapter={ch.id}
+      data-total={ch.totalLessons}
+      data-index={idx}
+    >
+      <div class="flex items-center gap-3 px-4 py-3.5 cursor-pointer chapter-toggle">
+        <div class="w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-base-muted">🔒</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-medium text-gray-900 truncate">{ch.title}</div>
+          <div class="text-xs text-gray-400 mt-0.5 ch-meta">{ch.meta}</div>
+        </div>
+        <span class="text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-base-muted text-gray-400">未開放</span>
+      </div>
+
+      <div class="h-[3px] bg-base-bar mx-4">
+        <div class="h-[3px] rounded-sm bg-gradient-to-r from-primary to-primary-light transition-[width] duration-400 ch-progress" style="width:0%"></div>
+      </div>
+
+      {ch.lessons.length > 0 && (
+        <div class="px-4 pt-1 pb-3.5 border-t border-base-bar lessons-list hidden">
+          {ch.lessons.map((lesson) => (
+            <div class="flex items-center gap-2.5 py-2 border-b border-base-bg last:border-b-0" data-lesson={lesson.id}>
+              <div class="w-5 h-5 rounded-full bg-base-bar border-[1.5px] border-gray-300 shrink-0 lesson-dot"></div>
+              <span class="text-[13px] flex-1 text-gray-900">{lesson.name}</span>
+              <a
+                href={`/lesson/${ch.id}-${lesson.id}`}
+                class="px-2.5 py-1 bg-primary-bg text-primary border-none rounded-md text-[11px] font-medium cursor-pointer whitespace-nowrap hover:bg-primary-pale no-underline lesson-action"
+              >開始</a>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  ))}
+</div>
