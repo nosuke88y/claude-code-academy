@@ -1,0 +1,378 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<Layout title="Tips & テクニック集 — Claude Code Academy">
+  <Sidebar currentTrack="" currentPage="tips" />
+
+  <main class="ml-[260px] p-8 min-h-screen">
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">Tips & テクニック集</h1>
+      <p class="text-sm text-gray-400 mt-1">Claude Codeの120個のTips · カテゴリ別・難易度別に検索</p>
+    </div>
+
+    <!-- 統計カード -->
+    <div class="grid grid-cols-4 gap-3.5 mb-7" id="tips-stats">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">全Tips</div>
+        <div class="text-lg font-semibold text-gray-900" id="stat-total">120</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">表示中</div>
+        <div class="text-lg font-semibold text-primary" id="stat-showing">120</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">お気に入り</div>
+        <div class="text-lg font-semibold text-yellow-500" id="stat-favs">0</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">効果度「高」</div>
+        <div class="text-lg font-semibold text-success-dark" id="stat-high">0</div>
+      </div>
+    </div>
+
+    <!-- 検索 & フィルター -->
+    <div class="bg-white rounded-[10px] border border-base-border p-4 mb-5">
+      <div class="flex items-center gap-3 mb-3">
+        <input type="text" id="search-input" placeholder="キーワードで検索..." class="flex-1 px-3 py-2 border border-base-border rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
+        <button id="fav-filter" class="px-3 py-2 border border-base-border rounded-lg text-sm hover:bg-yellow-50 hover:border-yellow-300 transition-all cursor-pointer bg-white" title="お気に入りのみ表示">
+          <span class="mr-1">&#9734;</span>お気に入り
+        </button>
+      </div>
+
+      <!-- 難易度フィルター -->
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[11px] text-gray-400 w-14 shrink-0">難易度:</span>
+        <button class="filter-level active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-level="all">すべて</button>
+        <button class="filter-level px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-level="初級">初級</button>
+        <button class="filter-level px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-level="中級">中級</button>
+        <button class="filter-level px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-level="上級">上級</button>
+      </div>
+
+      <!-- 効果度フィルター -->
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-gray-400 w-14 shrink-0">効果度:</span>
+        <button class="filter-impact active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-impact="all">すべて</button>
+        <button class="filter-impact px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-impact="高">高</button>
+        <button class="filter-impact px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-impact="中">中</button>
+        <button class="filter-impact px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-impact="低">低</button>
+      </div>
+    </div>
+
+    <!-- カテゴリタブ -->
+    <div class="flex gap-1 mb-5 overflow-x-auto pb-1" id="cat-tabs">
+      <button class="cat-tab active whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="all">すべて<span class="ml-1 text-gray-400" id="cnt-all"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="ui">UI・操作<span class="ml-1 text-gray-400" id="cnt-ui"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="prompt">プロンプト<span class="ml-1 text-gray-400" id="cnt-prompt"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="workflow">ワークフロー<span class="ml-1 text-gray-400" id="cnt-workflow"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="config">設定<span class="ml-1 text-gray-400" id="cnt-config"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="external">外部連携<span class="ml-1 text-gray-400" id="cnt-external"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="trouble">トラブル<span class="ml-1 text-gray-400" id="cnt-trouble"></span></button>
+      <button class="cat-tab whitespace-nowrap px-3 py-2 rounded-lg text-[12px] font-medium border cursor-pointer transition-all" data-cat="hidden">隠れ機能<span class="ml-1 text-gray-400" id="cnt-hidden"></span></button>
+    </div>
+
+    <!-- Tips カード一覧 -->
+    <div id="tips-grid" class="grid grid-cols-1 gap-3">
+    </div>
+
+    <!-- 0件メッセージ -->
+    <div id="no-results" class="hidden text-center py-16">
+      <div class="text-4xl mb-3">🔍</div>
+      <p class="text-sm text-gray-500">条件に一致するTipsが見つかりませんでした</p>
+      <button id="reset-filters" class="mt-3 px-4 py-2 bg-primary text-white rounded-lg text-sm cursor-pointer hover:bg-primary-dark transition-colors border-none">フィルターをリセット</button>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .cat-tab.active { background-color: var(--color-primary-bg); color: var(--color-primary); border-color: var(--color-primary-border); }
+  .cat-tab:not(.active) { background-color: white; color: #6b7280; border-color: var(--color-base-border); }
+  .cat-tab:not(.active):hover { background-color: var(--color-primary-bg); }
+  .filter-level.active, .filter-impact.active { background-color: var(--color-primary-bg); color: var(--color-primary); border-color: var(--color-primary-border); }
+  .filter-level:not(.active), .filter-impact:not(.active) { background-color: white; color: #6b7280; border-color: var(--color-base-border); }
+  .filter-level:not(.active):hover, .filter-impact:not(.active):hover { background-color: #f9fafb; }
+  .fav-active { background-color: #fef9c3 !important; border-color: #facc15 !important; color: #a16207 !important; }
+  .tip-card { transition: all 0.15s ease; }
+  .tip-card:hover { border-color: var(--color-primary-pale); box-shadow: 0 2px 8px rgba(83,74,183,0.08); }
+</style>
+
+<script>
+const TIPS = [
+  // === 1. UI・操作系 (19) ===
+  {id:1,cat:"ui",title:"Shift+Tab でPermission mode即切替",level:"初級",impact:"高",desc:"Ask → Auto Edit → Full Auto をワンキーで切替。作業フェーズに応じて瞬時に変更できる。"},
+  {id:2,cat:"ui",title:"Ctrl+R でコマンド履歴を逆検索",level:"初級",impact:"中",desc:"過去のプロンプトをインクリメンタル検索。同じ指示の再利用が高速になる。"},
+  {id:3,cat:"ui",title:"Ctrl+O でトランスクリプトビューア表示",level:"中級",impact:"高",desc:"ツール呼び出しの詳細ログを確認。Claude Codeの内部動作（どのツールをどの順で使ったか）が丸見えになる。"},
+  {id:4,cat:"ui",title:"バックスラッシュ+Enter で複数行入力",level:"初級",impact:"高",desc:"全ターミナル対応の改行方法。長いプロンプトを構造化して入力できる。Shift+Enterが効かない環境でも使える。"},
+  {id:5,cat:"ui",title:"Ctrl+V で画像をクリップボードから貼付",level:"中級",impact:"高",desc:"スクリーンショットやUI画像を直接貼り付けてレビュー依頼。エラー画面のスクショを貼って「これを修正して」が可能。"},
+  {id:6,cat:"ui",title:"Ctrl+B でバックグラウンドタスク実行",level:"中級",impact:"中",desc:"長時間ビルドやテストをバックグラウンドで実行しながら別作業を続行できる。"},
+  {id:7,cat:"ui",title:"Ctrl+T でタスクリスト表示/非表示",level:"中級",impact:"中",desc:"バックグラウンドタスクの進捗をリアルタイムで確認。"},
+  {id:8,cat:"ui",title:"Alt+P でモデルを即切替",level:"中級",impact:"高",desc:"Opus ↔ Sonnet ↔ Haiku をキー一つで切替。重いタスクはOpus、軽い質問はHaikuで使い分け。",code:"Alt+P (Windows)\nOption+P (macOS)"},
+  {id:9,cat:"ui",title:"Alt+T で Extended Thinking を切替",level:"中級",impact:"中",desc:"複雑な推論が必要な時だけONにしてトークン節約。設計やアルゴリズムの検討時に有効。"},
+  {id:10,cat:"ui",title:"Alt+O で高速モード（Fast Mode）切替",level:"初級",impact:"中",desc:"同じOpusモデルで高速出力。品質は変わらず速度だけ向上する。"},
+  {id:11,cat:"ui",title:"Ctrl+G で外部エディタでプロンプト編集",level:"上級",impact:"低",desc:"VS Code等でプロンプトを編集してから送信。超長文の指示を書く時に便利。"},
+  {id:12,cat:"ui",title:"Ctrl+X Ctrl+K で全バックグラウンドエージェント終了",level:"上級",impact:"低",desc:"暴走したサブエージェントを一括停止。2回押しで確認が入る安全設計。"},
+  {id:13,cat:"ui",title:"/config → Vim Mode を有効化",level:"中級",impact:"中",desc:"hjkl移動、dd削除、yy/pコピペなどVimキーバインドが使える。Vimmerに必須の設定。"},
+  {id:14,cat:"ui",title:"Vim modeとCtrlショートカットは独立動作",level:"中級",impact:"低",desc:"EscでNORMALモードに入るが、Ctrl+O等のショートカットはそのまま併用できる。"},
+  {id:15,cat:"ui",title:"VS Code拡張でエディタから直接起動",level:"初級",impact:"高",desc:"Anthropic公式「Claude Code」拡張。ファイルを自動でコンテキストに含み、IDE内でシームレスに作業。"},
+  {id:16,cat:"ui",title:"JetBrains拡張で IntelliJ/WebStorm連携",level:"初級",impact:"高",desc:"JetBrains IDE内でClaude Codeを実行。デバッガーとの連携も可能。"},
+  {id:17,cat:"ui",title:"Desktop版のSide Chats機能",level:"中級",impact:"中",desc:"メインスレッドに影響なく別質問が可能。設計相談しながら実装を進められる。"},
+  {id:18,cat:"ui",title:"Desktop版のLive App Preview",level:"中級",impact:"高",desc:"devサーバー・HTML・PDFをDesktopアプリ内でプレビュー表示。ブラウザに切り替え不要。"},
+  {id:19,cat:"ui",title:"Desktop版のVisual Diff Review",level:"中級",impact:"高",desc:"インラインコメント付きの差分ビューア。PRレビューが格段に見やすくなる。"},
+
+  // === 2. プロンプト・指示系 (30) ===
+  {id:20,cat:"prompt",title:"/compact [指示] で焦点を絞って圧縮",level:"初級",impact:"高",desc:"「/compact パフォーマンス改善に集中」のように焦点を指定すると、関連情報を優先保持してくれる。",code:"/compact パフォーマンス改善に集中して"},
+  {id:21,cat:"prompt",title:"/batch で大規模変更を並列処理",level:"上級",impact:"高",desc:"5〜30個の独立した変更を自動分割・並列実行。大規模リファクタリングの切り札。",code:"/batch 全APIルートにバリデーション追加"},
+  {id:22,cat:"prompt",title:"/review でPRレビューを自動実行",level:"初級",impact:"高",desc:"現在のdiffまたは指定PRを自動レビュー。セキュリティ・パフォーマンス・可読性を分析。",code:"/review\n/review 42"},
+  {id:23,cat:"prompt",title:"/security-review でセキュリティ監査",level:"中級",impact:"高",desc:"保留中の変更をOWASP Top 10の観点でセキュリティレビュー。",code:"/security-review"},
+  {id:24,cat:"prompt",title:"/init でCLAUDE.mdを自動生成",level:"初級",impact:"高",desc:"プロジェクト構造を分析して最適なCLAUDE.mdを自動作成。新規プロジェクトの初期設定に。",code:"/init"},
+  {id:25,cat:"prompt",title:"/diff でインタラクティブdiffビューア",level:"中級",impact:"中",desc:"変更内容を視覚的に確認。コミット前の最終チェックに最適。"},
+  {id:26,cat:"prompt",title:"/cost でトークン使用量を確認",level:"初級",impact:"中",desc:"セッションのコスト・トークン消費をリアルタイムで把握できる。",code:"/cost"},
+  {id:27,cat:"prompt",title:"/context でコンテキスト使用状況を可視化",level:"中級",impact:"中",desc:"何がコンテキストを占有しているか一目で確認。不要な情報の特定に。",code:"/context"},
+  {id:28,cat:"prompt",title:"/effort [level] で推論の深さを調整",level:"中級",impact:"中",desc:"low/medium/high/xhigh/max の5段階。簡単なタスクはlowにすると高速化。",code:"/effort low\n/effort max"},
+  {id:29,cat:"prompt",title:"/branch で会話をブランチ分岐",level:"上級",impact:"中",desc:"現在の時点から会話を分岐。別のアプローチを試して比較できる。",code:"/branch alternative-approach"},
+  {id:30,cat:"prompt",title:"/export で会話をテキスト出力",level:"初級",impact:"低",desc:"テキスト形式でファイルに保存。ナレッジ共有やドキュメント化に。",code:"/export session-log.txt"},
+  {id:31,cat:"prompt",title:"/insights でセッション使用分析",level:"中級",impact:"低",desc:"過去のセッション傾向をレポート。使い方の改善ポイントが見える。"},
+  {id:32,cat:"prompt",title:"/team-onboarding でチーム用ガイド生成",level:"中級",impact:"中",desc:"チームメンバー向けオンボーディングガイドを自動生成。新メンバーの立ち上げに。"},
+  {id:33,cat:"prompt",title:"/simplify でコード品質を自動改善",level:"中級",impact:"中",desc:"変更されたファイルをレビューし、品質を自動で改善してくれる。"},
+  {id:34,cat:"prompt",title:"@ファイルパス でファイルを明示参照",level:"初級",impact:"高",desc:"@src/api/auth.ts のように指定。タブ補完が効くので素早く入力できる。",code:"@src/api/auth.ts このファイルをレビューして"},
+  {id:35,cat:"prompt",title:"@フォルダ/ でディレクトリ全体を参照",level:"初級",impact:"高",desc:"@src/components/ で関連ファイルをまとめてコンテキストに投入。",code:"@src/components/ 型定義を統一して"},
+  {id:36,cat:"prompt",title:"@URL でWebページを参照",level:"中級",impact:"中",desc:"外部ドキュメントやAPI仕様を直接参照して作業に反映。"},
+  {id:37,cat:"prompt",title:"! でBashコマンドを直接実行",level:"初級",impact:"中",desc:"プロンプトで「!」をつけるとClaude Codeを経由せず直接コマンド実行。",code:"!git status\n!npm run test"},
+  {id:38,cat:"prompt",title:"「テストも書いて」の一文を追加",level:"初級",impact:"高",desc:"修正指示の末尾に「テストも書いて」を加えるだけでTDD的ワークフローに。"},
+  {id:39,cat:"prompt",title:"「最小限の変更で」と明示する",level:"初級",impact:"高",desc:"スコープクリープを防ぐ。バグ修正やhotfixで特に重要。"},
+  {id:40,cat:"prompt",title:"番号付きステップで段階的に指示",level:"初級",impact:"高",desc:"「1.分析 2.修正 3.テスト 4.レビュー」のように段階を明示すると精度向上。"},
+  {id:41,cat:"prompt",title:"「〜の観点で」とレビュー観点を限定",level:"中級",impact:"高",desc:"「パフォーマンスの観点でレビューして」のように焦点を絞ると的確なフィードバックが得られる。"},
+  {id:42,cat:"prompt",title:"ネガティブ制約を明示する",level:"中級",impact:"中",desc:"「既存のテストを壊さないで」「新しい依存を追加しないで」等の禁止事項を伝える。"},
+  {id:43,cat:"prompt",title:"CLAUDE.mdに @ファイル名 でインポート",level:"中級",impact:"高",desc:"CLAUDE.md内で @README.md @package.json 等を参照。常に最新情報を自動取得。",code:"# CLAUDE.md内\n@README.md\n@docs/api-spec.md"},
+  {id:44,cat:"prompt",title:"サブディレクトリにCLAUDE.mdを配置",level:"中級",impact:"中",desc:"src/api/CLAUDE.md のようにモジュール別の指示を配置。そのディレクトリのファイルを読む時に自動適用。"},
+  {id:45,cat:"prompt",title:"CLAUDE.local.md で個人設定を分離",level:"中級",impact:"中",desc:".gitignore に入れる個人設定用。チーム共有のCLAUDE.mdと個人の好みを分離できる。"},
+  {id:46,cat:"prompt",title:"CLAUDE.mdの4段階優先順位を理解する",level:"上級",impact:"中",desc:"管理者 > プロジェクト > ユーザー > ローカル の順で適用。組織ポリシーは上書きできない設計。"},
+  {id:47,cat:"prompt",title:"開発コマンド一覧をCLAUDE.mdに記載",level:"初級",impact:"高",desc:"npm run dev, npm run test 等を書いておくとClaude Codeが正しいコマンドを使ってくれる。"},
+  {id:48,cat:"prompt",title:"/debug でデバッグログを有効化",level:"中級",impact:"中",desc:"問題の診断にデバッグログを有効化。原因特定が高速になる。",code:"/debug api connection issue"},
+  {id:49,cat:"prompt",title:"/copy [N] で応答をクリップボードコピー",level:"初級",impact:"中",desc:"直前のClaude応答をコピー。Nを指定すると過去N番目の応答をコピー。",code:"/copy\n/copy 3"},
+
+  // === 3. ワークフロー系 (17) ===
+  {id:50,cat:"workflow",title:"claude -w でworktree隔離セッション",level:"上級",impact:"高",desc:"自動でgit worktreeを作成し、メインブランチに影響なく作業。複数機能の並列開発に最適。",code:"claude -w feature-auth"},
+  {id:51,cat:"workflow",title:"--tmux でtmuxペイン付きworktree",level:"上級",impact:"中",desc:"エディタ・ターミナル・プレビューを分割表示して作業。",code:"claude -w feature --tmux"},
+  {id:52,cat:"workflow",title:".worktreeinclude で.envを自動コピー",level:"上級",impact:"高",desc:"gitignoreされた.envファイルをworktreeに自動コピー。環境変数が正しく引き継がれる。",code:"# .worktreeinclude\n.env\n.env.local\nconfig/local.json"},
+  {id:53,cat:"workflow",title:"symlinkDirectories でnode_modules共有",level:"上級",impact:"中",desc:"settings.jsonでnode_modulesをシンボリックリンク。ディスク節約＆npm install不要。"},
+  {id:54,cat:"workflow",title:"claude -c で最新セッションを即再開",level:"初級",impact:"高",desc:"前回の会話をそのまま続行。朝イチの作業再開に最適。",code:"claude -c"},
+  {id:55,cat:"workflow",title:"--resume で名前付きセッション復帰",level:"中級",impact:"高",desc:"/rename でセッションに名前をつけておくと後から探しやすい。",code:"claude --resume auth-refactor"},
+  {id:56,cat:"workflow",title:"claude -n でセッション名を指定して開始",level:"中級",impact:"中",desc:"最初から名前をつけて開始。プロジェクト・機能別にセッションを整理。",code:'claude -n "payment-integration"'},
+  {id:57,cat:"workflow",title:"/color でセッションの色を変更",level:"初級",impact:"低",desc:"複数ターミナルで作業する際の視覚的区別に。",code:"/color blue"},
+  {id:58,cat:"workflow",title:"「並列で実行して」と明示的に指示",level:"中級",impact:"高",desc:"サブエージェントによる並列処理をトリガー。特に調査タスクで効果的。"},
+  {id:59,cat:"workflow",title:"「調査→実装」の2フェーズで進める",level:"中級",impact:"高",desc:"Phase1で並列調査、Phase2で結果に基づき順次実装。品質と速度を両立するパターン。"},
+  {id:60,cat:"workflow",title:"ディレクトリ単位でタスクを分割",level:"中級",impact:"高",desc:"「src/api/は〜、src/components/は〜」のように分割するとサブエージェントが並列処理しやすい。"},
+  {id:61,cat:"workflow",title:"/loop で定期実行タスクを設定",level:"上級",impact:"中",desc:"ビルドやデプロイの監視を自動化。",code:"/loop 5m ビルドが通るか確認して"},
+  {id:62,cat:"workflow",title:"claude --remote でクラウドセッション",level:"上級",impact:"高",desc:"Anthropicのクラウド VM上で実行。ローカルに負荷をかけず長時間タスクを処理。",code:'claude --remote "認証バグを修正して"'},
+  {id:63,cat:"workflow",title:"/teleport でクラウド→ローカルにハンドオフ",level:"上級",impact:"中",desc:"Web版で始めた作業をローカルCLIに引き継ぎ。環境を切り替えて続行。"},
+  {id:64,cat:"workflow",title:"/autofix-pr でPR自動修正（Web版）",level:"上級",impact:"高",desc:"PRを監視し、CI失敗やレビューコメントに自動対応。マージまでを自動化。",code:"/autofix-pr"},
+  {id:65,cat:"workflow",title:"/ultraplan でクラウド計画立案（Web版）",level:"上級",impact:"中",desc:"複雑な実装計画をクラウドで草案作成・多角的に検証。"},
+  {id:66,cat:"workflow",title:"/ultrareview で多エージェントPRレビュー（Web版）",level:"上級",impact:"高",desc:"クラウドで複数の観点から深いPRレビューを並列実行。"},
+
+  // === 4. 設定・カスタマイズ系 (18) ===
+  {id:67,cat:"config",title:"plan モードで計画だけ立てさせる",level:"中級",impact:"高",desc:"ファイル変更禁止の読み取り専用モード。設計レビューや調査に最適。",code:"claude --permission-mode plan"},
+  {id:68,cat:"config",title:"allow/deny でツール単位の細かい制御",level:"中級",impact:"高",desc:"パターンマッチでツール使用を許可/禁止。Bash(git push *)だけ許可等。",code:'"allow": ["Bash(npm run *)"]'},
+  {id:69,cat:"config",title:"deny で危険なコマンドをブロック",level:"中級",impact:"高",desc:"curlやenvファイルへのアクセスをブロックしてデータ漏洩リスクを排除。",code:'"deny": ["Bash(curl *)", "Read(./.env)"]'},
+  {id:70,cat:"config",title:"auto モードでバックグラウンド安全チェック",level:"上級",impact:"中",desc:"自動承認しつつ裏でセキュリティチェックが走る。信頼できるプロジェクト向け。"},
+  {id:71,cat:"config",title:".claude/skills/ でスキルを作成（推奨）",level:"中級",impact:"高",desc:"SKILL.mdのfrontmatterでツール制限・モデル指定が可能。.claude/commands/より高機能。"},
+  {id:72,cat:"config",title:"$ARGUMENTS で引数を受け取る",level:"中級",impact:"高",desc:"/project:fix-issue 123 → $ARGUMENTSに\"123\"が入る。汎用コマンドの作成に。",code:"/project:fix-issue 123"},
+  {id:73,cat:"config",title:"$0, $1 で複数引数を分解",level:"上級",impact:"中",desc:"複数引数を個別に受け取れる。マイグレーション等で元と先を指定するのに便利。",code:"/project:migrate Button React Vue"},
+  {id:74,cat:"config",title:"allowed-tools でスキル内のツール制限",level:"上級",impact:"中",desc:"SKILL.mdのfrontmatterでallowed-tools: Read Grepのように安全に制限。"},
+  {id:75,cat:"config",title:"ユーザースキル vs プロジェクトスキル",level:"中級",impact:"中",desc:"~/.claude/skills/は全プロジェクト共通、.claude/skills/はチーム共有（git管理）で使い分け。"},
+  {id:76,cat:"config",title:"PreToolUse フックで危険操作をブロック",level:"中級",impact:"高",desc:"ツール実行前に検証。本番DB接続文字列を含むコマンドをブロック等。"},
+  {id:77,cat:"config",title:"PostToolUse フックで自動lint実行",level:"中級",impact:"高",desc:"ファイル変更後にESLint自動修正を実行。コード品質を自動担保。",code:'matcher: "Edit|Write"'},
+  {id:78,cat:"config",title:"UserPromptSubmit フックでプロンプト検証",level:"上級",impact:"中",desc:"ユーザー入力時にコンテキスト注入やバリデーションを自動実行。"},
+  {id:79,cat:"config",title:"SessionStart フックで環境初期化",level:"上級",impact:"中",desc:"セッション開始時に環境変数チェックやDBマイグレーション確認を自動実行。"},
+  {id:80,cat:"config",title:"Notification フックでデスクトップ通知",level:"中級",impact:"中",desc:"タスク完了時にOS通知を送信。長時間タスクの完了を見逃さない。"},
+  {id:81,cat:"config",title:"PermissionRequest フックで権限オーバーライド",level:"上級",impact:"中",desc:"プログラマブルに権限判定。CI環境での自動承認等に活用。"},
+  {id:82,cat:"config",title:"matcher で正規表現パターンを使用",level:"上級",impact:"中",desc:"mcp__memory__.* のようにMCPツール全体にマッチさせる高度なパターン。"},
+  {id:83,cat:"config",title:"終了コード2でHookからブロック",level:"上級",impact:"高",desc:"Hook内でexit 2を返すとツール実行を完全ブロック。安全ガードの実装に。"},
+  {id:84,cat:"config",title:"${CLAUDE_SESSION_ID} でログ管理",level:"上級",impact:"低",desc:"スキル内でセッションIDを参照。デバッグログの紐付けやトレーサビリティに。"},
+
+  // === 5. 外部ツール連携系 (16) ===
+  {id:85,cat:"external",title:"/mcp で接続中MCPサーバーを管理",level:"中級",impact:"中",desc:"接続状態の確認、サーバーの追加・削除を対話的に実行。",code:"/mcp"},
+  {id:86,cat:"external",title:".mcp.json でプロジェクト固有MCP設定",level:"中級",impact:"高",desc:"プロジェクトルートに配置してチームで共有。git管理できるMCP設定。"},
+  {id:87,cat:"external",title:"--mcp-config でMCP設定ファイルを指定",level:"上級",impact:"中",desc:"起動時にMCP設定ファイルを明示的に指定。環境別に切り替え可能。",code:"claude --mcp-config ./mcp.json"},
+  {id:88,cat:"external",title:"公式MCPサーバー4種を活用",level:"中級",impact:"高",desc:"filesystem, GitHub, PostgreSQL, Puppeteer。Anthropic提供で品質保証済み。これだけで主要ユースケースをカバー。"},
+  {id:89,cat:"external",title:"複数MCPの組み合わせワークフロー",level:"上級",impact:"高",desc:"GitHub MCP + DB MCP + Slack MCP でIssue→修正→PR→通知を完全自動化。"},
+  {id:90,cat:"external",title:"管理者MCP設定で組織的に制御",level:"上級",impact:"中",desc:"managed-mcp.jsonで許可/禁止サーバーを組織レベルで管理。セキュリティポリシー遵守に。"},
+  {id:91,cat:"external",title:"claude -p で非対話モードCI実行",level:"中級",impact:"高",desc:"GitHub Actions等CIパイプラインから直接呼び出し。-p \"query\" で結果を取得。",code:'claude -p "このコードを分析して"'},
+  {id:92,cat:"external",title:"--output-format json で構造化出力",level:"中級",impact:"高",desc:"CI/CDスクリプトで結果をパースしやすいJSON形式で出力。",code:"claude -p --output-format json"},
+  {id:93,cat:"external",title:"--max-turns N でターン数制限",level:"中級",impact:"高",desc:"CIでの無限ループ防止。安全にターン数を制限できる。",code:"claude -p --max-turns 5"},
+  {id:94,cat:"external",title:"--max-budget-usd N でコスト上限設定",level:"中級",impact:"高",desc:"予算超過を防止。CI環境では必須の設定。",code:"claude -p --max-budget-usd 5.00"},
+  {id:95,cat:"external",title:"--no-session-persistence でセッション非保存",level:"中級",impact:"中",desc:"CI環境でのセッションデータ蓄積を防止。"},
+  {id:96,cat:"external",title:"パイプでファイル内容を直接投入",level:"中級",impact:"高",desc:"CIで生成されたファイルやログをそのまま分析に投入。",code:'cat error.log | claude -p "エラー原因を分析"'},
+  {id:97,cat:"external",title:"--json-schema で出力スキーマを強制",level:"上級",impact:"高",desc:"CIで決まった形式のJSONを確実に取得。自動化パイプラインの信頼性向上。"},
+  {id:98,cat:"external",title:"CLAUDE_CODE_USE_BEDROCK でAWS経由",level:"上級",impact:"中",desc:"企業のAWSアカウント経由でAPI利用。データ管理ポリシー準拠に。"},
+  {id:99,cat:"external",title:"CLAUDE_CODE_USE_VERTEX でGCP経由",level:"上級",impact:"中",desc:"Google Cloud環境との統合。GCPベースの企業インフラに適合。"},
+  {id:100,cat:"external",title:"settings.jsonのenvキーで環境変数管理",level:"中級",impact:"中",desc:"プロジェクト別にAPIキー等を管理。",code:'"env": { "API_KEY": "value" }'},
+
+  // === 6. トラブルシューティング系 (13) ===
+  {id:101,cat:"trouble",title:"/doctor で環境を自動診断・修正",level:"初級",impact:"高",desc:"インストール・設定の問題を自動診断。困ったらまずこれを実行。",code:"/doctor"},
+  {id:102,cat:"trouble",title:"/terminal-setup でShift+Enterを修正",level:"初級",impact:"高",desc:"VS Code Terminal, Alacritty, Warp等でマルチライン入力を有効化。",code:"/terminal-setup"},
+  {id:103,cat:"trouble",title:"--debug でデバッグモード有効化",level:"上級",impact:"高",desc:"API通信やHook実行の詳細ログを出力。原因不明のエラー調査に。",code:'claude --debug "api,hooks"'},
+  {id:104,cat:"trouble",title:"--debug-file でログをファイル出力",level:"上級",impact:"中",desc:"画面を汚さずにデバッグログを保存。後から詳細分析が可能。",code:"claude --debug-file /tmp/debug.log"},
+  {id:105,cat:"trouble",title:"コンテキスト80%超えたら /compact",level:"初級",impact:"高",desc:"自動compactもあるが、手動で焦点を指定した方が重要情報の保持率が高い。"},
+  {id:106,cat:"trouble",title:"/clear で完全リセット（復帰可能）",level:"初級",impact:"高",desc:"/resume で戻れるので安心してリセット可能。話題が大きく変わる時に使う。"},
+  {id:107,cat:"trouble",title:"CLAUDE.mdはcompact後も保持される",level:"中級",impact:"高",desc:"compact後もプロジェクト設定は全文再注入。重要情報はCLAUDE.mdに書くべき。"},
+  {id:108,cat:"trouble",title:"サブディレクトリCLAUDE.mdの再読み込み",level:"上級",impact:"中",desc:"compact後は失われるが、そのディレクトリのファイルを次に読む時に自動再適用される。"},
+  {id:109,cat:"trouble",title:"「変更前にgit statusを確認して」と指示",level:"初級",impact:"高",desc:"意図しない変更の検出。作業前後のdiffを確認させる習慣をつける。"},
+  {id:110,cat:"trouble",title:"plan モードで確認してから実行",level:"中級",impact:"高",desc:"まず計画を見せてもらい、承認後に実行モードに切り替える安全パターン。"},
+  {id:111,cat:"trouble",title:".claude/settings.json をgitにコミット",level:"中級",impact:"高",desc:"チーム全員が同じPermission設定で作業。設定ミスによる事故を防止。"},
+  {id:112,cat:"trouble",title:"--system-prompt で行動制約を追加",level:"上級",impact:"中",desc:"「テストファイルを変更しない」等の制約をシステムプロンプトで強制。",code:'claude --system-prompt "Never modify test files"'},
+  {id:113,cat:"trouble",title:"--append-system-prompt-file でルール適用",level:"上級",impact:"中",desc:"チームのコーディングスタイルをファイルで管理して適用。",code:"claude --append-system-prompt-file ./style-rules.txt"},
+
+  // === 7. 隠れた便利機能 (9) ===
+  {id:114,cat:"hidden",title:"--bare で最小限モード起動",level:"上級",impact:"中",desc:"スキル・MCP・CLAUDE.mdを全スキップ。高速起動でシンプルなクエリに。",code:'claude --bare -p "質問"'},
+  {id:115,cat:"hidden",title:"--add-dir で追加ディレクトリをコンテキストに",level:"中級",impact:"高",desc:"monorepoで別パッケージのコードをコンテキストに含める。プロジェクト横断の変更に必須。",code:"claude --add-dir ../libs ../apps"},
+  {id:116,cat:"hidden",title:"/copy [N] で過去の応答をコピー",level:"初級",impact:"中",desc:"Nを指定すると過去N番目の応答をクリップボードにコピー。"},
+  {id:117,cat:"hidden",title:"--fork-session でセッションを分岐",level:"上級",impact:"中",desc:"現在のコンテキストを保持したまま新セッションIDで開始。A/Bテストに使える。"},
+  {id:118,cat:"hidden",title:"DISABLE_GIT_INSTRUCTIONS で自動指示無効化",level:"上級",impact:"低",desc:"Gitの自動指示を無効化。特殊なGitワークフローで干渉する場合に。"},
+  {id:119,cat:"hidden",title:"Dispatch from Phone（Desktop版）",level:"中級",impact:"中",desc:"iOS/AndroidのClaudeアプリからDesktopのClaude Codeにタスクを送信。外出先から作業を開始。"},
+  {id:120,cat:"hidden",title:"--remote-control でWeb版から監視・操作",level:"上級",impact:"中",desc:"ローカルCLIセッションをWeb版から監視・操作可能に。ペアプロに最適。",code:'claude --remote-control "My Project"'},
+  {id:121,cat:"hidden",title:"/plugin でプラグイン管理",level:"上級",impact:"低",desc:"サードパーティプラグインの追加・管理。エコシステムの拡張に。"},
+  {id:122,cat:"hidden",title:"sparsePaths でworktreeの部分チェックアウト",level:"上級",impact:"中",desc:"巨大monorepoで必要なパスだけworktreeにコピー。チェックアウト高速化。"},
+];
+
+const STORAGE_KEY = 'cca-tips-favs';
+const catLabels = {all:"すべて",ui:"UI・操作",prompt:"プロンプト",workflow:"ワークフロー",config:"設定",external:"外部連携",trouble:"トラブル",hidden:"隠れ機能"};
+const levelColors = {"初級":"bg-green-100 text-green-700","中級":"bg-blue-100 text-blue-700","上級":"bg-purple-100 text-purple-700"};
+const impactColors = {"高":"bg-red-50 text-red-600 border-red-200","中":"bg-yellow-50 text-yellow-600 border-yellow-200","低":"bg-gray-50 text-gray-500 border-gray-200"};
+
+let favs = new Set();
+try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) favs = new Set(JSON.parse(raw)); } catch {}
+
+let currentCat = 'all', currentLevel = 'all', currentImpact = 'all', searchQuery = '', showFavsOnly = false;
+
+function saveFavs() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...favs])); }
+
+function getFiltered() {
+  return TIPS.filter(t => {
+    if (currentCat !== 'all' && t.cat !== currentCat) return false;
+    if (currentLevel !== 'all' && t.level !== currentLevel) return false;
+    if (currentImpact !== 'all' && t.impact !== currentImpact) return false;
+    if (showFavsOnly && !favs.has(t.id)) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      return t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || (t.code && t.code.toLowerCase().includes(q));
+    }
+    return true;
+  });
+}
+
+function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function renderCard(t) {
+  const isFav = favs.has(t.id);
+  const codeBlock = t.code ? `<div class="mt-3 bg-gray-900 rounded-lg p-3"><code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">${escapeHtml(t.code)}</code></div>` : '';
+  return `<div class="tip-card bg-white rounded-[10px] border border-base-border p-5" data-id="${t.id}">
+    <div class="flex items-start justify-between gap-3 mb-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${levelColors[t.level]}">${t.level}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full border ${impactColors[t.impact]}">効果: ${t.impact}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-muted text-gray-500">#${t.id}</span>
+      </div>
+      <button class="fav-btn shrink-0 w-8 h-8 flex items-center justify-center rounded-full border border-base-border text-base cursor-pointer transition-all hover:bg-yellow-50 ${isFav ? 'bg-yellow-50 border-yellow-300 text-yellow-500' : 'bg-white text-gray-300'}" data-id="${t.id}" title="お気に入り">${isFav ? '&#9733;' : '&#9734;'}</button>
+    </div>
+    <h3 class="text-sm font-semibold text-gray-900 mb-1.5">${escapeHtml(t.title)}</h3>
+    <p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(t.desc)}</p>
+    ${codeBlock}
+  </div>`;
+}
+
+function render() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('tips-grid');
+  const noRes = document.getElementById('no-results');
+  if (filtered.length === 0) { grid.innerHTML = ''; noRes.classList.remove('hidden'); }
+  else { grid.innerHTML = filtered.map(renderCard).join(''); noRes.classList.add('hidden'); }
+
+  // 統計更新
+  document.getElementById('stat-showing').textContent = filtered.length;
+  document.getElementById('stat-favs').textContent = favs.size;
+  document.getElementById('stat-high').textContent = TIPS.filter(t=>t.impact==='高').length;
+
+  // カテゴリ件数
+  const cats = {all:TIPS.length, ui:0, prompt:0, workflow:0, config:0, external:0, trouble:0, hidden:0};
+  TIPS.forEach(t => cats[t.cat]++);
+  Object.keys(cats).forEach(c => { const el = document.getElementById('cnt-'+c); if (el) el.textContent = '('+cats[c]+')'; });
+
+  // お気に入りボタン
+  grid.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = Number(btn.dataset.id);
+      if (favs.has(id)) { favs.delete(id); btn.innerHTML = '&#9734;'; btn.classList.remove('bg-yellow-50','border-yellow-300','text-yellow-500'); btn.classList.add('bg-white','text-gray-300'); }
+      else { favs.add(id); btn.innerHTML = '&#9733;'; btn.classList.add('bg-yellow-50','border-yellow-300','text-yellow-500'); btn.classList.remove('bg-white','text-gray-300'); }
+      saveFavs();
+      document.getElementById('stat-favs').textContent = favs.size;
+      if (showFavsOnly) render();
+    });
+  });
+}
+
+// カテゴリタブ
+document.querySelectorAll('.cat-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentCat = tab.dataset.cat;
+    render();
+  });
+});
+
+// 難易度フィルター
+document.querySelectorAll('.filter-level').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-level').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLevel = btn.dataset.level;
+    render();
+  });
+});
+
+// 効果度フィルター
+document.querySelectorAll('.filter-impact').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-impact').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentImpact = btn.dataset.impact;
+    render();
+  });
+});
+
+// 検索
+const searchInput = document.getElementById('search-input');
+let searchTimer;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { searchQuery = searchInput.value.trim(); render(); }, 200);
+});
+
+// お気に入りフィルター
+const favFilter = document.getElementById('fav-filter');
+favFilter.addEventListener('click', () => {
+  showFavsOnly = !showFavsOnly;
+  favFilter.classList.toggle('fav-active', showFavsOnly);
+  render();
+});
+
+// リセット
+document.getElementById('reset-filters').addEventListener('click', () => {
+  currentCat = 'all'; currentLevel = 'all'; currentImpact = 'all'; searchQuery = ''; showFavsOnly = false;
+  searchInput.value = '';
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.cat-tab[data-cat="all"]').classList.add('active');
+  document.querySelectorAll('.filter-level').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-level[data-level="all"]').classList.add('active');
+  document.querySelectorAll('.filter-impact').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-impact[data-impact="all"]').classList.add('active');
+  favFilter.classList.remove('fav-active');
+  render();
+});
+
+// 初回描画
+render();
+</script>
