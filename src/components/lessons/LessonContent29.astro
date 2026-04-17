@@ -37,9 +37,13 @@
       <div class="text-xs text-primary font-medium mb-2">config.json の作成依頼</div>
       <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「設定ファイルconfig.jsonを作って。CSVファイルパス、出力先、SlackのWebhook URLを設定できるようにして」</p>
     </div>
-    <div class="bg-primary-bg rounded-xl p-5">
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
       <p class="text-sm text-primary font-medium mb-1">💡 なぜ設定を分離する？</p>
       <p class="text-sm text-gray-700">設定をコードから分離すると、環境ごとに変更が簡単になります。Webhook URLなどの機密情報もコードに直書きしなくて済みます。</p>
+    </div>
+    <div class="bg-red-50 rounded-xl border border-red-200 p-5">
+      <p class="text-sm text-red-600 font-medium mb-2">⚠️ セキュリティ注意</p>
+      <p class="text-xs text-gray-700">Webhook URLなどの機密情報を含む設定ファイルは、<strong>.gitignore に追加</strong>してGitHubに公開されないようにしましょう。または <code class="bg-white px-1 py-0.5 rounded text-xs">.env</code> ファイルに機密情報を保存し、config.jsonにはファイルパスなどの一般設定のみ記載する方法がおすすめです。</p>
     </div>
   </section>
 

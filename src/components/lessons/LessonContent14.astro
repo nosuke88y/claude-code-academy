@@ -17,6 +17,84 @@
   </section>
 
   <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Gitのインストール</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Gitを使うには、まずパソコンにインストールする必要があります。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🪟</div>
+        <div><h3 class="text-sm font-semibold text-gray-900">Windows</h3></div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">1.</span><span class="text-xs text-gray-600">git-scm.com にアクセスして「Download for Windows」をクリック</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">2.</span><span class="text-xs text-gray-600">ダウンロードしたインストーラーを実行（設定はすべてデフォルトでOK）</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">3.</span><span class="text-xs text-gray-600">インストール後、PowerShellを再起動</span></div>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🍎</div>
+        <div><h3 class="text-sm font-semibold text-gray-900">Mac</h3></div>
+      </div>
+      <div class="bg-gray-900 rounded-xl p-4">
+        <div class="text-xs text-gray-400 mb-1">ターミナルで実行</div>
+        <code class="text-sm text-green-400 font-mono">xcode-select --install</code>
+      </div>
+      <p class="text-xs text-gray-500 mt-2">表示されるダイアログで「インストール」をクリックすればOKです。</p>
+    </div>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">インストール確認（全OS共通）</div>
+      <div class="space-y-1">
+        <code class="text-sm text-green-400 font-mono block">git --version</code>
+        <code class="text-sm text-gray-500 font-mono block">git version 2.x.x</code>
+      </div>
+    </div>
+    <div class="bg-success-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-success-dark font-medium mb-1">✅ 成功の目安</p>
+      <p class="text-sm text-gray-700">バージョン番号が表示されればインストール完了です。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">GitHubアカウントの作成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      GitHub（ギットハブ）は、Gitの変更履歴をインターネット上に保存できる無料のサービスです。
+      Ch.4以降のレッスンで使うので、アカウントを作成しておきましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6 space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">github.com にアクセス</h4><p class="text-xs text-gray-500 mt-0.5">「Sign up」ボタンをクリック</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">メールアドレス・パスワード・ユーザー名を入力</h4><p class="text-xs text-gray-500 mt-0.5">無料プラン（Free）で十分です</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">メール認証を完了</h4><p class="text-xs text-gray-500 mt-0.5">届いたメールのリンクをクリック</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">4</div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-900">GitHub CLI（gh）をインストール</h4>
+          <p class="text-xs text-gray-500 mt-0.5">Claude CodeがGitHub操作をするために必要です</p>
+          <div class="bg-gray-900 rounded-xl p-4 mt-2 space-y-1">
+            <code class="text-sm text-green-400 font-mono block">npm install -g @github/cli</code>
+            <code class="text-sm text-green-400 font-mono block">gh auth login</code>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">ブラウザが開くので、GitHubアカウントでログインしてください</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mt-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">GitHub CLIの認証が完了すると、Claude Codeに「GitHubにプッシュして」「PRを作って」と依頼できるようになります。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">Git基本用語</h2>
     <div class="space-y-3">
       <div class="bg-white rounded-xl border border-base-border p-5">

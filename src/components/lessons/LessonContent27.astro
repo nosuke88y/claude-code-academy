@@ -31,19 +31,17 @@
   </section>
 
   <section class="mb-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法2: Google Sheets API（上級）</h2>
-    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
-      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼</div>
-      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「Google Sheets APIを使って、スプレッドシートのデータを取得するNode.jsスクリプトを作って。サービスアカウントで認証する方式で」</p>
-    </div>
-    <div class="bg-white rounded-xl border border-base-border p-5">
-      <h3 class="text-sm font-semibold text-gray-900 mb-3">APIのセットアップ手順</h3>
-      <div class="space-y-2">
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">1.</span><span class="text-xs text-gray-600">Google Cloud Console でプロジェクトを作成</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">2.</span><span class="text-xs text-gray-600">Google Sheets API を有効化</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">3.</span><span class="text-xs text-gray-600">サービスアカウントの認証情報を取得</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">4.</span><span class="text-xs text-gray-600">スプレッドシートをサービスアカウントに共有</span></div>
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">参考: Google Sheets API（上級者向け）</h2>
+    <div class="bg-base-bg rounded-xl border border-base-border p-5">
+      <p class="text-sm text-gray-600 leading-relaxed mb-3">
+        Google Sheets APIを使うと、スプレッドシートのデータをプログラムから直接読み書きできます。
+        ただし、Google Cloud Consoleでの設定（プロジェクト作成、API有効化、認証情報の取得）が必要で、手順がやや複雑です。
+      </p>
+      <div class="bg-primary-bg rounded-xl p-4 mb-3">
+        <p class="text-sm text-primary font-medium mb-1">💡 初心者の方へ</p>
+        <p class="text-sm text-gray-700">この方法が難しいと感じたら、<strong>方法1（CSV経由）で進めてOKです</strong>。上のCSV方式でも十分に業務自動化できます。</p>
       </div>
+      <p class="text-xs text-gray-500">API連携に挑戦したい方は、Claude Codeに「Google Sheets APIの設定方法を教えて」と聞いてみてください。手順を1ステップずつ案内してくれます。</p>
     </div>
   </section>
 
