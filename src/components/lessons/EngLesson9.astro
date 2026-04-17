@@ -56,7 +56,7 @@
           <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
 > 「src/server/ 配下のアーキテクチャをレビューして。
 >  責務分離、依存関係の方向、テスタビリティ、
->  SOLID原則への準拠を確認して」</code>
+>  SOLID原則（オブジェクト指向設計の5つの基本原則）への準拠を確認して」</code>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@ async function processOrder(order) {
         <h3 class="text-sm font-semibold text-gray-900 mb-3">パターン適用</h3>
         <div class="bg-gray-900 rounded-lg p-3">
           <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
-> 「このエラーハンドリングをResult型パターンに統一して。
+> 「このエラーハンドリングをResult型パターン（成功/失敗を型で表現し、try-catchの代替とする手法）に統一して。
 >  try-catchを排除して、全ての関数がResult&lt;T, E&gt;を返すように。
 >  既存の呼び出し元も対応させて」</code>
         </div>

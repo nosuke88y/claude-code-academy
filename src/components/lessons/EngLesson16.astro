@@ -27,7 +27,7 @@
   技術要件:
   - TypeScript strict mode
   - Prisma + SQLite（開発用）
-  - zod でバリデーション
+  - zod（TypeScriptのバリデーションライブラリ）でバリデーション
   - エラーハンドリングミドルウェア
 
   DBスキーマ:
@@ -142,7 +142,7 @@ export const querySchema = z.object({
     </p>
     <div class="bg-gray-900 rounded-xl p-5 mb-4">
       <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
-      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このAPIのE2Eテストをsupertest + vitestで書いて。
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このAPIのE2Eテストをsupertest（HTTPリクエストのテスト用ライブラリ）+ vitestで書いて。
   テストケース:
   - POST /api/users: 正常作成、バリデーションエラー、email重複
   - GET /api/users: 一覧取得、ページネーション、フィルタリング

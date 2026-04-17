@@ -70,9 +70,12 @@
 
   <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">不要なファイルを読ませない工夫</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      .gitignoreに含まれているファイルはClaude Codeも自動的に無視します。さらにCLAUDE.mdに「以下のファイルは読まないでください」と記述することで、追加の除外が可能です。
+    </p>
     <div class="space-y-3">
       <div class="bg-gray-900 rounded-lg p-4">
-        <p class="text-[10px] text-gray-500 mb-2"># .claudeignore（.gitignoreと同様のフォーマット）</p>
+        <p class="text-[10px] text-gray-500 mb-2"># .gitignore（Claude Codeも自動的に無視）</p>
         <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
 node_modules/
 dist/
@@ -83,7 +86,7 @@ coverage/
 *.log</code>
       </div>
       <div class="bg-gray-900 rounded-lg p-4">
-        <p class="text-[10px] text-gray-500 mb-2"># CLAUDE.md での指示</p>
+        <p class="text-[10px] text-gray-500 mb-2"># CLAUDE.md での追加の除外指示</p>
         <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
 # 読まなくてよいファイル
 - generated/ ディレクトリは自動生成コードなので読まない
@@ -133,9 +136,10 @@ coverage/
 
 # URL（ドキュメント参照）
 > @https://docs.example.com/api この仕様に合わせて実装して
+# URLの内容をコピー&ペーストで渡す方法もあります
 
 # Git diff
-> @git:diff HEAD~3 直近3コミットの変更をレビューして</code>
+> git diff HEAD~3 の結果を見て、直近3コミットの変更をレビューして</code>
     </div>
     <div class="bg-primary-bg rounded-xl p-5">
       <p class="text-sm text-primary font-medium mb-1">ポイント</p>

@@ -19,15 +19,15 @@
           <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</div>
           <h3 class="text-sm font-semibold text-gray-900">設計フェーズ</h3>
         </div>
-        <p class="text-xs text-gray-600 mb-2">issueやPRDを貼り付けて、設計方針を議論できる。</p>
+        <p class="text-xs text-gray-600 mb-2">issueやPRD（Product Requirements Document: 機能要件書）を貼り付けて、設計方針を議論できる。</p>
         <div class="bg-gray-900 rounded-lg p-3 mb-2">
           <code class="text-[11px] text-green-400 font-mono">
-            > /plan このissueを実装したい。設計方針を提案して<br>
+            > plan mode（Shift+Tabで切り替え）で このissueの設計方針を提案して<br>
             > @docs/prd.md この仕様書に基づいてAPI設計をレビューして
           </code>
         </div>
         <div class="bg-primary-bg rounded-lg px-3 py-2">
-          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> plan modeを使うと、実装前に設計を確認できる。いきなりコードを書かせない。</p>
+          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> plan mode（Shift+Tabで切り替え）を使うと、実装前に設計を確認できる。いきなりコードを書かせない。</p>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ prisma/        - スキーマ・マイグレーション
 # コーディング規約
 - 関数コンポーネントのみ使用（classコンポーネント禁止）
 - 命名: camelCase（変数・関数）, PascalCase（コンポーネント・型）
-- エラーハンドリング: try-catchではなくResult型パターン
+- エラーハンドリング: try-catchではなくResult型パターン（成功/失敗を型で表現し、try-catchの代替とする手法）
 - テスト: 全public関数にユニットテスト必須
 
 # やってはいけないこと
@@ -158,7 +158,7 @@ prisma/        - スキーマ・マイグレーション
     </div>
     <div class="bg-primary-bg rounded-xl p-5">
       <p class="text-sm text-primary font-medium mb-1">ポイント</p>
-      <p class="text-sm text-gray-700">Claude Codeは「ツール」ではなく「開発プロセスのインフラ」として位置づけると最大限活用できる。CLAUDE.mdとHooksで開発チーム全体の生産性を底上げしよう。</p>
+      <p class="text-sm text-gray-700">Claude Codeは「ツール」ではなく「開発プロセスのインフラ」として位置づけると最大限活用できる。CLAUDE.mdとHooksで開発チーム全体の生産性を底上げしよう。Hooksの具体的な設定方法（settings.json）はClaude Code公式ドキュメントを参照してください。</p>
     </div>
   </section>
 </div>

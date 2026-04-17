@@ -39,12 +39,12 @@
         <div class="bg-gray-900 rounded-xl p-4">
           <code class="text-sm text-green-400 font-mono">$ brew install node</code>
         </div>
-        <p class="text-xs text-gray-500 mt-2">Homebrewが入っていない場合は nodejs.org から直接ダウンロードしてください。</p>
+        <p class="text-xs text-gray-500 mt-2">Homebrew（Mac用ソフト管理ツール）が入っていない場合は nodejs.org から直接ダウンロードしてください。</p>
       </div>
       <div class="bg-white rounded-xl border border-base-border p-5">
         <div class="flex items-center gap-3 mb-3">
           <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🐧</div>
-          <div><h3 class="text-sm font-semibold text-gray-900">Linux</h3></div>
+          <div><h3 class="text-sm font-semibold text-gray-900">Linux（上級者向け）</h3></div>
         </div>
         <div class="bg-gray-900 rounded-xl p-4">
           <div class="space-y-1">
@@ -59,11 +59,22 @@
   <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: Claude Codeのインストール</h2>
     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-      ターミナル（Windowsは PowerShell、Macは Terminal）を開いて、以下のコマンドを入力してください。
+      ターミナルを開いて、以下のコマンドを入力してください。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">ターミナルの開き方</h3>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-xs font-bold text-primary">Windows:</span><span class="text-xs text-gray-600">スタートメニュー（左下）で「<strong>PowerShell</strong>」と検索 → クリックして起動</span></div>
+        <div class="flex items-start gap-2"><span class="text-xs font-bold text-primary">Mac:</span><span class="text-xs text-gray-600">Cmd + Space で Spotlight を開き「<strong>Terminal</strong>」と検索 → クリックして起動</span></div>
+      </div>
+    </div>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      開いた黒い（または白い）画面がターミナルです。ここにコマンドを入力します。
     </p>
     <div class="bg-gray-900 rounded-xl p-5 mb-4">
       <div class="text-xs text-gray-400 mb-2">Claude Codeをインストール</div>
       <code class="text-sm text-green-400 font-mono">$ npm install -g @anthropic-ai/claude-code</code>
+      <p class="text-xs text-gray-500 mt-2">npm（エヌピーエム）= Node.jsに付属するソフト管理ツール。-g = パソコン全体で使えるようにするオプション</p>
     </div>
     <div class="bg-primary-bg rounded-xl p-5 mb-4">
       <p class="text-sm text-primary font-medium mb-1">💡 $マークについて</p>
@@ -113,7 +124,7 @@
         </div>
       </div>
       <p class="text-xs text-gray-600 mb-3">
-        Claude Codeを使うには、AnthropicのMax Plan（月額$100〜）への加入が推奨されます。
+        Claude Codeを使うには、AnthropicのMax Plan（月額$100〜）への加入が推奨されます（最新の料金は claude.ai でご確認ください）。
         API利用（従量課金）でも使えますが、Max Planなら定額で安心して使い放題です。
       </p>
       <div class="bg-primary-bg rounded-lg px-3 py-2">

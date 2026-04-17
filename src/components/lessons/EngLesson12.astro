@@ -52,7 +52,7 @@
   gh pr create で実行して。</pre>
     </div>
     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-      Claude Codeは <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">gh</code> コマンドを直接実行できるので、PRの作成まで自動で完了する。
+      Claude Codeは <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">gh</code>（GitHub CLI。未インストールの場合は <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">brew install gh</code> または <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">npm install -g @github/cli</code> でインストール）コマンドを直接実行できるので、PRの作成まで自動で完了する。
       生成されたdescriptionは実行前に確認できる。
     </p>
     <div class="bg-white rounded-xl border border-base-border p-5">
@@ -118,6 +118,7 @@ jobs:
           fetch-depth: 0
       - name: Claude Code Review
         uses: anthropics/claude-code-action@v1
+        # 注: ANTHROPIC_API_KEY はGitHubリポジトリの Settings → Secrets and variables → Actions に登録してください。YAMLファイルに直接書かないでください
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           review: true</pre>
