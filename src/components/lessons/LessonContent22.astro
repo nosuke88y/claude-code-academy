@@ -22,15 +22,18 @@
 
   <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">エラーメッセージの読み方</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ブラウザのコンソール（開発者ツール）でエラーを確認できます。<strong>Chromeの場合はF12キー → 「Console」タブ</strong>を開いてください。
+    </p>
     <div class="bg-gray-900 rounded-xl p-5 mb-4">
       <div class="text-xs text-red-400 mb-1">エラー例</div>
       <code class="text-sm text-red-400 font-mono">TypeError: Cannot read properties of null (reading 'addEventListener')</code>
     </div>
     <div class="bg-white rounded-xl border border-base-border p-5">
       <div class="space-y-2">
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">TypeError</span><span class="text-xs text-gray-600">→ データの型が違う（存在しない要素を操作しようとした）</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">null</span><span class="text-xs text-gray-600">→ 対象の要素が見つからなかった</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">addEventListener</span><span class="text-xs text-gray-600">→ イベントリスナーを追加しようとした場所</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">TypeError</span><span class="text-xs text-gray-600">→ データの種類が合わない（探したものが見つからず操作できなかった）</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">null</span><span class="text-xs text-gray-600">→ 探した要素が見つからなかった（空っぽだった）</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary text-xs font-bold">addEventListener</span><span class="text-xs text-gray-600">→ ボタンクリック等の操作を監視する仕組みを追加しようとした場所</span></div>
       </div>
     </div>
   </section>

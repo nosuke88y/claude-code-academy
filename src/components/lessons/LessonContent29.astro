@@ -5,7 +5,7 @@
 <div class="max-w-3xl">
   <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">ツールを統合しよう</h2>
-    <p class="text-sm text-gray-600 leading-relaxed mb-4">これまで作った個別のツール（CSV処理・レポート生成・Slack通知）を1つのパイプラインに統合します。</p>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">これまで作った個別のツール（CSV処理・レポート生成・Slack通知）を1つのパイプライン（複数の処理を順番につなげて自動実行する仕組み）に統合します。</p>
   </section>
 
   <section class="mb-8">
@@ -27,7 +27,7 @@
     <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeへの統合依頼</h2>
     <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
       <div class="text-xs text-primary font-medium mb-2">統合スクリプトの作成</div>
-      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「これらのスクリプトを1つのmain.jsに統合して。CSV読込→集計→HTMLレポート生成→Slack通知の順に実行。エラーハンドリング付きで、設定はconfig.jsonで管理して」</p>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「これらのスクリプトを1つのmain.jsに統合して。CSV読込→集計→HTMLレポート生成→Slack通知の順に実行。エラーハンドリング（エラー発生時の対処処理）付きで、設定はconfig.json（設定情報をまとめたファイル）で管理して」</p>
     </div>
   </section>
 

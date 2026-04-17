@@ -36,8 +36,9 @@
   <section class="mb-8">
     <h2 class="text-lg font-semibold text-gray-900 mb-3">プロジェクトの初期化 — claude init</h2>
     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-      <code class="bg-base-bg px-1.5 py-0.5 rounded text-gray-700 text-xs">claude init</code> は、プロジェクトに <strong>CLAUDE.md</strong> を作成するコマンドです。
+      <code class="bg-base-bg px-1.5 py-0.5 rounded text-gray-700 text-xs">claude init</code> は、プロジェクトの内容をAIが分析して、適切な <strong>CLAUDE.md</strong> を自動生成するコマンドです。
       CLAUDE.mdはプロジェクトの「説明書」で、Claude Codeがあなたのプロジェクトを理解するために読みます。
+      （※ Git操作はCh.4で学びますが、Gitがなくても CLAUDE.md の作成はできます）
     </p>
     <div class="bg-gray-900 rounded-xl p-5 mb-4">
       <div class="space-y-1">
@@ -52,9 +53,9 @@
       <h3 class="text-sm font-semibold text-gray-900 mb-2">CLAUDE.md に書くこと</h3>
       <ul class="text-xs text-gray-600 space-y-2 list-none p-0">
         <li class="flex items-start gap-2"><span class="text-primary">•</span><span>プロジェクトの概要（何を作っているか）</span></li>
-        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>使っている技術スタック</span></li>
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>技術スタック（使っている言語やツールの組み合わせ）</span></li>
         <li class="flex items-start gap-2"><span class="text-primary">•</span><span>ファイル構成のルール</span></li>
-        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>コーディング規約やスタイルガイド</span></li>
+        <li class="flex items-start gap-2"><span class="text-primary">•</span><span>コーディング規約（コードの書き方ルール。例: 変数名は英語で付ける、など）</span></li>
       </ul>
     </div>
   </section>
@@ -76,11 +77,11 @@
       </div>
       <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
         <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/commit</code>
-        <span class="text-xs text-gray-600">変更内容を自動でGitコミット</span>
+        <span class="text-xs text-gray-600">変更内容を自動でGitコミット（※Ch.4で詳しく学びます）</span>
       </div>
       <div class="bg-white rounded-xl border border-base-border p-4 flex items-center gap-3">
         <code class="text-xs bg-primary-bg text-primary px-2 py-1 rounded font-mono whitespace-nowrap">/review</code>
-        <span class="text-xs text-gray-600">コードレビューを依頼する</span>
+        <span class="text-xs text-gray-600">コードレビューを依頼する（※Ch.4で詳しく学びます）</span>
       </div>
     </div>
   </section>
