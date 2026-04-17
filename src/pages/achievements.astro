@@ -1,16 +1,116 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
-import Placeholder from '../components/Placeholder.astro';
 ---
 
 <Layout title="実績・バッジ — Claude Code Academy">
   <Sidebar currentPage="achievements" />
   <main class="ml-[260px] p-8 min-h-screen">
-    <Placeholder
-      icon="🏆"
-      title="実績・バッジ"
-      description="獲得済みバッジ・進行中の実績の詳細ページを準備中です。"
-    />
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">実績・バッジ</h1>
+      <p class="text-sm text-gray-400 mt-1">学習の成果をバッジで確認しましょう</p>
+    </div>
+
+    <!-- サマリーカード -->
+    <div class="grid grid-cols-4 gap-3.5 mb-7">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">XP</div>
+        <div class="text-lg font-semibold text-primary" id="s-xp">0</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">レベル</div>
+        <div class="text-lg font-semibold text-gray-900" id="s-level">1</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">バッジ取得</div>
+        <div class="text-lg font-semibold text-success-dark" id="s-badges">0 / 21</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">連続学習</div>
+        <div class="text-lg font-semibold text-gray-900" id="s-streak">0日</div>
+      </div>
+    </div>
+
+    <!-- バッジ一覧 -->
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900 mb-3">完全初心者コース</h2>
+        <div class="grid grid-cols-3 gap-3" id="badges-beginner"></div>
+      </div>
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900 mb-3">ビジネス職コース</h2>
+        <div class="grid grid-cols-3 gap-3" id="badges-biz"></div>
+      </div>
+      <div>
+        <h2 class="text-sm font-semibold text-gray-900 mb-3">エンジニアコース</h2>
+        <div class="grid grid-cols-3 gap-3" id="badges-eng"></div>
+      </div>
+    </div>
   </main>
 </Layout>
+
+<script>
+  const badges = [
+    // 初心者
+    {icon:"🚀",name:"AIコーディング入門",cond:"Ch.1完了",key:"cca-progress",ch:"ch1",group:"beginner",total:4},
+    {icon:"🛠️",name:"環境構築完了",cond:"Ch.2完了",key:"cca-progress",ch:"ch2",group:"beginner",total:4},
+    {icon:"💬",name:"基本操作マスター",cond:"Ch.3完了",key:"cca-progress",ch:"ch3",group:"beginner",total:5},
+    {icon:"🔗",name:"Git連携マスター",cond:"Ch.4完了",key:"cca-progress",ch:"ch4",group:"beginner",total:5},
+    {icon:"🌐",name:"Webアプリ開発者",cond:"Ch.5完了",key:"cca-progress",ch:"ch5",group:"beginner",total:6},
+    {icon:"⚙️",name:"業務自動化マスター",cond:"Ch.6完了",key:"cca-progress",ch:"ch6",group:"beginner",total:6},
+    // ビジネス
+    {icon:"💼",name:"ビジネス入門",cond:"Ch.1完了",key:"cca-progress-biz",ch:"ch1",group:"biz",total:4},
+    {icon:"🛠️",name:"環境構築完了",cond:"Ch.2完了",key:"cca-progress-biz",ch:"ch2",group:"biz",total:4},
+    {icon:"📄",name:"実務テクニック",cond:"Ch.3完了",key:"cca-progress-biz",ch:"ch3",group:"biz",total:5},
+    {icon:"🔍",name:"リサーチマスター",cond:"Ch.4完了",key:"cca-progress-biz",ch:"ch4",group:"biz",total:4},
+    {icon:"⚡",name:"コアコース修了",cond:"Ch.5完了",key:"cca-progress-biz",ch:"ch5",group:"biz",total:3},
+    {icon:"📊",name:"データ連携マスター",cond:"Ch.6完了",key:"cca-progress-biz",ch:"ch6",group:"biz",total:4},
+    {icon:"🔧",name:"ツール開発者",cond:"Ch.7完了",key:"cca-progress-biz",ch:"ch7",group:"biz",total:4},
+    {icon:"🎓",name:"上級コース修了",cond:"Ch.8完了",key:"cca-progress-biz",ch:"ch8",group:"biz",total:4},
+    // エンジニア
+    {icon:"⚡",name:"エンジニア入門",cond:"Ch.1完了",key:"cca-progress-eng",ch:"ch1",group:"eng",total:3},
+    {icon:"🧠",name:"プロンプトマスター",cond:"Ch.2完了",key:"cca-progress-eng",ch:"ch2",group:"eng",total:4},
+    {icon:"📖",name:"コードリーダー",cond:"Ch.3完了",key:"cca-progress-eng",ch:"ch3",group:"eng",total:4},
+    {icon:"🔄",name:"ワークフローマスター",cond:"Ch.4完了",key:"cca-progress-eng",ch:"ch4",group:"eng",total:4},
+    {icon:"👥",name:"チーム開発マスター",cond:"Ch.5完了",key:"cca-progress-eng",ch:"ch5",group:"eng",total:3},
+    {icon:"🚀",name:"コアコース修了",cond:"Ch.6完了",key:"cca-progress-eng",ch:"ch6",group:"eng",total:4},
+    {icon:"🛡️",name:"セキュリティマスター",cond:"Ch.7完了",key:"cca-progress-eng",ch:"ch7",group:"eng",total:4},
+    {icon:"🔌",name:"MCPマスター",cond:"Ch.8完了",key:"cca-progress-eng",ch:"ch8",group:"eng",total:4},
+    {icon:"🎓",name:"上級コース修了",cond:"Ch.9完了",key:"cca-progress-eng",ch:"ch9",group:"eng",total:4},
+  ];
+
+  function load(key) { try { const r=localStorage.getItem(key); return r?JSON.parse(r):null; } catch { return null; } }
+
+  function chDone(key, ch, total) {
+    const d = load(key);
+    if (!d || !d.chapters || !d.chapters[ch] || !d.chapters[ch].lessons) return false;
+    return Object.values(d.chapters[ch].lessons).filter(l=>l.completed).length >= total;
+  }
+
+  // サマリー計算
+  let totalXp=0, maxStreak=0, badgeCount=0;
+  ['cca-progress','cca-progress-biz','cca-progress-eng'].forEach(k=>{
+    const d=load(k);
+    if(d){ totalXp+=(d.xp||0); maxStreak=Math.max(maxStreak,d.streak||0); }
+  });
+  badges.forEach(b=>{ if(chDone(b.key,b.ch,b.total)) badgeCount++; });
+  document.getElementById('s-xp').textContent=totalXp;
+  document.getElementById('s-level').textContent=Math.floor(totalXp/200)+1;
+  document.getElementById('s-badges').textContent=badgeCount+' / '+badges.length;
+  document.getElementById('s-streak').textContent=maxStreak+'日';
+
+  // バッジ描画
+  const groups={beginner:'badges-beginner',biz:'badges-biz',eng:'badges-eng'};
+  Object.entries(groups).forEach(([g,elId])=>{
+    const el=document.getElementById(elId);
+    const gb=badges.filter(b=>b.group===g);
+    el.innerHTML=gb.map(b=>{
+      const earned=chDone(b.key,b.ch,b.total);
+      return `<div class="p-4 rounded-[10px] border ${earned?'border-primary-border bg-primary-bg':'border-base-border bg-white'} text-center">
+        <div class="text-2xl mb-2 ${earned?'':'opacity-30 grayscale'}">${b.icon}</div>
+        <div class="text-xs font-medium ${earned?'text-gray-900':'text-gray-400'}">${b.name}</div>
+        <div class="text-[10px] ${earned?'text-primary':'text-gray-300'} mt-1">${earned?'取得済み':b.cond}</div>
+      </div>`;
+    }).join('');
+  });
+</script>

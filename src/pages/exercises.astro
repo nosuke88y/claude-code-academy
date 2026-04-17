@@ -1,16 +1,71 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
-import Placeholder from '../components/Placeholder.astro';
 ---
 
 <Layout title="演習課題 — Claude Code Academy">
   <Sidebar currentPage="exercises" />
   <main class="ml-[260px] p-8 min-h-screen">
-    <Placeholder
-      icon="📝"
-      title="演習課題"
-      description="ハンズオン演習・コーディングチャレンジ機能を準備中です。"
-    />
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">演習課題</h1>
+      <p class="text-sm text-gray-400 mt-1">全コースのハンズオン・プロジェクト課題を一覧で確認</p>
+    </div>
+
+    <div class="flex items-center gap-3 mb-5">
+      <button class="ex-filter active px-3 py-1.5 rounded-full text-xs border cursor-pointer transition-all" data-filter="all">すべて</button>
+      <button class="ex-filter px-3 py-1.5 rounded-full text-xs border cursor-pointer transition-all" data-filter="todo">未完了</button>
+      <button class="ex-filter px-3 py-1.5 rounded-full text-xs border cursor-pointer transition-all" data-filter="done">完了済み</button>
+      <span class="text-xs text-gray-400 ml-auto" id="ex-count"></span>
+    </div>
+
+    <div id="ex-list" class="space-y-3"></div>
+    <div id="ex-empty" class="hidden text-center py-16"><p class="text-sm text-gray-400">該当する課題がありません</p></div>
   </main>
 </Layout>
+
+<style>
+  .ex-filter.active { background-color: var(--color-primary-bg); color: var(--color-primary); border-color: var(--color-primary-border); }
+  .ex-filter:not(.active) { background-color: white; color: #6b7280; border-color: var(--color-base-border); }
+</style>
+
+<script>
+  const EX = [
+    {id:"ch3-l1",c:"初心者",ch:"Ch.3",t:"CLIの基本操作",tp:"ハンズオン",k:"cca-progress",ci:"ch3",li:"l1"},
+    {id:"ch3-l2",c:"初心者",ch:"Ch.3",t:"ファイル生成・編集・削除",tp:"ハンズオン",k:"cca-progress",ci:"ch3",li:"l2"},
+    {id:"ch4-l3",c:"初心者",ch:"Ch.4",t:"コミットメッセージの自動生成",tp:"ハンズオン",k:"cca-progress",ci:"ch4",li:"l3"},
+    {id:"ch5-l2",c:"初心者",ch:"Ch.5",t:"TODOアプリのHTML/CSS作成",tp:"ハンズオン",k:"cca-progress",ci:"ch5",li:"l2"},
+    {id:"ch5-l6",c:"初心者",ch:"Ch.5",t:"実践演習課題I",tp:"プロジェクト",k:"cca-progress",ci:"ch5",li:"l6"},
+    {id:"ch6-l2",c:"初心者",ch:"Ch.6",t:"CSVデータ処理スクリプト",tp:"ハンズオン",k:"cca-progress",ci:"ch6",li:"l2"},
+    {id:"ch6-l6",c:"初心者",ch:"Ch.6",t:"最終演習課題",tp:"プロジェクト",k:"cca-progress",ci:"ch6",li:"l6"},
+    {id:"biz-ch3-l1",c:"ビジネス",ch:"Ch.3",t:"議事録・報告書の自動生成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch3",li:"l1"},
+    {id:"biz-ch3-l2",c:"ビジネス",ch:"Ch.3",t:"Excelデータ分析・グラフ作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch3",li:"l2"},
+    {id:"biz-ch4-l3",c:"ビジネス",ch:"Ch.4",t:"分析フレームワーク実践",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch4",li:"l3"},
+    {id:"biz-ch6-l1",c:"ビジネス",ch:"Ch.6",t:"HTMLダッシュボード作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch6",li:"l1"},
+    {id:"biz-ch6-l2",c:"ビジネス",ch:"Ch.6",t:"定期実行スクリプト化",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch6",li:"l2"},
+    {id:"biz-ch7-l1",c:"ビジネス",ch:"Ch.7",t:"社内Webアプリ作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch7",li:"l1"},
+    {id:"biz-ch7-l2",c:"ビジネス",ch:"Ch.7",t:"Slack通知・チャット連携",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch7",li:"l2"},
+    {id:"biz-ch8-l4",c:"ビジネス",ch:"Ch.8",t:"最終演習",tp:"プロジェクト",k:"cca-progress-biz",ci:"ch8",li:"l4"},
+    {id:"eng-ch3-l1",c:"エンジニア",ch:"Ch.3",t:"既存プロジェクトへの導入",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch3",li:"l1"},
+    {id:"eng-ch4-l1",c:"エンジニア",ch:"Ch.4",t:"TDDとClaude Code",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch4",li:"l1"},
+    {id:"eng-ch6-l1",c:"エンジニア",ch:"Ch.6",t:"デプロイ自動化",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch6",li:"l1"},
+    {id:"eng-ch7-l1",c:"エンジニア",ch:"Ch.7",t:"Hooksの設定と活用",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch7",li:"l1"},
+    {id:"eng-ch8-l2",c:"エンジニア",ch:"Ch.8",t:"MCPサーバーのセットアップ",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch8",li:"l2"},
+    {id:"eng-ch9-l4",c:"エンジニア",ch:"Ch.9",t:"最終演習：フルスタック開発",tp:"プロジェクト",k:"cca-progress-eng",ci:"ch9",li:"l4"},
+  ];
+  const CC={"初心者":"bg-primary-bg text-primary","ビジネス":"bg-success-bg text-success-dark","エンジニア":"bg-yellow-50 text-yellow-700"};
+  let fil='all';
+  function chk(e){try{const r=localStorage.getItem(e.k);if(!r)return false;const d=JSON.parse(r);return !!d.chapters?.[e.ci]?.lessons?.[e.li]?.completed;}catch{return false;}}
+  function render(){
+    const f=EX.filter(e=>fil==='done'?chk(e):fil==='todo'?!chk(e):true);
+    document.getElementById('ex-count').textContent=f.length+'件';
+    const list=document.getElementById('ex-list'),emp=document.getElementById('ex-empty');
+    if(!f.length){list.innerHTML='';emp.classList.remove('hidden');return;}
+    emp.classList.add('hidden');
+    list.innerHTML=f.map(e=>{const d=chk(e);return `<a href="/lesson/${e.id}" class="flex items-center gap-4 p-4 bg-white rounded-[10px] border border-base-border hover:border-primary-pale hover:shadow-sm transition-all no-underline">
+      <div class="w-8 h-8 rounded-full ${d?'bg-success-bg':'bg-base-bar'} flex items-center justify-center shrink-0">${d?'<span class="text-success-dark text-xs">&#10003;</span>':'<span class="text-gray-400 text-xs">&#9675;</span>'}</div>
+      <div class="flex-1 min-w-0"><div class="text-sm font-medium text-gray-900">${e.t}</div><div class="text-[11px] text-gray-400">${e.c} · ${e.ch} · ${e.tp}</div></div>
+      <span class="text-[10px] px-2 py-0.5 rounded-full ${CC[e.c]}">${e.c}</span></a>`;}).join('');
+  }
+  document.querySelectorAll('.ex-filter').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.ex-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');fil=b.dataset.filter;render();});});
+  render();
+</script>

@@ -1,16 +1,104 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
-import Placeholder from '../components/Placeholder.astro';
 ---
 
 <Layout title="コース一覧 — Claude Code Academy">
   <Sidebar currentPage="courses" />
   <main class="ml-[260px] p-8 min-h-screen">
-    <Placeholder
-      icon="📚"
-      title="コース一覧"
-      description="全コースの一覧・検索・フィルタリング機能を準備中です。"
-    />
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">コース一覧</h1>
+      <p class="text-sm text-gray-400 mt-1">3つのコースから自分に合ったものを選んで学習を始めましょう</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5" id="course-list">
+      <!-- 完全初心者コース -->
+      <div class="bg-white rounded-[10px] border border-base-border p-6 hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)] transition-all" data-course="beginner" data-key="cca-progress" data-total="30" data-chapters="6">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-primary-bg flex items-center justify-center text-2xl shrink-0">🚀</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h2 class="text-base font-semibold text-gray-900">完全初心者コース</h2>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-primary-bg text-primary">おすすめ</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">プログラミング未経験からClaude Codeの基本操作・実践プロジェクトまでを段階的に学ぶ</p>
+            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+              <span>6チャプター</span><span>30レッスン</span><span class="course-time">約5時間</span>
+            </div>
+            <div class="h-2 bg-base-bar rounded-full mb-2"><div class="h-2 bg-primary rounded-full transition-all course-bar" style="width:0%"></div></div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-400 course-progress">0% 完了</span>
+              <a href="/" class="px-4 py-2 bg-primary text-white rounded-lg text-xs font-medium no-underline hover:bg-primary-dark transition-colors course-btn">始める</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ビジネス職コース -->
+      <div class="bg-white rounded-[10px] border border-base-border p-6 hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)] transition-all" data-course="business" data-key="cca-progress-biz" data-total="32" data-chapters="8">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-success-bg flex items-center justify-center text-2xl shrink-0">💼</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h2 class="text-base font-semibold text-gray-900">ビジネス職コース</h2>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-success-bg text-success-dark">8Ch · 32L</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">業務効率化からデータ連携・社内ツール作成・チーム導入までを実践的に学ぶ</p>
+            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+              <span>8チャプター</span><span>32レッスン</span><span class="course-time">約6時間</span>
+            </div>
+            <div class="h-2 bg-base-bar rounded-full mb-2"><div class="h-2 bg-success rounded-full transition-all course-bar" style="width:0%"></div></div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-400 course-progress">0% 完了</span>
+              <a href="/track/business" class="px-4 py-2 bg-success text-white rounded-lg text-xs font-medium no-underline hover:opacity-90 transition-colors course-btn">始める</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- エンジニアコース -->
+      <div class="bg-white rounded-[10px] border border-base-border p-6 hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)] transition-all" data-course="engineer" data-key="cca-progress-eng" data-total="34" data-chapters="9">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-yellow-50 flex items-center justify-center text-2xl shrink-0">⚡</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <h2 class="text-base font-semibold text-gray-900">エンジニアコース</h2>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700">9Ch · 34L</span>
+            </div>
+            <p class="text-xs text-gray-500 mb-3">開発ワークフロー最適化からMCP・サブエージェント・CI/CDまでを実践的に学ぶ</p>
+            <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+              <span>9チャプター</span><span>34レッスン</span><span class="course-time">約8時間</span>
+            </div>
+            <div class="h-2 bg-base-bar rounded-full mb-2"><div class="h-2 bg-yellow-500 rounded-full transition-all course-bar" style="width:0%"></div></div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-400 course-progress">0% 完了</span>
+              <a href="/track/engineer" class="px-4 py-2 bg-yellow-500 text-white rounded-lg text-xs font-medium no-underline hover:opacity-90 transition-colors course-btn">始める</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </Layout>
+
+<script>
+  document.querySelectorAll('[data-course]').forEach(card => {
+    const key = card.dataset.key;
+    const total = Number(card.dataset.total);
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      let done = 0;
+      if (data.chapters) {
+        Object.values(data.chapters).forEach(ch => {
+          if (ch.lessons) done += Object.values(ch.lessons).filter(l => l.completed).length;
+        });
+      }
+      const pct = Math.round((done / total) * 100);
+      card.querySelector('.course-bar').style.width = pct + '%';
+      card.querySelector('.course-progress').textContent = pct + '% 完了（' + done + '/' + total + '）';
+      if (done > 0) card.querySelector('.course-btn').textContent = '続きから';
+    } catch {}
+  });
+</script>

@@ -1,16 +1,170 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
-import Placeholder from '../components/Placeholder.astro';
 ---
 
 <Layout title="学習記録 — Claude Code Academy">
   <Sidebar currentPage="history" />
   <main class="ml-[260px] p-8 min-h-screen">
-    <Placeholder
-      icon="📊"
-      title="学習記録"
-      description="学習時間・進捗グラフ・アクティビティ履歴を準備中です。"
-    />
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">学習記録</h1>
+      <p class="text-sm text-gray-400 mt-1">学習の履歴と進捗を振り返りましょう</p>
+    </div>
+
+    <!-- サマリーカード -->
+    <div class="grid grid-cols-4 gap-3.5 mb-7">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">総XP</div>
+        <div class="text-lg font-semibold text-primary" id="h-xp">0</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">完了レッスン</div>
+        <div class="text-lg font-semibold text-gray-900" id="h-lessons">0</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">連続学習</div>
+        <div class="text-lg font-semibold text-success-dark" id="h-streak">0日</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">最終学習日</div>
+        <div class="text-lg font-semibold text-gray-900" id="h-last">-</div>
+      </div>
+    </div>
+
+    <!-- 週間カレンダー -->
+    <div class="bg-white rounded-[10px] border border-base-border p-5 mb-5">
+      <h2 class="text-sm font-semibold text-gray-900 mb-3">今週の学習カレンダー</h2>
+      <div class="grid grid-cols-7 gap-2" id="week-cal"></div>
+    </div>
+
+    <!-- コース別進捗 -->
+    <div class="bg-white rounded-[10px] border border-base-border p-5 mb-5">
+      <h2 class="text-sm font-semibold text-gray-900 mb-4">コース別進捗</h2>
+      <div class="space-y-4">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-gray-600">完全初心者コース</span>
+            <span class="text-xs text-gray-400" id="p-beg">0/30</span>
+          </div>
+          <div class="h-3 bg-base-bar rounded-full"><div class="h-3 bg-primary rounded-full transition-all" id="bar-beg" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-gray-600">ビジネス職コース</span>
+            <span class="text-xs text-gray-400" id="p-biz">0/32</span>
+          </div>
+          <div class="h-3 bg-base-bar rounded-full"><div class="h-3 bg-success rounded-full transition-all" id="bar-biz" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs text-gray-600">エンジニアコース</span>
+            <span class="text-xs text-gray-400" id="p-eng">0/34</span>
+          </div>
+          <div class="h-3 bg-base-bar rounded-full"><div class="h-3 bg-yellow-500 rounded-full transition-all" id="bar-eng" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 学習履歴 -->
+    <div class="bg-white rounded-[10px] border border-base-border p-5">
+      <h2 class="text-sm font-semibold text-gray-900 mb-3">最近の学習履歴</h2>
+      <div id="history-list" class="space-y-2"></div>
+      <div id="history-empty" class="hidden text-center py-8">
+        <p class="text-sm text-gray-400">まだ学習履歴がありません。レッスンを始めましょう！</p>
+      </div>
+    </div>
   </main>
 </Layout>
+
+<script>
+  function load(k) { try { const r=localStorage.getItem(k); return r?JSON.parse(r):null; } catch { return null; } }
+
+  function countDone(d) {
+    let n=0;
+    if(d&&d.chapters) Object.values(d.chapters).forEach(ch=>{ if(ch.lessons) n+=Object.values(ch.lessons).filter(l=>l.completed).length; });
+    return n;
+  }
+
+  function getHistory(key,course) {
+    const d=load(key);
+    const items=[];
+    if(d&&d.chapters){
+      Object.entries(d.chapters).forEach(([chId,ch])=>{
+        if(ch.lessons) Object.entries(ch.lessons).forEach(([lId,l])=>{
+          if(l.completed) items.push({course,ch:chId,lesson:lId,at:l.completedAt||''});
+        });
+      });
+    }
+    return items;
+  }
+
+  // データ集計
+  const beg=load('cca-progress'), biz=load('cca-progress-biz'), eng=load('cca-progress-eng');
+  const begD=countDone(beg), bizD=countDone(biz), engD=countDone(eng);
+  const totalLessons=begD+bizD+engD;
+  let totalXp=0, maxStreak=0, lastDate='-';
+  [beg,biz,eng].forEach(d=>{ if(d){totalXp+=(d.xp||0);maxStreak=Math.max(maxStreak,d.streak||0);if(d.lastStudyDate&&d.lastStudyDate>lastDate)lastDate=d.lastStudyDate;}});
+
+  document.getElementById('h-xp').textContent=totalXp;
+  document.getElementById('h-lessons').textContent=totalLessons;
+  document.getElementById('h-streak').textContent=maxStreak+'日';
+  document.getElementById('h-last').textContent=lastDate==='-'?'-':lastDate;
+
+  // 進捗バー
+  document.getElementById('p-beg').textContent=begD+'/30';
+  document.getElementById('bar-beg').style.width=Math.round(begD/30*100)+'%';
+  document.getElementById('p-biz').textContent=bizD+'/32';
+  document.getElementById('bar-biz').style.width=Math.round(bizD/32*100)+'%';
+  document.getElementById('p-eng').textContent=engD+'/34';
+  document.getElementById('bar-eng').style.width=Math.round(engD/34*100)+'%';
+
+  // 週間カレンダー
+  const days=["月","火","水","木","金","土","日"];
+  const today=new Date();
+  const dow=today.getDay()||7; // 月=1,日=7
+  const cal=document.getElementById('week-cal');
+  const studyDates=new Set();
+  [beg,biz,eng].forEach(d=>{
+    if(d&&d.chapters) Object.values(d.chapters).forEach(ch=>{
+      if(ch.lessons) Object.values(ch.lessons).forEach(l=>{
+        if(l.completedAt) studyDates.add(l.completedAt.slice(0,10));
+      });
+    });
+  });
+  for(let i=1;i<=7;i++){
+    const diff=i-dow;
+    const date=new Date(today);date.setDate(today.getDate()+diff);
+    const ds=date.toISOString().slice(0,10);
+    const isToday=diff===0;
+    const studied=studyDates.has(ds);
+    cal.innerHTML+=`<div class="text-center p-2 rounded-lg ${isToday?'bg-primary-bg border border-primary-border':studied?'bg-success-bg border border-green-200':'bg-base-bg border border-base-border'}">
+      <div class="text-[10px] ${isToday?'text-primary font-medium':'text-gray-400'}">${days[i-1]}</div>
+      <div class="text-xs font-medium ${isToday?'text-primary':studied?'text-success-dark':'text-gray-300'} mt-0.5">${date.getDate()}</div>
+      ${studied?'<div class="text-[9px] text-success-dark mt-0.5">&#10003;</div>':''}
+    </div>`;
+  }
+
+  // 履歴リスト
+  const allHistory=[
+    ...getHistory('cca-progress','初心者'),
+    ...getHistory('cca-progress-biz','ビジネス'),
+    ...getHistory('cca-progress-eng','エンジニア'),
+  ].sort((a,b)=>(b.at||'').localeCompare(a.at||'')).slice(0,20);
+
+  const hList=document.getElementById('history-list');
+  const hEmpty=document.getElementById('history-empty');
+  if(allHistory.length===0){hEmpty.classList.remove('hidden');}
+  else{
+    hList.innerHTML=allHistory.map(h=>{
+      const dateStr=h.at?h.at.slice(0,10):'不明';
+      return `<div class="flex items-center gap-3 py-2 border-b border-base-bg last:border-b-0">
+        <div class="w-2 h-2 rounded-full bg-primary shrink-0"></div>
+        <div class="flex-1 min-w-0">
+          <div class="text-xs text-gray-900">${h.course} · ${h.ch} · ${h.lesson}</div>
+        </div>
+        <div class="text-[11px] text-gray-400 shrink-0">${dateStr}</div>
+        <div class="text-[11px] text-primary font-medium shrink-0">+20 XP</div>
+      </div>`;
+    }).join('');
+  }
+</script>
