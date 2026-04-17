@@ -28,23 +28,23 @@
     {
       question: 'Claude Codeでコミットメッセージを自動生成するには？',
       choices: [
-        'git commit -m "auto" と入力する',
         'Claude Codeに「変更内容をコミットして」と伝えるか /commit を使う',
+        'git commit -m "auto" と入力する',
         'GitHub上のボタンをクリックする',
         'CLAUDE.mdにメッセージを書いておく'
       ],
-      correct: 1,
+      correct: 0,
       explanation: 'Claude Codeに「コミットして」と伝えるか、/commit スラッシュコマンドを使うと、変更内容を分析して適切なコミットメッセージを自動生成してくれます。'
     },
     {
       question: 'PRレビューをClaude Codeに依頼するメリットは？',
       choices: [
         'PRが自動でマージされる',
-        'コードの問題点やセキュリティリスクを素早く指摘してもらえる',
         'GitHubのアカウントが不要になる',
-        'レビューの手間が完全にゼロになる'
+        'レビューの手間が完全にゼロになる',
+        'コードの問題点やセキュリティリスクを素早く指摘してもらえる'
       ],
-      correct: 1,
+      correct: 3,
       explanation: 'Claude Codeにレビューを依頼すると、コードの品質問題やセキュリティリスク、改善提案を素早く受けられます。最終判断は人間が行いますが、レビューの効率が大幅に上がります。'
     }
   ];
