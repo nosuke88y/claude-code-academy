@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<Layout title="活用事例集 — Claude Code Academy">
+  <Sidebar currentPage="cases" />
+  <main class="ml-[260px] p-8 min-h-screen">
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">活用事例集</h1>
+      <p class="text-sm text-gray-400 mt-1">実際の企業・個人によるClaude Code活用事例 · 35件 · Web検索で収集</p>
+    </div>
+
+    <!-- 統計 -->
+    <div class="grid grid-cols-4 gap-3.5 mb-7">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">事例数</div>
+        <div class="text-lg font-semibold text-gray-900" id="s-total">35</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">表示中</div>
+        <div class="text-lg font-semibold text-primary" id="s-showing">35</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">平均削減率</div>
+        <div class="text-lg font-semibold text-success-dark">78%</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">初級向け</div>
+        <div class="text-lg font-semibold text-green-600" id="s-beg">0</div>
+      </div>
+    </div>
+
+    <!-- フィルター -->
+    <div class="bg-white rounded-[10px] border border-base-border p-4 mb-5">
+      <div class="flex items-center gap-3 mb-3">
+        <input type="text" id="search" placeholder="キーワードで検索..." class="flex-1 px-3 py-2 border border-base-border rounded-lg text-sm focus:outline-none focus:border-primary" />
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">カテゴリ:</span>
+        <button class="cf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-cat="all">すべて</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-cat="dev">開発効率化</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-cat="auto">業務自動化</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-cat="data">データ分析</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-cat="content">コンテンツ</button>
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">職種:</span>
+        <button class="jf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-job="all">すべて</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-job="eng">エンジニア</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-job="biz">ビジネス職</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-job="non">非エンジニア</button>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">難易度:</span>
+        <button class="lf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-lv="all">すべて</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-lv="初級">初級</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-lv="中級">中級</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-lv="上級">上級</button>
+      </div>
+    </div>
+
+    <div id="case-list" class="grid grid-cols-1 gap-3"></div>
+    <div id="no-results" class="hidden text-center py-16"><p class="text-sm text-gray-400">条件に一致する事例がありません</p></div>
+  </main>
+</Layout>
+
+<style>
+  .cf.active,.jf.active,.lf.active { background-color: var(--color-primary-bg); color: var(--color-primary); border-color: var(--color-primary-border); }
+  .cf:not(.active),.jf:not(.active),.lf:not(.active) { background-color: white; color: #6b7280; border-color: var(--color-base-border); }
+  .cf:not(.active):hover,.jf:not(.active):hover,.lf:not(.active):hover { background-color: #f9fafb; }
+</style>
+
+<script>
+const D=[
+// 業務自動化
+{t:"税理士事務所の自動仕訳処理",job:"non",cat:"auto",lv:"中級",before:"60社分の仕訳処理に毎日5時間",how:"MCP×5外部サービス連携、CLAUDE.mdに仕訳ルール定義、毎晩21時に自動実行",after:"5時間→50分（83%削減）",pct:"83",tags:["MCP","CLAUDE.md","Custom Commands"],src:"税理士事務所（個人）",link:"/tips"},
+{t:"営業のExcel月次集計を93%削減",job:"biz",cat:"auto",lv:"初級",before:"月次集計に平均3.2時間",how:"Claude Codeに集計ルールを指示してスクリプト自動生成",after:"3.2時間→14分（93%削減）",pct:"93",tags:["基本操作"],src:"一般企業・営業部門",link:"/track/business"},
+{t:"CS返信作成時間を80%削減",job:"biz",cat:"auto",lv:"初級",before:"1通の返信作成に15分",how:"問い合わせ内容を自動分類し返信ドラフトを自動生成",after:"15分→3分（80%削減）、月間60時間削減",pct:"80",tags:["基本操作"],src:"EC企業・CS部門",link:"/track/business"},
+{t:"経理の請求書確認を87%削減",job:"biz",cat:"auto",lv:"初級",before:"請求書確認に毎月4.5時間",how:"請求書データの読み取り・照合・差異検出を自動化",after:"4.5時間→35分（87%削減）",pct:"87",tags:["基本操作"],src:"一般企業・経理部門",link:"/track/business"},
+{t:"商談準備を30分→2分に短縮",job:"biz",cat:"auto",lv:"初級",before:"商談前の顧客情報収集・競合分析に30分",how:"顧客情報を自動検索・要約し商談シナリオを生成",after:"30分→2分（93%削減）",pct:"93",tags:["基本操作"],src:"営業担当者",link:"/track/business"},
+{t:"ServiceNow 29,000人に展開、営業準備95%削減",job:"biz",cat:"auto",lv:"中級",before:"営業担当者が商談前準備に多大な時間",how:"全社29,000人にClaude展開、情報収集・分析を自動化",after:"営業準備時間を最大95%削減",pct:"95",tags:["基本操作"],src:"ServiceNow（大手SaaS）",link:"/track/business"},
+{t:"非エンジニアが21業務を統合、実働60分/日に",job:"non",cat:"auto",lv:"上級",before:"調査・執筆・画像生成・会計処理など21の業務を個別に処理",how:"CLAUDE.md+Skillsで業務ルールを定義し1つの環境に統合",after:"1日の実働が60分に短縮",pct:"88",tags:["Skills","CLAUDE.md","MCP"],src:"個人事業主",link:"/tips"},
+{t:"データ入力作業を60-70%削減、年$80,000のコスト削減",job:"biz",cat:"auto",lv:"初級",before:"チームが週40時間をデータ入力に費やし年$80,000以上",how:"入力フォーム・バリデーション・データ変換を自動化",after:"60-70%削減、年間$48,000-56,000コスト削減",pct:"65",tags:["基本操作"],src:"バックオフィスチーム",link:"/track/business"},
+{t:"Eコマース事業者が週15-25時間の手作業を削減",job:"non",cat:"auto",lv:"中級",before:"商品タグ付け・注文分析・価格調査に毎週40時間以上",how:"商品タグ自動化、競合価格スクレイピング、注文データ分析を自動化",after:"週15-25時間削減、年間フルタイム1人分相当",pct:"50",tags:["基本操作"],src:"Eコマース事業者",link:"/track/business"},
+{t:"Excel週次集計を92%削減",job:"biz",cat:"auto",lv:"初級",before:"Excelの集計作業に毎週4時間",how:"集計スクリプトを自動生成しデータ処理を自動化",after:"4時間→20分（92%削減）",pct:"92",tags:["基本操作"],src:"バックオフィス",link:"/track/business"},
+// 開発効率化
+{t:"ソロ開発者が4人×6ヶ月のプロジェクトを2ヶ月で完了",job:"eng",cat:"dev",lv:"上級",before:"4人チームで6ヶ月かかると見積もられたプロジェクト",how:"Claude Codeで1人で設計・実装・テストを一貫して実施",after:"12倍の工数削減（24人月→2人月）",pct:"92",tags:["基本操作"],src:"ソロエンジニア",link:"/track/engineer"},
+{t:"Anthropic社内PRマージ率67%向上",job:"eng",cat:"dev",lv:"中級",before:"コード作成・レビュー・マージのサイクルが遅い",how:"全社的にClaude Code導入、コードの70-90%をAI作成",after:"1日のPRマージ数67%増加、生産性+50%",pct:"67",tags:["基本操作"],src:"Anthropic（社内事例）",link:"/track/engineer"},
+{t:"Claude Code採用チーム vs 非採用でPR47%増",job:"eng",cat:"dev",lv:"中級",before:"チーム間の開発速度のばらつき",how:"Faros AIでClaude Code採用率とPR生産性を計測・比較",after:"採用率60%チームはPRマージ数が47%多い",pct:"47",tags:["基本操作"],src:"Faros AI調査",link:"/track/engineer"},
+{t:"LINEヤフーのPRレビュー自動化で週6時間削減",job:"eng",cat:"dev",lv:"上級",before:"PRレビュー準備にJira/Confluenceから手動で情報収集",how:"Claude Code + GitHub MCP + GitHub CLIでPR情報を自動収集",after:"週6時間の業務効率化",pct:"75",tags:["MCP","Custom Commands"],src:"LINEヤフー",link:"/track/engineer"},
+{t:"3人で週30PRを安定処理",job:"eng",cat:"dev",lv:"中級",before:"3人の開発チームがPRレビューに溺れかけていた",how:"Claude Code Skillsでレビューワークフローを構築・標準化",after:"3人で週30PRを安定処理",pct:"60",tags:["Skills","Custom Commands"],src:"Tokium",link:"/track/engineer"},
+{t:"テストコード拡充を2ヶ月前倒しで完了",job:"eng",cat:"dev",lv:"中級",before:"テストコード拡充が半年計画（6月〜12月）",how:"サブエージェント活用のテスト半自動化ワークフロー構築",after:"計画より2ヶ月前倒しで完了（33%期間短縮）",pct:"33",tags:["基本操作","Custom Commands"],src:"セーフィー",link:"/track/engineer"},
+{t:"在庫管理システム開発を40%削減",job:"eng",cat:"dev",lv:"中級",before:"開発に約200時間の見込み",how:"DB設計・ER図作成・コード生成をClaude Codeで支援",after:"200時間→120時間（40%削減）",pct:"40",tags:["基本操作"],src:"受託開発企業",link:"/track/engineer"},
+{t:"REST API開発を45%削減",job:"eng",cat:"dev",lv:"中級",before:"モバイルアプリ向けREST API開発に100時間の見積もり",how:"APIエンドポイント設計・コード生成・テスト作成を支援",after:"100時間→55時間（45%削減）",pct:"45",tags:["基本操作"],src:"IT企業",link:"/track/engineer"},
+{t:"バグ修正を半日→1.5時間に短縮",job:"eng",cat:"dev",lv:"初級",before:"原因特定から修正・テストに4〜5時間",how:"エラーログからの原因特定→修正→テストを一気通貫で実行",after:"約1.5時間で完了（約70%削減）",pct:"70",tags:["基本操作"],src:"エンジニア個人",link:"/track/engineer"},
+{t:"Intercom開発チーム30名の工数40%削減",job:"eng",cat:"dev",lv:"中級",before:"30名チームでコードレビューとバグ修正に多大な工数",how:"Claude Codeを30名に展開しレビューとバグ修正を支援",after:"コードレビュー・バグ修正工数40%削減",pct:"40",tags:["基本操作"],src:"Intercom",link:"/track/engineer"},
+{t:"HooksでQAチェック工数40%削減",job:"eng",cat:"dev",lv:"中級",before:"QAチェック（フォーマット・lint・テスト）に工数過大",how:"Hooksでファイル保存時にフォーマッター自動実行、コミット前lint設定",after:"QAチェック工数40%削減",pct:"40",tags:["Hooks"],src:"企業開発チーム",link:"/track/engineer"},
+{t:"テスト自動生成で95%カバレッジ・バグ70%減",job:"eng",cat:"dev",lv:"中級",before:"テストカバレッジ40%、バグの見落とし多い",how:"テストコード自動生成でエッジケースも網羅的にカバー",after:"カバレッジ40%→95%、本番バグ70%減少",pct:"70",tags:["基本操作"],src:"開発チーム",link:"/track/engineer"},
+{t:"Firecracker社で生産性10倍達成",job:"eng",cat:"dev",lv:"中級",before:"AI非使用時の開発生産性に限界",how:"約50名規模で全社導入、開発プロセス全体にAI支援を組み込み",after:"AI非使用時比で10倍以上の生産性向上",pct:"90",tags:["基本操作","Custom Commands"],src:"Firecracker（約50名）",link:"/track/engineer"},
+{t:"CS学生がSaaSを3日で構築",job:"eng",cat:"dev",lv:"中級",before:"認証・決済・AI統合を含むSaaS構築に数週間〜数ヶ月",how:"Claude Codeで全機能を自律実装、MCPでDB・API接続",after:"3日間で完全なSaaSを完成（10倍以上の速度）",pct:"90",tags:["MCP"],src:"CS学生（個人）",link:"/track/engineer"},
+{t:"請求書管理MVPを1日・$3.65で構築",job:"eng",cat:"dev",lv:"中級",before:"MVP開発に数週間の見込み",how:"Claude Code + MCP（PostgreSQL、メール等）でDB〜メールテストまで一気通貫",after:"1日で完成、API費用わずか$3.65",pct:"95",tags:["MCP"],src:"エンジニア（個人）",link:"/track/engineer"},
+// データ分析
+{t:"広告分析を3〜5時間→7分に短縮",job:"biz",cat:"data",lv:"中級",before:"広告パフォーマンスの集計・分析・レポートに3〜5時間",how:"BigQuery/GA4をMCP接続し広告データの自動集計・分析・レポート生成",after:"3〜5時間→体感7分（約97%削減）",pct:"97",tags:["MCP"],src:"マーケター（Rimo）",link:"/track/business"},
+{t:"マーケティング分析レポート95%短縮",job:"biz",cat:"data",lv:"初級",before:"分析レポート作成・更新に半日（約4時間）",how:"データ集計・可視化・レポート生成を自動化",after:"半日→約3分（95%短縮）",pct:"95",tags:["基本操作"],src:"マーケティングアナリスト",link:"/track/business"},
+{t:"経理レポート作成を6時間→12分に短縮",job:"biz",cat:"data",lv:"初級",before:"月次財務レポートの集計・整形に6時間",how:"スプレッドシート上でAIがデータ集計・分析・レポート整形を自動化",after:"6時間→12分（97%短縮）",pct:"97",tags:["基本操作"],src:"経理・財務担当者",link:"/track/business"},
+{t:"7時間の自律作業で99.9%精度達成",job:"eng",cat:"data",lv:"上級",before:"複雑なデータ処理に人手で数日、ミスのリスクも高い",how:"自律モードで複雑なデータ処理を委任",after:"7時間で完了、数値精度99.9%",pct:"95",tags:["基本操作"],src:"データエンジニア",link:"/track/engineer"},
+// コンテンツ作成
+{t:"マーケターが事業KPIを4ヶ月で300%成長",job:"non",cat:"content",lv:"中級",before:"広告データ集計30分、クリエイティブ制作を少人数で対応",how:"定型作業を自動化。データ集計→分析→打ち手提案まで一気通貫",after:"広告集計30分→1-2分、主要KPI4ヶ月で300%成長、外注費ゼロ",pct:"97",tags:["Custom Commands"],src:"スマートバンク（マーケター）",link:"/track/business"},
+{t:"営業提案書の作成時間を78%削減",job:"biz",cat:"content",lv:"中級",before:"提案書作成に平均4.2時間、月間220時間の工数",how:"テンプレートをSkillsに登録し顧客情報入力で提案書を自動生成",after:"4.2時間→45分、月間220時間→47時間（78%削減）",pct:"78",tags:["Skills","Custom Commands"],src:"IT/コンサル企業・営業部門",link:"/track/business"},
+{t:"提案書5分・LP30分で完成",job:"non",cat:"content",lv:"中級",before:"提案書やLP制作に多大な時間（小規模企業）",how:"構成・デザイン・コーディングを一気通貫で自動生成",after:"提案書5分、LP30分で完成（96%削減）",pct:"96",tags:["基本操作"],src:"小規模IT企業",link:"/track/business"},
+{t:"1人で全マーケティングチャネルを運用",job:"non",cat:"content",lv:"上級",before:"検索広告・SNS・メールマーケ・SEOを複数人で担当",how:"広告コピー生成をサブエージェントで並列処理、FigmaプラグインやカスタムMCPを自作",after:"1名で全チャンネル運用可能、広告コピー生産量10倍",pct:"90",tags:["MCP","Custom Commands","Skills"],src:"Anthropic社内マーケチーム",link:"/tips"},
+{t:"非エンジニアのマーケターが週15時間以上を自動化",job:"non",cat:"content",lv:"初級",before:"レポート作成・データ集計に毎週大量の手作業",how:"レポートワークフローを自動化、カスタムツール3つを8週間で構築",after:"週15時間以上の時間節約",pct:"75",tags:["基本操作"],src:"デジタルマーケター（プログラミング経験ゼロ）",link:"/track/business"},
+{t:"技術リサーチ時間を80%削減",job:"eng",cat:"data",lv:"初級",before:"新フレームワーク・ライブラリの調査に1時間以上のGoogle検索",how:"自然言語でリサーチを依頼、ドキュメント検索・要約を自動化",after:"1時間→10-20分（80%削減）",pct:"80",tags:["基本操作"],src:"Anthropic全職種",link:"/tips"},
+];
+
+const catL={"all":"すべて","dev":"開発効率化","auto":"業務自動化","data":"データ分析","content":"コンテンツ"};
+const catC={"dev":"bg-blue-100 text-blue-700","auto":"bg-green-100 text-green-700","data":"bg-purple-100 text-purple-700","content":"bg-orange-100 text-orange-700"};
+const jobL={"eng":"エンジニア","biz":"ビジネス職","non":"非エンジニア"};
+const jobC={"eng":"bg-yellow-50 text-yellow-700","biz":"bg-primary-bg text-primary","non":"bg-pink-50 text-pink-700"};
+const lvC={"初級":"bg-green-100 text-green-700","中級":"bg-blue-100 text-blue-700","上級":"bg-purple-100 text-purple-700"};
+
+let fCat='all',fJob='all',fLv='all',q='';
+
+function render(){
+  const f=D.filter(c=>{
+    if(fCat!=='all'&&c.cat!==fCat)return false;
+    if(fJob!=='all'&&c.job!==fJob)return false;
+    if(fLv!=='all'&&c.lv!==fLv)return false;
+    if(q){const s=q.toLowerCase();return c.t.toLowerCase().includes(s)||c.before.toLowerCase().includes(s)||c.how.toLowerCase().includes(s)||c.after.toLowerCase().includes(s)||c.src.toLowerCase().includes(s);}
+    return true;
+  });
+  document.getElementById('s-showing').textContent=f.length;
+  document.getElementById('s-total').textContent=D.length;
+  document.getElementById('s-beg').textContent=D.filter(c=>c.lv==='初級').length;
+  const el=document.getElementById('case-list'),no=document.getElementById('no-results');
+  if(!f.length){el.innerHTML='';no.classList.remove('hidden');return;}
+  no.classList.add('hidden');
+  el.innerHTML=f.map(c=>`<div class="bg-white rounded-[10px] border border-base-border p-5 hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)] transition-all">
+    <div class="flex items-start justify-between gap-3 mb-3">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${catC[c.cat]}">${catL[c.cat]}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${jobC[c.job]}">${jobL[c.job]}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${lvC[c.lv]}">${c.lv}</span>
+      </div>
+      ${c.pct?`<div class="text-lg font-bold text-success-dark shrink-0">-${c.pct}%</div>`:''}
+    </div>
+    <h3 class="text-sm font-semibold text-gray-900 mb-2">${c.t}</h3>
+    <div class="grid grid-cols-[1fr_auto_1fr] gap-2 mb-3 text-xs">
+      <div class="bg-red-50 rounded-lg p-2.5 border border-red-100">
+        <div class="text-[10px] text-red-400 font-medium mb-1">Before</div>
+        <div class="text-gray-700">${c.before}</div>
+      </div>
+      <div class="flex items-center text-gray-300 text-lg">→</div>
+      <div class="bg-green-50 rounded-lg p-2.5 border border-green-100">
+        <div class="text-[10px] text-green-500 font-medium mb-1">After</div>
+        <div class="text-gray-700 font-medium">${c.after}</div>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500 mb-3"><span class="font-medium text-gray-600">How:</span> ${c.how}</p>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-1 flex-wrap">
+        ${c.tags.map(tag=>`<span class="text-[9px] px-1.5 py-0.5 rounded bg-base-muted text-gray-500">${tag}</span>`).join('')}
+        <span class="text-[10px] text-gray-400 ml-1">${c.src}</span>
+      </div>
+      <a href="${c.link}" class="text-[11px] text-primary font-medium no-underline hover:underline shrink-0">学習する →</a>
+    </div>
+  </div>`).join('');
+}
+
+// フィルター
+document.querySelectorAll('.cf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.cf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fCat=b.dataset.cat;render();});});
+document.querySelectorAll('.jf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.jf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fJob=b.dataset.job;render();});});
+document.querySelectorAll('.lf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.lf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fLv=b.dataset.lv;render();});});
+let st;document.getElementById('search').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{q=e.target.value.trim();render();},200);});
+render();
+</script>
