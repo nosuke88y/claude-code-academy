@@ -1,0 +1,86 @@
+---
+// Biz Ch.6 Lesson 4: チェックテスト（クイズ）
+---
+
+<div class="max-w-3xl">
+  <div id="quiz-container">
+    <div id="quiz-content"></div>
+  </div>
+  <div id="quiz-result" class="hidden">
+    <div class="bg-gradient-to-br from-primary-bg to-white rounded-xl p-8 text-center">
+      <div class="text-5xl mb-4">🏆</div>
+      <h2 class="text-xl font-bold text-gray-900 mb-2">Chapter 6 完了！</h2>
+      <p class="text-sm text-gray-600 mb-1">データ連携・定期実行 チェックテスト</p>
+      <div class="text-3xl font-bold text-primary my-4" id="quiz-score"></div>
+      <p class="text-sm text-gray-600 mb-6" id="quiz-message"></p>
+      <a href="/track/business" class="inline-block px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">コースに戻る</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const quizData = [
+    { q: "HTMLダッシュボードを作成する際、Claude Codeに何を渡す必要がありますか？", choices: ["プログラミングのソースコード","CSVデータと表示したい内容の説明","APIキーとデータベース接続情報","HTMLの知識"], answer: 1, explanation: "CSVデータと「KPIカード、グラフ、テーブルを表示して」等の説明を渡すだけで、Claude Codeがプログラミング不要でHTMLダッシュボードを生成してくれます。" },
+    { q: "Windowsで毎朝7時にスクリプトを自動実行するには何を使いますか？", choices: ["Googleカレンダー","タスクスケジューラ","Windowsアラーム","メールの予約送信"], answer: 1, explanation: "Windowsの「タスクスケジューラ」で、指定した時刻にバッチファイル(.bat)を自動実行する設定ができます。プログラミング知識なしで設定可能です。" },
+    { q: "Googleスプレッドシートのデータを Claude Codeで処理する最もシンプルな方法は？", choices: ["Google APIを使って直接接続する","CSV形式でダウンロードしてClaude Codeに渡す","スプレッドシートのURLを共有する","Googleアカウントをリンクする"], answer: 1, explanation: "最もシンプルな方法は、スプレッドシートからCSV形式でダウンロードし、Claude Codeに「このCSVを処理して」と依頼する方法です。" },
+    { q: "複数のCSVファイルを一括で処理する時の依頼方法として適切なのは？", choices: ["1ファイルずつ個別に依頼する","「data/フォルダ内の全CSVを統合して」と依頼する","自分でプログラムを書く","Excelで手動結合する"], answer: 1, explanation: "「data/フォルダ内の全CSVを統合して」と依頼すれば、Claude Codeが自動でフォルダ内の全ファイルを読み込んで処理してくれます。" },
+    { q: "定期実行を設定する際に最も重要なことは？", choices: ["高性能なパソコンを用意する","スクリプトが正しく動作することを事前にテストする","インターネットに常時接続している","有料プランに加入する"], answer: 1, explanation: "定期実行を設定する前に、スクリプトを手動で実行して正しく動作することを必ず確認しましょう。エラーが出たまま定期実行すると、毎回失敗し続けます。" },
+  ];
+
+  let currentQ = 0, score = 0;
+  const container = document.getElementById('quiz-content');
+  const resultDiv = document.getElementById('quiz-result');
+  const quizContainer = document.getElementById('quiz-container');
+
+  function renderQuestion() {
+    const q = quizData[currentQ];
+    container.innerHTML = `
+      <div class="mb-2 text-xs text-gray-400">問題 ${currentQ + 1} / ${quizData.length}</div>
+      <div class="h-1 bg-base-bar rounded mb-6"><div class="h-1 bg-primary rounded transition-all" style="width:${((currentQ) / quizData.length) * 100}%"></div></div>
+      <h2 class="text-base font-semibold text-gray-900 mb-5">${q.q}</h2>
+      <div class="space-y-2.5">${q.choices.map((c, i) => `<button class="quiz-choice w-full text-left px-4 py-3 bg-white border border-base-border rounded-xl text-sm hover:border-primary hover:bg-primary-bg transition-all cursor-pointer" data-idx="${i}">${c}</button>`).join('')}</div>
+    `;
+    container.querySelectorAll('.quiz-choice').forEach(btn => btn.addEventListener('click', () => handleAnswer(Number(btn.dataset.idx))));
+  }
+
+  function handleAnswer(idx) {
+    const q = quizData[currentQ];
+    const correct = idx === q.answer;
+    if (correct) score++;
+    container.querySelectorAll('.quiz-choice').forEach((btn, i) => {
+      btn.disabled = true;
+      btn.classList.remove('hover:border-primary', 'hover:bg-primary-bg', 'cursor-pointer');
+      if (i === q.answer) { btn.classList.remove('border-base-border', 'bg-white'); btn.classList.add('border-green-500', 'bg-green-50', 'text-green-700'); }
+      else if (i === idx && !correct) { btn.classList.remove('border-base-border', 'bg-white'); btn.classList.add('border-red-300', 'bg-red-50', 'text-red-700'); }
+    });
+    const exp = document.createElement('div');
+    exp.className = `mt-4 p-4 rounded-xl text-sm ${correct ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`;
+    exp.innerHTML = `<p class="font-medium mb-1">${correct ? '正解！' : '不正解…'}</p><p class="text-xs leading-relaxed">${q.explanation}</p>`;
+    container.appendChild(exp);
+    const next = document.createElement('button');
+    next.className = 'mt-4 w-full py-3 bg-primary text-white rounded-lg text-sm font-medium cursor-pointer hover:bg-primary-dark transition-colors border-none';
+    next.textContent = currentQ < quizData.length - 1 ? '次の問題へ' : '結果を見る';
+    next.addEventListener('click', () => { currentQ++; currentQ < quizData.length ? renderQuestion() : showResult(); });
+    container.appendChild(next);
+  }
+
+  function showResult() {
+    quizContainer.classList.add('hidden');
+    resultDiv.classList.remove('hidden');
+    document.getElementById('quiz-score').textContent = `${score} / ${quizData.length} 正解`;
+    document.getElementById('quiz-message').textContent = score === quizData.length ? '満点！データ連携・定期実行をマスターしました！' : score >= 3 ? 'よくできました！苦手な部分を復習しましょう。' : 'レッスンを復習して再チャレンジしましょう。';
+    const K = 'cca-progress-biz';
+    try {
+      const raw = localStorage.getItem(K);
+      const d = raw ? { chapters:{}, xp:0, level:1, streak:0, lastStudyDate:null, ...JSON.parse(raw) } : { chapters:{}, xp:0, level:1, streak:0, lastStudyDate:null };
+      if (!d.chapters['ch6']) d.chapters['ch6'] = { lessons:{} };
+      d.chapters['ch6'].lessons['l4'] = { completed:true, completedAt:new Date().toISOString() };
+      d.xp += score * 10; d.level = Math.floor(d.xp / 200) + 1;
+      const today = new Date().toISOString().slice(0,10);
+      if (d.lastStudyDate !== today) { const y = new Date(Date.now()-86400000).toISOString().slice(0,10); d.streak = d.lastStudyDate === y ? d.streak+1 : 1; d.lastStudyDate = today; }
+      localStorage.setItem(K, JSON.stringify(d));
+    } catch(e) {}
+  }
+
+  renderQuestion();
+</script>

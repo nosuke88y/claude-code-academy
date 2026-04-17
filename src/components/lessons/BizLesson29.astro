@@ -1,0 +1,73 @@
+---
+// Biz Ch.7 Lesson 4: チェックテスト（クイズ）
+---
+
+<div class="max-w-3xl">
+  <div id="quiz-container">
+    <div id="quiz-content"></div>
+  </div>
+  <div id="quiz-result" class="hidden">
+    <div class="bg-gradient-to-br from-primary-bg to-white rounded-xl p-8 text-center">
+      <div class="text-5xl mb-4">🏆</div>
+      <h2 class="text-xl font-bold text-gray-900 mb-2">Chapter 7 完了！</h2>
+      <p class="text-sm text-gray-600 mb-1">社内ツール・ダッシュボード チェックテスト</p>
+      <div class="text-3xl font-bold text-primary my-4" id="quiz-score"></div>
+      <p class="text-sm text-gray-600 mb-6" id="quiz-message"></p>
+      <a href="/track/business" class="inline-block px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">コースに戻る</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const quizData = [
+    { q: "社内向けWebアプリ（経費申請フォーム等）を作る時、特別なサーバーは必要ですか？", choices: ["必ずサーバーが必要","HTML+JavaScriptだけでサーバー不要","データベースが必要","有料サービスの契約が必要"], answer: 1, explanation: "HTML+JavaScriptだけで作れるので、特別なサーバーは不要です。ブラウザのlocalStorageでデータを保存でき、共有フォルダに置けばチーム全員が使えます。" },
+    { q: "SlackにClaude Codeで作ったレポートを自動投稿するには何が必要？", choices: ["Slack有料プラン","Incoming Webhook URL","Slack公式プラグイン","プログラミング資格"], answer: 1, explanation: "Slack APIの「Incoming Webhooks」を有効化してWebhook URLを取得すれば、Claude Codeで作成したスクリプトからSlackに投稿できます。無料プランでも利用可能です。" },
+    { q: "10社分の提案書を一括生成する時に渡すべきものは？", choices: ["各社の提案内容を1つずつ手書きする","顧客リストCSV + テンプレート構成の指示","各社のWebサイトURL","提案書のPDFテンプレート"], answer: 1, explanation: "顧客リスト（CSV）と提案書のテンプレート構成を指示すれば、Claude Codeが各社の情報に合わせてカスタマイズした提案書を一括生成してくれます。" },
+    { q: "社内Webアプリのデータをチーム全員で共有する最も簡単な方法は？", choices: ["クラウドサーバーを構築","HTMLファイルを社内共有フォルダに置く","データベースを設定","全員のPCにインストール"], answer: 1, explanation: "HTMLファイルを社内の共有フォルダ（NASやOneDrive等）に置けば、チーム全員がブラウザで開いて使えます。特別なインフラ不要です。" },
+  ];
+
+  let currentQ = 0, score = 0;
+  const container = document.getElementById('quiz-content');
+  const resultDiv = document.getElementById('quiz-result');
+  const quizContainer = document.getElementById('quiz-container');
+
+  function renderQuestion() {
+    const q = quizData[currentQ];
+    container.innerHTML = `
+      <div class="mb-2 text-xs text-gray-400">問題 ${currentQ + 1} / ${quizData.length}</div>
+      <div class="h-1 bg-base-bar rounded mb-6"><div class="h-1 bg-primary rounded transition-all" style="width:${((currentQ) / quizData.length) * 100}%"></div></div>
+      <h2 class="text-base font-semibold text-gray-900 mb-5">${q.q}</h2>
+      <div class="space-y-2.5">${q.choices.map((c, i) => `<button class="quiz-choice w-full text-left px-4 py-3 bg-white border border-base-border rounded-xl text-sm hover:border-primary hover:bg-primary-bg transition-all cursor-pointer" data-idx="${i}">${c}</button>`).join('')}</div>
+    `;
+    container.querySelectorAll('.quiz-choice').forEach(btn => btn.addEventListener('click', () => handleAnswer(Number(btn.dataset.idx))));
+  }
+
+  function handleAnswer(idx) {
+    const q = quizData[currentQ];
+    const correct = idx === q.answer;
+    if (correct) score++;
+    container.querySelectorAll('.quiz-choice').forEach((btn, i) => {
+      btn.disabled = true; btn.classList.remove('hover:border-primary','hover:bg-primary-bg','cursor-pointer');
+      if (i === q.answer) { btn.classList.remove('border-base-border','bg-white'); btn.classList.add('border-green-500','bg-green-50','text-green-700'); }
+      else if (i === idx && !correct) { btn.classList.remove('border-base-border','bg-white'); btn.classList.add('border-red-300','bg-red-50','text-red-700'); }
+    });
+    const exp = document.createElement('div');
+    exp.className = `mt-4 p-4 rounded-xl text-sm ${correct ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`;
+    exp.innerHTML = `<p class="font-medium mb-1">${correct ? '正解！' : '不正解…'}</p><p class="text-xs leading-relaxed">${q.explanation}</p>`;
+    container.appendChild(exp);
+    const next = document.createElement('button');
+    next.className = 'mt-4 w-full py-3 bg-primary text-white rounded-lg text-sm font-medium cursor-pointer hover:bg-primary-dark transition-colors border-none';
+    next.textContent = currentQ < quizData.length - 1 ? '次の問題へ' : '結果を見る';
+    next.addEventListener('click', () => { currentQ++; currentQ < quizData.length ? renderQuestion() : showResult(); });
+    container.appendChild(next);
+  }
+
+  function showResult() {
+    quizContainer.classList.add('hidden'); resultDiv.classList.remove('hidden');
+    document.getElementById('quiz-score').textContent = `${score} / ${quizData.length} 正解`;
+    document.getElementById('quiz-message').textContent = score === quizData.length ? '満点！社内ツール作成をマスターしました！' : score >= 3 ? 'よくできました！' : '復習してみましょう。';
+    const K = 'cca-progress-biz';
+    try { const raw = localStorage.getItem(K); const d = raw ? {chapters:{},xp:0,level:1,streak:0,lastStudyDate:null,...JSON.parse(raw)} : {chapters:{},xp:0,level:1,streak:0,lastStudyDate:null}; if(!d.chapters['ch7'])d.chapters['ch7']={lessons:{}}; d.chapters['ch7'].lessons['l4']={completed:true,completedAt:new Date().toISOString()}; d.xp+=score*10; d.level=Math.floor(d.xp/200)+1; const today=new Date().toISOString().slice(0,10); if(d.lastStudyDate!==today){const y=new Date(Date.now()-86400000).toISOString().slice(0,10);d.streak=d.lastStudyDate===y?d.streak+1:1;d.lastStudyDate=today;} localStorage.setItem(K,JSON.stringify(d)); } catch(e){}
+  }
+  renderQuestion();
+</script>

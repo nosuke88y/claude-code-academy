@@ -1,0 +1,101 @@
+---
+// Biz Ch.2 Lesson 3: トラブルシューティングガイド
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">困った時のトラブルシューティング</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      インストールや初回操作でエラーが出ても大丈夫。
+      ここでは、よくあるトラブルとその解決方法をまとめています。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">安心してください</p>
+      <p class="text-sm text-gray-700">エラーが出るのは普通のことです。このページの手順で、ほとんどの問題は解決できます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">トラブル1: 「claude」コマンドが見つからない</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="bg-red-50 rounded-lg p-3 border border-red-200 mb-3">
+        <p class="text-xs text-red-600 font-medium mb-1">エラーメッセージ</p>
+        <p class="text-xs text-gray-700 font-mono">'claude' は内部コマンドとして認識されていません</p>
+      </div>
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">解決方法</h3>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>ターミナルを<strong>一度閉じて、もう一度開く</strong>（再起動すると認識されることが多い）</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>それでもダメな場合、以下のコマンドを実行:</span></div>
+      </div>
+      <div class="bg-base-bg rounded-lg px-3 py-2 mt-2">
+        <code class="text-[11px] text-gray-600 font-mono">npm install -g @anthropic-ai/claude-code</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">トラブル2: Node.jsがインストールできない</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">解決方法</h3>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>公式サイト（nodejs.org）から<strong>LTS版</strong>（推奨版）をダウンロード</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>インストール時に「Add to PATH」にチェックが入っていることを確認</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">3.</span><span>インストール後、ターミナルで確認:</span></div>
+      </div>
+      <div class="bg-base-bg rounded-lg px-3 py-2 mt-2">
+        <code class="text-[11px] text-gray-600 font-mono">node --version</code>
+      </div>
+      <p class="text-xs text-gray-500 mt-2">「v22.x.x」のようにバージョンが表示されればOK。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">トラブル3: 認証エラーが出る</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-3">
+      <div class="bg-red-50 rounded-lg p-3 border border-red-200 mb-3">
+        <p class="text-xs text-red-600 font-medium mb-1">エラーメッセージ</p>
+        <p class="text-xs text-gray-700 font-mono">Authentication failed / 認証に失敗しました</p>
+      </div>
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">解決方法</h3>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>ブラウザが自動で開くので、Anthropicアカウントでログイン</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>ブラウザが開かない場合、表示されるURLをコピーしてブラウザに貼り付け</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">3.</span><span>それでもダメな場合、以下を実行:</span></div>
+      </div>
+      <div class="bg-base-bg rounded-lg px-3 py-2 mt-2">
+        <code class="text-[11px] text-gray-600 font-mono">claude /doctor</code>
+      </div>
+      <p class="text-xs text-gray-500 mt-2">自動診断が実行され、問題と解決方法が表示されます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">トラブル4: 「Permission denied」と表示される</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">解決方法</h3>
+      <p class="text-xs text-gray-600 mb-2">管理者権限（Administrator）が必要な場合があります。</p>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">Windows:</span><span>「コマンドプロンプト」を<strong>右クリック→管理者として実行</strong></span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">Mac:</span><span>コマンドの前に <code class="bg-base-bg px-1 rounded">sudo</code> をつけて実行</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">万能の診断コマンド: /doctor</h2>
+    <div class="bg-success-bg rounded-xl p-5">
+      <p class="text-sm text-success-dark font-medium mb-2">困ったらまずこれ！</p>
+      <p class="text-sm text-gray-700 mb-3">Claude Codeを起動できたら、以下のコマンドで環境を自動診断できます。ほとんどの問題はこれで解決します。</p>
+      <div class="bg-white rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">/doctor</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">次のステップ</p>
+      <p class="text-sm text-gray-700">トラブルが解決したら、チェックテストに進んでChapter 2を完了しましょう。</p>
+    </div>
+  </section>
+</div>

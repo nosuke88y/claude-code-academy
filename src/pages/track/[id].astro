@@ -13,43 +13,69 @@ interface TrackConfig {
 const trackConfigs: Record<string, TrackConfig> = {
   business: {
     title: "ビジネス職コース",
-    sub: "業務効率化 → ノーコード自動化まで · 5チャプター",
+    sub: "コアコース（Ch.1-5）＋ 上級コース（Ch.6-8）· 8チャプター · 32レッスン",
     storageKey: "cca-progress-biz",
     chapters: [
+      // === コアコース ===
       { id: "ch1", title: "Ch.1 — Claude Codeでできること", meta: "4レッスン · 約30分 · 読み物＋クイズ", totalLessons: 4, lessons: [
         { id: "l1", name: "非エンジニアこそClaude Codeを使うべき理由", type: "読み物" },
         { id: "l2", name: "実際の業務活用事例10選", type: "読み物" },
         { id: "l3", name: "ビジネス職向けユースケースマップ", type: "インタラクティブ" },
         { id: "l4", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch2", title: "Ch.2 — 環境構築（簡易版）", meta: "3レッスン · 約20分 · Ch.1完了で解放", totalLessons: 3, lessons: [
+      { id: "ch2", title: "Ch.2 — セットアップと初体験", meta: "4レッスン · 約35分 · Ch.1完了で解放", totalLessons: 4, lessons: [
         { id: "l1", name: "インストール手順", type: "ハンズオン" },
         { id: "l2", name: "最初の10分で試すハンズオン", type: "ハンズオン" },
-        { id: "l3", name: "チェックテスト", type: "クイズ" },
+        { id: "l3", name: "トラブルシューティングガイド", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch3", title: "Ch.3 — 資料作成・文書作業の自動化", meta: "4レッスン · 約45分 · Ch.2完了で解放", totalLessons: 4, lessons: [
+      { id: "ch3", title: "Ch.3 — 実務テクニック基礎", meta: "5レッスン · 約55分 · Ch.2完了で解放", totalLessons: 5, lessons: [
         { id: "l1", name: "議事録・報告書の自動生成", type: "ハンズオン" },
         { id: "l2", name: "Excelデータ分析・グラフ作成依頼", type: "ハンズオン" },
         { id: "l3", name: "プレゼン資料の構成作成", type: "ハンズオン" },
-        { id: "l4", name: "チェックテスト", type: "クイズ" },
+        { id: "l4", name: "よくある失敗パターンと対策", type: "ハンズオン" },
+        { id: "l5", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch4", title: "Ch.4 — リサーチ・情報整理の効率化", meta: "3レッスン · 約30分 · Ch.3完了で解放", totalLessons: 3, lessons: [
+      { id: "ch4", title: "Ch.4 — リサーチ・分析スキル", meta: "4レッスン · 約40分 · Ch.3完了で解放", totalLessons: 4, lessons: [
         { id: "l1", name: "競合調査・市場分析レポート作成", type: "ハンズオン" },
         { id: "l2", name: "大量ドキュメントの要約・整理", type: "ハンズオン" },
-        { id: "l3", name: "チェックテスト", type: "クイズ" },
+        { id: "l3", name: "分析フレームワーク実践（SWOT/3C）", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch5", title: "Ch.5 — 実践演習：業務効率化ツール", meta: "4レッスン · 約60分 · Ch.4完了で解放", totalLessons: 4, lessons: [
+      { id: "ch5", title: "Ch.5 — 業務自動化の設計", meta: "3レッスン · 約40分 · Ch.4完了で解放", totalLessons: 3, lessons: [
         { id: "l1", name: "業務フロー分析とツール設計", type: "読み物" },
         { id: "l2", name: "日報自動生成ツール", type: "ハンズオン" },
         { id: "l3", name: "会議アジェンダ・議事録テンプレ作成", type: "ハンズオン" },
+      ]},
+      // === 上級コース ===
+      { id: "ch6", title: "Ch.6 — データ連携・定期実行", meta: "4レッスン · 約50分 · Ch.5完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "HTMLダッシュボード作成", type: "ハンズオン" },
+        { id: "l2", name: "定期実行スクリプト化", type: "ハンズオン" },
+        { id: "l3", name: "スプレッドシート・外部データ連携", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch7", title: "Ch.7 — 社内ツール・ダッシュボード", meta: "4レッスン · 約45分 · Ch.6完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "社内Webアプリ作成（ノーコード）", type: "ハンズオン" },
+        { id: "l2", name: "Slack通知・チャット連携", type: "ハンズオン" },
+        { id: "l3", name: "提案書・メール文のバッチ生成", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch8", title: "Ch.8 — 実践プロジェクト", meta: "4レッスン · 約90分 · Ch.7完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "プロジェクト設計", type: "読み物" },
+        { id: "l2", name: "実装演習", type: "ハンズオン" },
+        { id: "l3", name: "チーム導入ガイドの作成", type: "ハンズオン" },
         { id: "l4", name: "最終演習", type: "プロジェクト" },
       ]},
     ],
     achievements: [
       { id: "biz-intro", icon: "💼", name: "ビジネス入門", condition: "Ch.1完了で解放", chapterId: "ch1" },
       { id: "biz-env", icon: "🛠️", name: "環境構築完了", condition: "Ch.2完了で解放", chapterId: "ch2" },
-      { id: "biz-doc", icon: "📄", name: "資料作成マスター", condition: "Ch.3完了で解放", chapterId: "ch3" },
+      { id: "biz-doc", icon: "📄", name: "実務テクニック", condition: "Ch.3完了で解放", chapterId: "ch3" },
       { id: "biz-research", icon: "🔍", name: "リサーチマスター", condition: "Ch.4完了で解放", chapterId: "ch4" },
+      { id: "biz-auto", icon: "⚡", name: "コアコース修了", condition: "Ch.5完了で解放", chapterId: "ch5" },
+      { id: "biz-data", icon: "📊", name: "データ連携マスター", condition: "Ch.6完了で解放", chapterId: "ch6" },
+      { id: "biz-tool", icon: "🔧", name: "ツール開発者", condition: "Ch.7完了で解放", chapterId: "ch7" },
+      { id: "biz-master", icon: "🎓", name: "上級コース修了", condition: "Ch.8完了で解放", chapterId: "ch8" },
     ],
   },
   engineer: {

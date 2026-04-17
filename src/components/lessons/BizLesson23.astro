@@ -1,0 +1,83 @@
+---
+// Biz Ch.6 Lesson 2: 定期実行スクリプト化
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">「毎朝自動で」を実現する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      前のレッスンで作ったダッシュボードやレポートを、毎朝自動で生成されるようにします。
+      パソコンの「タスクスケジューラ」を使えば、プログラミング知識なしで定期実行が設定できます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">これで実現できること</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>毎朝7時にレポートを自動生成</li>
+        <li>毎週月曜に週次サマリーを作成</li>
+        <li>毎月1日に月次集計を実行</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: 自動実行スクリプトを作成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">毎朝自動で日次レポートを生成するスクリプトを作って。
+
+処理内容:
+1. data/フォルダのCSVを読み込み
+2. 前日のデータを集計
+3. HTMLレポートを生成してreport/フォルダに保存
+4. ファイル名に日付をつける（例: report_20250417.html）
+
+Windows用のバッチファイル(.bat)も一緒に作って。</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: タスクスケジューラで設定（Windows）</h2>
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+        <p class="text-sm text-gray-600">Windowsキー → 「タスクスケジューラ」と検索して開く</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+        <p class="text-sm text-gray-600">「基本タスクの作成」をクリック</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+        <p class="text-sm text-gray-600">名前:「日次レポート生成」、トリガー:「毎日7:00」を設定</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">4</div>
+        <p class="text-sm text-gray-600">操作:「プログラムの開始」→ 作成したバッチファイル(.bat)を指定</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">5</div>
+        <p class="text-sm text-gray-600">完了！翌朝からレポートが自動生成されます</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Macの場合（cron設定）</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">このスクリプトを毎朝7時に自動実行するcron設定を教えて。
+Macでの設定手順をステップバイステップで</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">「作ったら自動化」が業務効率化の本質。手動実行で満足せず、必ず定期実行まで設定しましょう。</p>
+    </div>
+  </section>
+</div>

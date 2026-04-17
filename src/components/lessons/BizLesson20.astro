@@ -1,0 +1,139 @@
+---
+// Biz Ch.3 Lesson 4: よくある失敗パターンと対策
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ビジネス職がやりがちな失敗パターン7選</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeを使い始めると、誰もが同じ失敗を経験します。
+      ここでは、よくある失敗パターンとその対策を紹介します。事前に知っておくだけで成功率が大幅に上がります。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">1</div>
+          <h3 class="text-sm font-semibold text-gray-900">対象ファイルを指定しない</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">NG</p>
+            <p class="text-xs text-gray-700">「このデータを集計して」</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-500 font-medium mb-1">OK</p>
+            <p class="text-xs text-gray-700">「sales_data.csv を部門別に集計して」</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">ファイル名を@で明示すると確実です。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">2</div>
+          <h3 class="text-sm font-semibold text-gray-900">出力形式を指定しない</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">NG</p>
+            <p class="text-xs text-gray-700">「レポートを作って」</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-500 font-medium mb-1">OK</p>
+            <p class="text-xs text-gray-700">「HTML形式でグラフ付きレポートを作って」</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">3</div>
+          <h3 class="text-sm font-semibold text-gray-900">集計軸を曖昧にする</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">NG</p>
+            <p class="text-xs text-gray-700">「売上を集計して」</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-500 font-medium mb-1">OK</p>
+            <p class="text-xs text-gray-700">「売上を月別・部門別に集計して。合計と前月比も」</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">4</div>
+          <h3 class="text-sm font-semibold text-gray-900">一度に複数のことを頼みすぎる</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">NG</p>
+            <p class="text-xs text-gray-700">「データ集計して、グラフ作って、メール文も書いて、スライドも作って」</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-500 font-medium mb-1">OK</p>
+            <p class="text-xs text-gray-700">1回目:「データ集計して」→ 2回目:「グラフを作って」→ 3回目:「スライド構成を作って」</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">1依頼=1処理の原則。段階的に進めると精度が上がります。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">5</div>
+          <h3 class="text-sm font-semibold text-gray-900">結果を確認せずに使う</h3>
+        </div>
+        <p class="text-xs text-gray-600">AIの出力は「下書き」です。特に<strong>数値・金額・人名</strong>は必ず確認してから使いましょう。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">6</div>
+          <h3 class="text-sm font-semibold text-gray-900">完璧を一発で求める</h3>
+        </div>
+        <p class="text-xs text-gray-600">「60点の出力でOK。段階的に100点に」がコツ。まず「動くこと」を優先し、修正依頼で品質を上げていきましょう。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">7</div>
+          <h3 class="text-sm font-semibold text-gray-900">修正依頼が曖昧</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">NG</p>
+            <p class="text-xs text-gray-700">「違う。もう一度やって」</p>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-500 font-medium mb-1">OK</p>
+            <p class="text-xs text-gray-700">「グラフのX軸を月名に変更して。色は青系統で統一して」</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">依頼前チェックリスト</h2>
+    <div class="bg-success-bg rounded-xl p-5">
+      <div class="space-y-2 text-sm text-gray-700">
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>対象ファイルを指定した？</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>出力形式（HTML/CSV/PDF）を指定した？</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>集計軸（月別/部門別等）を明示した？</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>1依頼=1処理にしている？</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">失敗は学びのチャンス。このチェックリストを習慣にすれば、成功率は格段に上がります。</p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,83 @@
+---
+// Biz Ch.6 Lesson 3: Googleスプレッドシート・外部データ連携
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">スプレッドシートと連携する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      普段使っているGoogleスプレッドシートやExcelのデータを、
+      Claude Codeで自動的に読み込み→加工→出力する方法を学びます。
+      手動コピペの手間がなくなり、常に最新データで作業できます。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法1: CSVエクスポート → Claude Codeで処理</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      最もシンプルな方法。スプレッドシートからCSVをダウンロードして処理します。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">sales_export.csv を読み込んで、以下を作成して:
+1. 月別売上サマリー（CSV）
+2. 営業担当別ランキング（HTML）
+3. 前月比較グラフ付きレポート（HTML）</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法2: 複数ファイルの一括処理</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">data/フォルダ内の全CSVファイルを読み込んで統合して。
+各ファイルは部門別の月次データ（営業1課.csv, 営業2課.csv, ...）。
+全部門を1つのCSVにまとめて、部門列を追加して。</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">方法3: 処理結果をスプレッドシートに戻す</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">集計結果をGoogleスプレッドシートに戻せる形式のCSVで出力して。
+列の順序はスプレッドシートと同じ（日付, 部門, 売上, 達成率）で。
+日付形式はYYYY/MM/DDで統一して。</code>
+      </div>
+    </div>
+    <p class="text-xs text-gray-500">出力されたCSVをGoogleスプレッドシートにインポートすれば反映完了です。</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <p class="text-sm text-gray-600">Googleスプレッドシートからデータをダウンロード（CSV形式）</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <p class="text-sm text-gray-600">Claude Codeに「このCSVを集計してHTMLレポートを作って」と依頼</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <p class="text-sm text-gray-600">結果のHTMLをブラウザで確認し、必要に応じて修正依頼</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">CSVエクスポート→Claude Code処理→結果をインポート、の3ステップが基本パターン。慣れれば5分で完了します。</p>
+    </div>
+  </section>
+</div>

@@ -32,7 +32,7 @@ import LessonContent27 from '../../components/lessons/LessonContent27.astro';
 import LessonContent28 from '../../components/lessons/LessonContent28.astro';
 import LessonContent29 from '../../components/lessons/LessonContent29.astro';
 import LessonContent30 from '../../components/lessons/LessonContent30.astro';
-// ビジネス職コース (biz1-18)
+// ビジネス職コース (biz1-33)
 import BizLesson1 from '../../components/lessons/BizLesson1.astro';
 import BizLesson2 from '../../components/lessons/BizLesson2.astro';
 import BizLesson3 from '../../components/lessons/BizLesson3.astro';
@@ -51,6 +51,21 @@ import BizLesson15 from '../../components/lessons/BizLesson15.astro';
 import BizLesson16 from '../../components/lessons/BizLesson16.astro';
 import BizLesson17 from '../../components/lessons/BizLesson17.astro';
 import BizLesson18 from '../../components/lessons/BizLesson18.astro';
+import BizLesson19 from '../../components/lessons/BizLesson19.astro';
+import BizLesson20 from '../../components/lessons/BizLesson20.astro';
+import BizLesson21 from '../../components/lessons/BizLesson21.astro';
+import BizLesson22 from '../../components/lessons/BizLesson22.astro';
+import BizLesson23 from '../../components/lessons/BizLesson23.astro';
+import BizLesson24 from '../../components/lessons/BizLesson24.astro';
+import BizLesson25 from '../../components/lessons/BizLesson25.astro';
+import BizLesson26 from '../../components/lessons/BizLesson26.astro';
+import BizLesson27 from '../../components/lessons/BizLesson27.astro';
+import BizLesson28 from '../../components/lessons/BizLesson28.astro';
+import BizLesson29 from '../../components/lessons/BizLesson29.astro';
+import BizLesson30 from '../../components/lessons/BizLesson30.astro';
+import BizLesson31 from '../../components/lessons/BizLesson31.astro';
+import BizLesson32 from '../../components/lessons/BizLesson32.astro';
+import BizLesson33 from '../../components/lessons/BizLesson33.astro';
 // エンジニアコース (eng1-14: 既存Ch.1-4, eng19-38: 新規Ch.3,6,7,8,9)
 import EngLesson1 from '../../components/lessons/EngLesson1.astro';
 import EngLesson2 from '../../components/lessons/EngLesson2.astro';
@@ -121,25 +136,47 @@ const lessonData: Record<string, LessonInfo> = {
   "ch6-l4": { chapter: "Ch.6", title: "Slack通知ボットの作成", type: "ハンズオン", duration: "約15分", prev: "ch6-l3", next: "ch6-l5", track: "beginner", storageKey: "cca-progress", homeHref: "/", comp: "b28" },
   "ch6-l5": { chapter: "Ch.6", title: "複数ツールの組み合わせ", type: "ハンズオン", duration: "約12分", prev: "ch6-l4", next: "ch6-l6", track: "beginner", storageKey: "cca-progress", homeHref: "/", comp: "b29" },
   "ch6-l6": { chapter: "Ch.6", title: "最終演習課題", type: "プロジェクト", duration: "約30分", prev: "ch6-l5", next: null, track: "beginner", storageKey: "cca-progress", homeHref: "/", comp: "b30" },
-  // === ビジネス職コース ===
+  // === ビジネス職コース（8チャプター・32レッスン）===
+  // Ch.1 — Claude Codeでできること（4L）
   "biz-ch1-l1": { chapter: "Ch.1", title: "非エンジニアこそClaude Codeを使うべき理由", type: "読み物", duration: "約8分", prev: null, next: "biz-ch1-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz1" },
   "biz-ch1-l2": { chapter: "Ch.1", title: "実際の業務活用事例10選", type: "読み物", duration: "約10分", prev: "biz-ch1-l1", next: "biz-ch1-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz2" },
   "biz-ch1-l3": { chapter: "Ch.1", title: "ビジネス職向けユースケースマップ", type: "インタラクティブ", duration: "約7分", prev: "biz-ch1-l2", next: "biz-ch1-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz3" },
   "biz-ch1-l4": { chapter: "Ch.1", title: "チェックテスト", type: "クイズ", duration: "約7分", prev: "biz-ch1-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz4" },
+  // Ch.2 — セットアップと初体験（4L）※トラブルシューティング追加
   "biz-ch2-l1": { chapter: "Ch.2", title: "インストール手順", type: "ハンズオン", duration: "約10分", prev: null, next: "biz-ch2-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz5" },
   "biz-ch2-l2": { chapter: "Ch.2", title: "最初の10分で試すハンズオン", type: "ハンズオン", duration: "約10分", prev: "biz-ch2-l1", next: "biz-ch2-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz6" },
-  "biz-ch2-l3": { chapter: "Ch.2", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch2-l2", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz7" },
+  "biz-ch2-l3": { chapter: "Ch.2", title: "トラブルシューティングガイド", type: "ハンズオン", duration: "約8分", prev: "biz-ch2-l2", next: "biz-ch2-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz19" },
+  "biz-ch2-l4": { chapter: "Ch.2", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch2-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz7" },
+  // Ch.3 — 実務テクニック基礎（5L）※失敗パターン集追加
   "biz-ch3-l1": { chapter: "Ch.3", title: "議事録・報告書の自動生成", type: "ハンズオン", duration: "約12分", prev: null, next: "biz-ch3-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz8" },
   "biz-ch3-l2": { chapter: "Ch.3", title: "Excelデータ分析・グラフ作成依頼", type: "ハンズオン", duration: "約12分", prev: "biz-ch3-l1", next: "biz-ch3-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz9" },
   "biz-ch3-l3": { chapter: "Ch.3", title: "プレゼン資料の構成作成", type: "ハンズオン", duration: "約10分", prev: "biz-ch3-l2", next: "biz-ch3-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz10" },
-  "biz-ch3-l4": { chapter: "Ch.3", title: "チェックテスト", type: "クイズ", duration: "約7分", prev: "biz-ch3-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz11" },
+  "biz-ch3-l4": { chapter: "Ch.3", title: "よくある失敗パターンと対策", type: "ハンズオン", duration: "約10分", prev: "biz-ch3-l3", next: "biz-ch3-l5", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz20" },
+  "biz-ch3-l5": { chapter: "Ch.3", title: "チェックテスト", type: "クイズ", duration: "約7分", prev: "biz-ch3-l4", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz11" },
+  // Ch.4 — リサーチ・分析スキル（4L）※フレームワーク追加
   "biz-ch4-l1": { chapter: "Ch.4", title: "競合調査・市場分析レポート作成", type: "ハンズオン", duration: "約12分", prev: null, next: "biz-ch4-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz12" },
   "biz-ch4-l2": { chapter: "Ch.4", title: "大量ドキュメントの要約・整理", type: "ハンズオン", duration: "約10分", prev: "biz-ch4-l1", next: "biz-ch4-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz13" },
-  "biz-ch4-l3": { chapter: "Ch.4", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch4-l2", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz14" },
+  "biz-ch4-l3": { chapter: "Ch.4", title: "分析フレームワーク実践（SWOT/3C）", type: "ハンズオン", duration: "約12分", prev: "biz-ch4-l2", next: "biz-ch4-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz21" },
+  "biz-ch4-l4": { chapter: "Ch.4", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch4-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz14" },
+  // Ch.5 — 業務自動化の設計（3L）※既存流用
   "biz-ch5-l1": { chapter: "Ch.5", title: "業務フロー分析とツール設計", type: "読み物", duration: "約10分", prev: null, next: "biz-ch5-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz15" },
   "biz-ch5-l2": { chapter: "Ch.5", title: "日報自動生成ツール", type: "ハンズオン", duration: "約15分", prev: "biz-ch5-l1", next: "biz-ch5-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz16" },
-  "biz-ch5-l3": { chapter: "Ch.5", title: "会議アジェンダ・議事録テンプレ作成", type: "ハンズオン", duration: "約12分", prev: "biz-ch5-l2", next: "biz-ch5-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz17" },
-  "biz-ch5-l4": { chapter: "Ch.5", title: "最終演習", type: "プロジェクト", duration: "約30分", prev: "biz-ch5-l3", next: null, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz18" },
+  "biz-ch5-l3": { chapter: "Ch.5", title: "会議アジェンダ・議事録テンプレ作成", type: "ハンズオン", duration: "約12分", prev: "biz-ch5-l2", next: null, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz17" },
+  // Ch.6 — データ連携・定期実行（4L）★新設
+  "biz-ch6-l1": { chapter: "Ch.6", title: "HTMLダッシュボード作成", type: "ハンズオン", duration: "約15分", prev: null, next: "biz-ch6-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz22" },
+  "biz-ch6-l2": { chapter: "Ch.6", title: "定期実行スクリプト化", type: "ハンズオン", duration: "約15分", prev: "biz-ch6-l1", next: "biz-ch6-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz23" },
+  "biz-ch6-l3": { chapter: "Ch.6", title: "スプレッドシート・外部データ連携", type: "ハンズオン", duration: "約12分", prev: "biz-ch6-l2", next: "biz-ch6-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz24" },
+  "biz-ch6-l4": { chapter: "Ch.6", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch6-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz25" },
+  // Ch.7 — 社内ツール・ダッシュボード（4L）★新設
+  "biz-ch7-l1": { chapter: "Ch.7", title: "社内Webアプリ作成（ノーコード）", type: "ハンズオン", duration: "約15分", prev: null, next: "biz-ch7-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz26" },
+  "biz-ch7-l2": { chapter: "Ch.7", title: "Slack通知・チャット連携", type: "ハンズオン", duration: "約12分", prev: "biz-ch7-l1", next: "biz-ch7-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz27" },
+  "biz-ch7-l3": { chapter: "Ch.7", title: "提案書・メール文のバッチ生成", type: "ハンズオン", duration: "約12分", prev: "biz-ch7-l2", next: "biz-ch7-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz28" },
+  "biz-ch7-l4": { chapter: "Ch.7", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "biz-ch7-l3", next: null, isQuiz: true, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz29" },
+  // Ch.8 — 実践プロジェクト（4L）★拡充
+  "biz-ch8-l1": { chapter: "Ch.8", title: "プロジェクト設計", type: "読み物", duration: "約10分", prev: null, next: "biz-ch8-l2", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz30" },
+  "biz-ch8-l2": { chapter: "Ch.8", title: "実装演習", type: "ハンズオン", duration: "約30分", prev: "biz-ch8-l1", next: "biz-ch8-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz31" },
+  "biz-ch8-l3": { chapter: "Ch.8", title: "チーム導入ガイドの作成", type: "ハンズオン", duration: "約15分", prev: "biz-ch8-l2", next: "biz-ch8-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz32" },
+  "biz-ch8-l4": { chapter: "Ch.8", title: "最終演習", type: "プロジェクト", duration: "約30分", prev: "biz-ch8-l3", next: null, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz33" },
   // === エンジニアコース（9チャプター・34レッスン） ===
   // Ch.1 — Claude Codeをエンジニアが使うべき理由（3L）
   "eng-ch1-l1": { chapter: "Ch.1", title: "既存ツールとの違い・優位性", type: "読み物", duration: "約10分", prev: null, next: "eng-ch1-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng1" },
@@ -195,12 +232,15 @@ export function getStaticPaths() {
     "ch4-l1","ch4-l2","ch4-l3","ch4-l4","ch4-l5",
     "ch5-l1","ch5-l2","ch5-l3","ch5-l4","ch5-l5","ch5-l6",
     "ch6-l1","ch6-l2","ch6-l3","ch6-l4","ch6-l5","ch6-l6",
-    // ビジネス職コース
+    // ビジネス職コース（8チャプター・32レッスン）
     "biz-ch1-l1","biz-ch1-l2","biz-ch1-l3","biz-ch1-l4",
-    "biz-ch2-l1","biz-ch2-l2","biz-ch2-l3",
-    "biz-ch3-l1","biz-ch3-l2","biz-ch3-l3","biz-ch3-l4",
-    "biz-ch4-l1","biz-ch4-l2","biz-ch4-l3",
-    "biz-ch5-l1","biz-ch5-l2","biz-ch5-l3","biz-ch5-l4",
+    "biz-ch2-l1","biz-ch2-l2","biz-ch2-l3","biz-ch2-l4",
+    "biz-ch3-l1","biz-ch3-l2","biz-ch3-l3","biz-ch3-l4","biz-ch3-l5",
+    "biz-ch4-l1","biz-ch4-l2","biz-ch4-l3","biz-ch4-l4",
+    "biz-ch5-l1","biz-ch5-l2","biz-ch5-l3",
+    "biz-ch6-l1","biz-ch6-l2","biz-ch6-l3","biz-ch6-l4",
+    "biz-ch7-l1","biz-ch7-l2","biz-ch7-l3","biz-ch7-l4",
+    "biz-ch8-l1","biz-ch8-l2","biz-ch8-l3","biz-ch8-l4",
     // エンジニアコース（9チャプター・34レッスン）
     "eng-ch1-l1","eng-ch1-l2","eng-ch1-l3",
     "eng-ch2-l1","eng-ch2-l2","eng-ch2-l3","eng-ch2-l4",
@@ -260,6 +300,10 @@ const trackName = lesson.track === 'business' ? 'ビジネス職コース' : les
     {lesson.comp === "biz8" && <BizLesson8 />}{lesson.comp === "biz9" && <BizLesson9 />}{lesson.comp === "biz10" && <BizLesson10 />}{lesson.comp === "biz11" && <BizLesson11 />}
     {lesson.comp === "biz12" && <BizLesson12 />}{lesson.comp === "biz13" && <BizLesson13 />}{lesson.comp === "biz14" && <BizLesson14 />}
     {lesson.comp === "biz15" && <BizLesson15 />}{lesson.comp === "biz16" && <BizLesson16 />}{lesson.comp === "biz17" && <BizLesson17 />}{lesson.comp === "biz18" && <BizLesson18 />}
+    {lesson.comp === "biz19" && <BizLesson19 />}{lesson.comp === "biz20" && <BizLesson20 />}{lesson.comp === "biz21" && <BizLesson21 />}
+    {lesson.comp === "biz22" && <BizLesson22 />}{lesson.comp === "biz23" && <BizLesson23 />}{lesson.comp === "biz24" && <BizLesson24 />}{lesson.comp === "biz25" && <BizLesson25 />}
+    {lesson.comp === "biz26" && <BizLesson26 />}{lesson.comp === "biz27" && <BizLesson27 />}{lesson.comp === "biz28" && <BizLesson28 />}{lesson.comp === "biz29" && <BizLesson29 />}
+    {lesson.comp === "biz30" && <BizLesson30 />}{lesson.comp === "biz31" && <BizLesson31 />}{lesson.comp === "biz32" && <BizLesson32 />}{lesson.comp === "biz33" && <BizLesson33 />}
     <!-- エンジニアコース（Ch.1-2: eng1-7, Ch.3新設: eng19-22, Ch.4: eng8-11, Ch.5: eng12-14, Ch.6-9新設: eng23-38） -->
     {lesson.comp === "eng1" && <EngLesson1 />}{lesson.comp === "eng2" && <EngLesson2 />}{lesson.comp === "eng3" && <EngLesson3 />}
     {lesson.comp === "eng4" && <EngLesson4 />}{lesson.comp === "eng5" && <EngLesson5 />}{lesson.comp === "eng6" && <EngLesson6 />}{lesson.comp === "eng7" && <EngLesson7 />}

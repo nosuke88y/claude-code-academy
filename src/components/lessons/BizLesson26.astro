@@ -1,0 +1,76 @@
+---
+// Biz Ch.7 Lesson 1: 社内Webアプリ作成（ノーコード）
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">社内向けWebアプリをノーコードで作る</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      経費申請フォーム、顧客フィードバック入力、プロジェクト進捗報告など、
+      チーム全員が使える社内ツールを、Claude Codeに依頼するだけで作れます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">作れるWebアプリの例</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>経費申請・承認フォーム</li>
+        <li>営業日報入力＆一覧画面</li>
+        <li>会議室予約管理ボード</li>
+        <li>顧客アンケート集計ダッシュボード</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン: 経費申請フォームを作る</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">社内向け経費申請フォームのHTMLを作って。
+
+入力項目:
+- 申請日（今日の日付をデフォルト）
+- 申請者名
+- 金額（数値入力）
+- カテゴリ（交通費/食事/備品/会議費 から選択）
+- 説明（自由入力）
+
+機能:
+- 入力した経費を一覧テーブルに追加
+- 合計金額を自動計算して表示
+- CSVダウンロードボタン
+- データはブラウザに保存（ページを閉じても残る）
+
+デザイン: シンプルで見やすいビジネス向けUI</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">完成したら試してみる</h2>
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+        <p class="text-sm text-gray-600">作成されたHTMLファイルをブラウザで開く</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+        <p class="text-sm text-gray-600">経費データを3件以上入力して動作確認</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+        <p class="text-sm text-gray-600">CSVダウンロードボタンで出力されるか確認</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">4</div>
+        <p class="text-sm text-gray-600">修正したい点を具体的にClaude Codeに依頼</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">HTML+JavaScriptだけで作るので、特別なサーバーは不要。ファイルを社内の共有フォルダに置けば、チーム全員がブラウザで使えます。</p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,72 @@
+---
+// Biz Ch.6 Lesson 1: HTMLダッシュボード作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">業務ダッシュボードを作ろう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      「毎朝見る」KPI管理画面を、Claude Codeに依頼するだけで作れます。
+      プログラミングの知識は不要。CSVデータを渡して「ダッシュボードを作って」と伝えるだけです。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">完成イメージ</p>
+      <p class="text-sm text-gray-700">KPIカード（売上・件数・達成率） + グラフ（推移・比較） + データテーブルが1ページにまとまったHTML画面</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: サンプルデータを準備</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">営業チームの月次売上サンプルCSVを作って。
+列: 月, 部門(営業1課/2課/3課), 売上金額, 目標金額, 商談件数
+期間: 2025年1月〜12月</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: ダッシュボードを依頼</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">このCSVデータから営業ダッシュボードHTMLを作って。
+
+表示内容:
+- KPIカード: 年間売上合計、目標達成率、商談件数合計
+- グラフ1: 月別売上推移（折れ線グラフ）
+- グラフ2: 部門別売上比較（棒グラフ）
+- テーブル: 月別×部門別の詳細データ
+
+デザイン: モダンで見やすい配色。レスポンシブ対応</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: ブラウザで確認</h2>
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+        <p class="text-sm text-gray-600">作成されたHTMLファイルをダブルクリックでブラウザで開く</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+        <p class="text-sm text-gray-600">KPIカード、グラフ、テーブルが正しく表示されるか確認</p>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+        <p class="text-sm text-gray-600">修正点があれば「グラフの色を青系統に変更して」等、具体的に依頼</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">ダッシュボードは「1回作ったら終わり」ではなく、CSVデータを更新するだけで毎月使い回せます。次のレッスンで「自動更新」の方法を学びます。</p>
+    </div>
+  </section>
+</div>

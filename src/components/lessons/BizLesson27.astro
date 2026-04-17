@@ -1,0 +1,62 @@
+---
+// Biz Ch.7 Lesson 2: Slack通知・チャット連携
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Slackに自動通知を送る</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      レポート生成完了の通知、毎朝のスケジュール配信、エラーアラートなど、
+      Slackへの自動投稿をClaude Codeで設定する方法を学びます。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: Slack Webhookを取得</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>Slack API（api.slack.com）にアクセス</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>「Incoming Webhooks」を有効化</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">3.</span><span>通知先チャンネルを選択</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">4.</span><span>Webhook URLをコピー</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: 通知スクリプトを作成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">Slackに日次レポートを自動投稿するスクリプトを作って。
+
+Webhook URL: （自分のWebhook URLに置き換え）
+チャンネル: #営業
+
+投稿内容:
+- 本日の売上サマリー（data/today.csvから集計）
+- 前日比の増減
+- 上位3商品のランキング
+
+フォーマット: Slackのリッチテキスト（太字・箇条書き対応）</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: 定期実行と組み合わせる</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm text-gray-600 mb-2">前のレッスンで学んだタスクスケジューラと組み合わせれば、<strong>毎朝9時にSlackにレポートが自動投稿</strong>されます。</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">データ集計スクリプト → Slack通知スクリプト → タスクスケジューラで毎朝実行</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Slack連携は「Incoming Webhook」を使えばプログラミング知識は最小限でOK。Claude Codeがスクリプトを全て生成してくれます。</p>
+    </div>
+  </section>
+</div>

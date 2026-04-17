@@ -1,0 +1,74 @@
+---
+// Biz Ch.8 Lesson 2: 実装演習 — 設計を形にする
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">設計書をもとに実装する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      前のレッスンで作成した設計書をClaude Codeに渡して、実際にツールを実装します。
+      「段階的に作る」のがコツ。一度に全部ではなく、1機能ずつ作って確認を繰り返しましょう。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実装の進め方</h2>
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">データ処理部分を先に作る</p>
+          <p class="text-xs text-gray-600">「まずCSVを読み込んで集計するスクリプトを作って」</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">動作確認して修正</p>
+          <p class="text-xs text-gray-600">スクリプトを実行して結果を確認。問題があれば修正依頼</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">UI部分を追加</p>
+          <p class="text-xs text-gray-600">「次にHTMLダッシュボードを作って」「フォームを追加して」</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">4</div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">通知・連携を追加</p>
+          <p class="text-xs text-gray-600">「Slack通知スクリプトを追加して」「定期実行の.batファイルも作って」</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">5</div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">全体を統合テスト</p>
+          <p class="text-xs text-gray-600">「全体を通しで実行して動作確認して」</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">完成チェックリスト</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-2 text-sm text-gray-700">
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>データ入力 → 処理 → 出力の一連の流れが動作する</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>ブラウザで開いて正しく表示される（HTMLの場合）</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>エラーが出ずに最後まで実行できる</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>定期実行の設定ができている（該当する場合）</span></div>
+        <div class="flex items-center gap-2"><span>&#9744;</span><span>同僚に使い方を説明できる</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">「完璧じゃなくても使えるものを先に作る」が大事。まず最小限の機能で動かし、フィードバックをもとに改善していきましょう。</p>
+    </div>
+  </section>
+</div>

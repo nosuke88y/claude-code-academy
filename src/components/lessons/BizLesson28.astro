@@ -1,0 +1,68 @@
+---
+// Biz Ch.7 Lesson 3: 提案書・メール文のバッチ生成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">提案書・メール文を一括生成する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      顧客リストから個別にカスタマイズされた提案書やメール文を一括生成する方法を学びます。
+      10社分の提案書を手作業で作ると半日かかりますが、Claude Codeなら数分で完了します。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: 顧客リストを準備</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">顧客リストのサンプルCSVを作って。
+列: 会社名, 担当者名, 業種, 課題, 予算規模
+10社分のサンプルデータで</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: テンプレート+バッチ生成を依頼</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">顧客リスト.csv を読み込んで、各社別にカスタマイズした
+提案書HTMLを一括生成して。
+
+テンプレート構成:
+- ヘッダー: 「〇〇株式会社 御中」
+- 課題認識: CSVの「課題」列を元に記載
+- 解決策提案: 課題に合わせた提案（3点）
+- 投資対効果: 予算規模に合わせた試算
+- 次のステップ: 打ち合わせ日程調整
+
+各社のHTMLをproposals/フォルダに保存。
+ファイル名: proposal_会社名.html</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">応用: メール文の一括生成</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeに送る依頼</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono whitespace-pre-wrap">顧客リスト.csv を読み込んで、各担当者宛の
+フォローアップメール文を一括生成して。
+
+トーン: ビジネスカジュアル
+内容: 前回打ち合わせのお礼 + 提案書送付の案内
+各メールをemails/フォルダにテキスト保存</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">CSVの各行を変数として使い、テンプレートに差し込む「メールマージ」的な使い方。営業の提案書作成・メール送信業務が劇的に効率化されます。</p>
+    </div>
+  </section>
+</div>
