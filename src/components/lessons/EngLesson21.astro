@@ -1,0 +1,140 @@
+---
+// Eng Ch.3 Lesson 3: Custom slash commandsの作成と活用
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Custom slash commandsで繰り返し作業を効率化</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeでは、よく使う指示をカスタムコマンドとして登録できる。
+      <code class="bg-base-bg px-1.5 py-0.5 rounded text-primary text-xs">.claude/commands/</code>
+      ディレクトリにMarkdownファイルを置くだけで、独自のスラッシュコマンドが使えるようになる。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">活用シーン</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>コードレビューの定型チェック</li>
+        <li>新規コンポーネントのスキャフォールド（雛形生成）</li>
+        <li>デバッグの定型手順</li>
+        <li>チーム共通のコーディング規約チェック</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">コマンドの作成方法</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">基本構造</h3>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# ファイルの配置先
+.claude/
+  commands/
+    review.md      → /project:review で呼び出し
+    new-component.md → /project:new-component で呼び出し
+    debug.md       → /project:debug で呼び出し</code>
+        </div>
+        <p class="text-xs text-gray-600">ファイル名がそのままコマンド名になる。<code class="bg-base-bg px-1 rounded">/project:ファイル名</code>で呼び出せる。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">例1: コードレビューコマンド</h3>
+        <p class="text-[11px] text-gray-500 mb-2">.claude/commands/review.md</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+変更されたファイルをレビューしてください。
+
+チェック観点:
+1. セキュリティ: SQLインジェクション、XSS、認証バイパスの可能性
+2. パフォーマンス: N+1クエリ、不要な再レンダリング、メモリリーク
+3. 可読性: 命名規則、関数の長さ、コメントの適切さ
+4. テスト: テストカバレッジ、エッジケースの網羅性
+
+問題が見つかった場合は修正案も提示してください。</code>
+        </div>
+        <div class="bg-base-bg rounded-lg p-3">
+          <p class="text-[11px] text-gray-600 font-mono">使い方: > /project:review</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">例2: コンポーネント生成コマンド</h3>
+        <p class="text-[11px] text-gray-500 mb-2">.claude/commands/new-component.md</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+$ARGUMENTS という名前のReactコンポーネントを作成してください。
+
+要件:
+- src/components/ に配置
+- TypeScriptで型定義を含める
+- Tailwind CSSでスタイリング
+- Storybookのstoryファイルも同時作成
+- 基本的なunit testも作成（Vitest + Testing Library）
+
+プロジェクトの既存コンポーネントのスタイルに合わせてください。</code>
+        </div>
+        <div class="bg-base-bg rounded-lg p-3">
+          <p class="text-[11px] text-gray-600 font-mono">使い方: > /project:new-component UserProfile</p>
+          <p class="text-[10px] text-gray-500 mt-1">$ARGUMENTS に「UserProfile」が入る</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">例3: デバッグコマンド</h3>
+        <p class="text-[11px] text-gray-500 mb-2">.claude/commands/debug.md</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+以下のエラーを調査・修正してください: $ARGUMENTS
+
+手順:
+1. エラーメッセージを分析し、原因の仮説を立てる
+2. 関連するソースコードを特定する
+3. 再現手順を確認する
+4. 修正を実施する
+5. テストを実行して修正を検証する</code>
+        </div>
+        <div class="bg-base-bg rounded-lg p-3">
+          <p class="text-[11px] text-gray-600 font-mono">使い方: > /project:debug "TypeError: Cannot read property 'id' of undefined"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">commandsディレクトリを作成</p>
+            <p class="text-xs text-gray-600">Claude Codeで「.claude/commandsディレクトリを作成して」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">レビューコマンドを作成</p>
+            <p class="text-xs text-gray-600">上記のreview.mdの内容を参考に、自分のプロジェクトに合ったレビューコマンドを作成する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">実行してみる</p>
+            <p class="text-xs text-gray-600"><code class="bg-base-bg px-1 rounded">/project:review</code> を実行し、レビュー結果を確認する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Custom slash commandsはチーム全体で共有できる。.claude/commandsをGitにコミットすれば、チームメンバー全員が同じコマンドを使える。プロジェクトの「知恵」をコマンドとして蓄積していこう。</p>
+    </div>
+  </section>
+</div>

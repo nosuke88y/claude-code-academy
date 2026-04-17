@@ -1,0 +1,120 @@
+---
+// Eng Ch.9 Lesson 2: 並列タスク処理の設計パターン
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">並列処理の設計パターンを学ぶ</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      サブエージェントを効果的に使うには、タスクの分割方法が重要。
+      ここでは実践的な並列処理の設計パターンを学ぶ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン1: ディレクトリ分割</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-xs text-gray-600 mb-2">各ディレクトリを独立したサブエージェントに割り当てる</p>
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「以下のディレクトリごとに並列でコードレビューして:
+>  - src/api/ — APIルートのセキュリティとバリデ��ション
+>  - src/components/ — Reactコンポーネントのパフォーマンス
+>  - src/lib/ — ユーティリティの型安全性
+>  - src/server/ — サーバーサイドロジックのエラーハンドリング
+>  各ディレクトリの結果を最後にまとめて報告して」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン2: 機能分割</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-xs text-gray-600 mb-2">異なる種類の作業を並列実行する</p>
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「以下を並列で実行して:
+>  タスクA: 全APIルートにバリデーション（入力値の検証）を追加
+>  タスクB: 全コンポーネントにローディング状態を追加
+>  タ���クC: 各モジュールに不足しているテストを追加
+>
+>  各タスクは別々のファイルを変更するので並列実行可能」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン3: 調査→実装の2段階</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-xs text-gray-600 mb-2">まず並列調査、次に結果を統合して実装</p>
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# フェーズ1: 並列��査
+> 「以下を並列で調査して:
+>  1. パフォーマンスのボトルネック箇所
+>  2. セキュリティ上の脆弱性
+>  3. コードの重複箇所
+>  結果をレポートにまとめて」
+
+# フェーズ2: 調査結果に基づいて実装
+> 「調査結果に基づいて、優先度が高い問題から
+>  修正して。ただし1つずつ順番に修正して、
+>  テストがパスすることを確認してから次に進んで」</code>
+      </div>
+      <p class="text-xs text-gray-600">調査は並列で高速化し、実装は順次で安全に行うハイブリッドパターン。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン4: worktreeを使った安全な並列変更</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-xs text-gray-600 mb-2">Git worktree（同一リポジトリの並列作業コピー）で競合を回避</p>
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「worktreeを使って、以下の3つの変更を並列で行って:
+>  1. ブランチ feat/add-validation — 入力バリデーション追加
+>  2. ブランチ feat/add-logging — ログ出力追加
+>  3. ブランチ feat/add-error-pages — エラーページ作��
+>  各ブランチのPRを作成して、後でマージする」</code>
+      </div>
+      <p class="text-xs text-gray-600">worktreeはGitの機能で、1つのリポジトリから複数の作業ディレクトリを作る仕組み。Claude Codeがこれを活用して安全に並列作業���行う。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">並列調査を実行</p>
+            <p class="text-xs text-gray-600">自分のプロジェクトで「ディレクトリごとに並列でコードレビューして」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">機能分割パターンを試す</p>
+            <p class="text-xs text-gray-600">異なる種類の作業（例: テスト追加 + ドキュメント生成）を並列で実行させる</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">速度の違いを体感</p>
+            <p class="text-xs text-gray-600">同じタスクを「順次実行」と「並列実行」で比較し、処理時間の差を実感する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">並列処理の鍵は「独立性の確保」。変更対象が重ならないようにタスクを分割し、依存関係がある作業は順次実行にする。調査は並列、実装は慎重に、がベストプラクティス。</p>
+    </div>
+  </section>
+</div>

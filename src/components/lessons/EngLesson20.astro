@@ -1,0 +1,143 @@
+---
+// Eng Ch.3 Lesson 2: Permission modesの理解と安全な操作
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Permission modesで安全に作業する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeはファイルの作成・編集・コマンド実行など強力な操作ができる。
+      Permission modes（権限モード）を正しく理解し、安全に作業する方法を学ぶ。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">なぜPermission modesが重要か</p>
+      <p class="text-sm text-gray-700">
+        本番環境に影響するコマンドの誤実行を防ぎ、チーム全体のセキュリティポリシーに沿った運用ができる。
+      </p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">5つのPermission modes</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-sm">🔒</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Ask（デフォルト）</h3>
+            <p class="text-[11px] text-gray-500">すべてのツール使用時に確認を求める</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">最も安全。初めてのプロジェクトや本番環境での作業に推奨。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-sm">⚡</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Auto Edit</h3>
+            <p class="text-[11px] text-gray-500">ファイル編集は自動許可、コマンド実行は確認</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">日常的な開発作業に便利。コードの編集は信頼するが、シェルコマンドは確認する。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-sm">🚀</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">Full Auto</h3>
+            <p class="text-[11px] text-gray-500">すべてのツール使用を自動許可</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">完全自動化。信頼できるプロジェクトでの高速開発向け。リスクを理解した上で使用する。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">設定方法</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">起動時に指定</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# デフォルト（Ask mode）
+$ claude
+
+# Full Autoモードで起動
+$ claude --allowedTools '*'
+
+# 特定のツールだけ許可
+$ claude --allowedTools 'Edit,Write,Read'</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">settings.jsonで永続設定</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# ~/.claude/settings.json
+# プロジェクトごとに .claude/settings.json でも設定可能
+
+> 「Claude Codeの設定ファイルを確認して。
+>  現在のPermission modesと
+>  allowedToolsの設定を表示して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">allowedToolsの細かな制御</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# settings.json で許可するツールを細かく指定
+# Read, Edit, Write: ファイル操作
+# Bash: シェルコマンド実行
+# Glob, Grep: ファイル検索
+
+> 「.claude/settings.json を作成して。
+>  allowedToolsにEdit, Write, Read, Glob, Grepを許可し、
+>  Bash(npm test)とBash(npm run lint)も許可して。
+>  それ以外のBashコマンドは確認を求める設定にして」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">現在の権限設定を確認</p>
+            <p class="text-xs text-gray-600">Claude Codeで <code class="bg-base-bg px-1 rounded">/permissions</code> を実行して現在の設定を確認する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">プロジェクト用のsettings.jsonを作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「.claude/settings.jsonを作成して、ファイル操作は許可、Bashは確認する設定にして」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">動作を確認</p>
+            <p class="text-xs text-gray-600">ファイル編集が自動で行われ、コマンド実行時に確認が出ることを確かめる</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Permission modesは「便利さ」と「安全性」のトレードオフ。開発初期はAsk modeで安全に、慣れてきたらAuto Editへ移行するのがおすすめ。本番環境での作業は常にAsk modeを使う。</p>
+    </div>
+  </section>
+</div>

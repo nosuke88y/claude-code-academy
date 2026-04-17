@@ -1,0 +1,133 @@
+---
+// Eng Ch.9 Lesson 3: 大規模タスクの分割と委譲
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">大規模タスクを戦略的に分割する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      実務では「APIを全面リニューアル」「テストカバレッジを30%から80%に」といった大規模タスクが発生する。
+      これらを効率的にClaude Codeで処理するための分割・委譲戦��を学ぶ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">��割戦略1: マイグレーション</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">例: JavaScript → TypeScript移行</h3>
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「JavaScriptからTypeScriptへの移行を計画して。
+>  フェーズ分割:
+>  1. 分析: .jsファイルの一覧と依存関係を調査
+>  2. 優先順位: 依存が少ない末端ファイルから順に並べる
+>  3. 変換: 優先順に並列でTS化（型推論で自動付与）
+>  4. 検証: tscで型エラーがないことを確認
+>
+>  各フェーズの成果物とゴールを明確にして」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">分割戦略2: テストカバレッジ向��</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「テストカバレッジを向上させるプランを作って。
+>  現状: 30%（主にユーティリティのみ）
+>  目標: 80%
+>
+>  進め方:
+>  1. カバレッジレポートを分析して未テスト箇所を��定
+>  2. 重要度でランク付け（ビジネスロジック > UI > ユーティリティ）
+>  3. モジュールごとに並列でテスト作成
+>  4. カバレッジの推移を追跡」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">分割戦略3: API全面リニューアル</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「REST APIをv1→v2にリニューアルする計画を立てて。
+>  要件:
+>  - v1とv2を並行稼働（後方互換性を維持）
+>  - v2はOpenAPI仕様を先に定義
+>  - エンドポイントごとに移行
+>
+>  分割方法:
+>  1. [調査] 全エンドポイントの一覧と利用状況
+>  2. [設計] v2のOpenAPI仕様をエンドポイントごとに定義
+>  3. [実装] 各エンドポイントを並列で実装
+>  4. [テスト] v1とv2の出力が一致するか検証
+>  5. [移行] クライアントをv1→v2に段階的に切り替え」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">進捗管理のテクニッ���</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">チェックリスト方��</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「移行タスクの進捗チェックリストを
+>  MIGRATION_STATUS.md として作成して。
+>  各ファイルの移行状態（未着手/進行中/完了/検証済み）を
+>  一覧で管理できる形式にして」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">段階的な実行</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「MIGRATION_STATUS.mdを確認して、
+>  次に着手すべきファイルを5つ選んで並列で移行して。
+>  完了したらステータスを更新して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハ���ズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">大規模タスクを選ぶ</p>
+            <p class="text-xs text-gray-600">自分のプロジェクトで「テスト追加」「型定義の改善」「ドキュメント整備」など大規模タスクを1つ選ぶ</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">分割計画を作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「このタスクを分割して実行計画を立てて」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">最初のバッチを実行</p>
+            <p class="text-xs text-gray-600">計画の最初のバッチ（5ファイル程度）を並列で実行し、品質を確認する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">大規模タスクの鍵は「計画 → 小バッチ実行 → 検証 → 次のバッチ」のサイクル。一度に全部やろうとせず、小さなバッチで品質を確認しながら進める。Claude Codeに計画立案と進捗管理の両方を任せることで、人間は意思決定に集中できる。</p>
+    </div>
+  </section>
+</div>

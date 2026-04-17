@@ -1,0 +1,130 @@
+---
+// Eng Ch.6 Lesson 2: 認証実装（NextAuth/Supabase Auth）
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">認証をClaude Codeで実装する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ユーザー認証はほぼすべてのWebアプリに必要だが、実装が複雑でミスがセキュリティリスクに直結する。
+      Claude Codeを活用して、安全な認証を効率的に実装する方法を学ぶ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">NextAuth.js（Auth.js）による認証</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">初期セットアップ</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「NextAuth.js v5をセットアップして。
+>  1. 必要なパッケージのインストール
+>  2. auth.ts設定ファイルの作成
+>  3. Google OAuth プロバイダーの設定
+>  4. セッション管理（JWT方式）
+>  5. 必要な環境変数を.env.exampleに追記
+>  6. ミドルウェアで保護するルートの設定」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">ロールベースアクセス制御</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「ロールベースのアクセス制御を実装して。
+>  ロール: admin, editor, viewer
+>  - admin: 全ページアクセス可能
+>  - editor: ダッシュボード + 編集ページ
+>  - viewer: ダッシュボードのみ
+>  ミドルウェアとコンポーネントの両方でチェック」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Supabase Authによる認証</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">メール+パスワード認証</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「Supabase Authでメール認証を実装して。
+>  1. Supabaseクライアントの設定
+>  2. サインアップフォーム（メール確認付き）
+>  3. ログインフォーム
+>  4. パスワードリセット機能
+>  5. セッション管理とログアウト
+>  6. 認証状態に応じたUI切り替え」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Row Level Security（RLS）</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「Supabaseのテーブルにrow level security（行単位のアクセス制御）を設定して。
+>  todosテーブル:
+>  - SELECT: 自分のデータのみ閲覧可能
+>  - INSERT: 自分のuser_idでのみ作成可能
+>  - UPDATE/DELETE: 自分のデータのみ操作可能
+>  SQLのポリシーを作成して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">認証実装のセキュリティチェック</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「認証周りのセキュリティをレビューして。
+>  チェック項目:
+>  - CSRF対策（クロスサイトリクエストフォージェリ防止）
+>  - セッションハイジャック対策
+>  - パスワードのハッシュ化
+>  - ブルートフォース攻撃対策（レート制限）
+>  - 安全なCookie設定（HttpOnly, Secure, SameSite）」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">認証方式を選択</p>
+            <p class="text-xs text-gray-600">Claude Codeに「NextAuth.jsとSupabase Authの違いを説明して、このプロジェクトにどちらが適切か提案して」と聞く</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">認証を実装</p>
+            <p class="text-xs text-gray-600">選択した方式で、サインアップ・ログイン・ログアウトを一気に実装させる</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">セキュリティレビュー</p>
+            <p class="text-xs text-gray-600">実装後にClaude Codeにセキュリティレビューを依頼し、指摘を修正する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">認証は「自分で一から実装しない」が鉄則。NextAuth.jsやSupabase Authのような実績のあるライブラリを使い、Claude Codeにはその設定と統合を任せる。セキュリティレビューは必ず実施すること。</p>
+    </div>
+  </section>
+</div>

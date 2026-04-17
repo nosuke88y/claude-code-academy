@@ -1,0 +1,129 @@
+---
+// Eng Ch.8 Lesson 4: 独自MCPサーバーの作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">独自のMCPサーバーを作成する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      既存のMCPサーバーでカバーできない機能は、自分で作ることができる。
+      TypeScriptで独自のMCPサーバーを作成し、Claude Codeのツールとして使えるようにする方法を学ぶ。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">独自MCPサーバーが有効な場面</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>社内APIとの連携（独自REST API、GraphQL）</li>
+        <li>社内ツール操作の自動化（Jira、Confluence等）</li>
+        <li>独自のデータ処理パイプライン</li>
+        <li>特定のドメイン知識を活用するツール</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPサーバーの基本構造</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「TypeScriptでシンプルなMCPサーバーを作成して。
+>  機能: 天気情報APIを呼び出して天気を返す
+>  要件:
+>  1. @modelcontextprotocol/sdk を使用
+>  2. 'get_weather' ツールを定義
+>  3. 引数: city（都市名）
+>  4. OpenWeatherMap APIを呼び出す
+>  5. MCPプロトコルに準拠したレスポンスを返す」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践: 社内API連携MCPサーバー</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">ツール定義</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「社内の顧客管理APIと連携するMCPサーバーを作って。
+>  ツール:
+>  - search_customers: 顧客検索（名前、メール、会社名）
+>  - get_customer_detail: 顧客詳細取得（ID指定）
+>  - update_customer_status: ステータス更新
+>  APIのベースURL: https://api.internal.example.com/v1
+>  認証: Authorization ヘッダーにBearerトークン」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">settings.jsonへの登録</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 作成したMCPサーバーを登録
+"mcpServers": {
+  "internal-crm": {
+    "command": "node",
+    "args": ["./mcp-servers/crm-server/dist/index.js"],
+    "env": {
+      "API_BASE_URL": "https://api.internal.example.com/v1",
+      "API_TOKEN": "your-api-token"
+    }
+  }
+}</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPサーバーのテスト</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「作成したMCPサーバーのテストを書いて。
+>  テスト項目:
+>  1. ツール一覧が正しく返ること
+>  2. 各ツールに正しい引数を渡すと期待通りのレスポンスが返ること
+>  3. 不正な引数にはエラーレスポンスが返ること
+>  4. API接続エラー時のエラーハンドリング
+>  VitestとMSW（APIモック）を使用」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">MCPサーバーのプロジェクト作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「シンプルなMCPサーバーのプロジェクトを作って。@modelcontextprotocol/sdkを使用」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">ツールを実装</p>
+            <p class="text-xs text-gray-600">1つ以上のツール（例: ファイル変換、テキスト処理など）を定義して実装する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Claude Codeに接続して使う</p>
+            <p class="text-xs text-gray-600">settings.jsonに登録し、Claude Codeから自作ツールを呼び出して動作を確認する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">独自MCPサーバーの作成はClaude Code自体に依頼できる。「こういう機能のMCPサーバーを作って」と伝えれば、プロジェクトの雛形からツール定義まで一気に生成してくれる。社内ツールとの連携に特に有効。</p>
+    </div>
+  </section>
+</div>

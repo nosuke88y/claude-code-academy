@@ -1,0 +1,173 @@
+---
+// Eng Ch.9 Lesson 4: 最終演習 — フルスタック開発
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">最終演習: Claude Codeでフルスタック開発</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      これまで学んだ全てのスキルを使い、Claude Codeでフルスタックアプリケーションを開発する。
+      設計→実装→テスト→セキュリティ→デプロイまでの一連のフローを実践する。
+    </p>
+    <div class="bg-gradient-to-br from-primary-bg to-white rounded-xl p-6 mb-4 border border-primary-border">
+      <p class="text-sm text-primary font-bold mb-2">上級コース最終プロジェクト</p>
+      <p class="text-sm text-gray-700">このプロジェクトを完了すると、エンジニアコースの全修了バッジを獲得できます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロジェクトテーマ（いずれか1つを選択）</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-sm">A</div>
+          <h3 class="text-sm font-semibold text-gray-900">チームタスク管理ツール</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">要件: ユーザー認証、タスクCRUD、チーム機能、リアルタイム更新</p>
+        <div class="flex flex-wrap gap-1">
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">Next.js</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">Supabase</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">Vercel</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-sm">B</div>
+          <h3 class="text-sm font-semibold text-gray-900">社内ナレッジベース</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">要件: Markdown記事、タグ検索、権限管理、MCPによる外部連携</p>
+        <div class="flex flex-wrap gap-1">
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">Astro</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">PostgreSQL</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">Railway</span>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-sm">C</div>
+          <h3 class="text-sm font-semibold text-gray-900">自分のアイデア</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">以下の要件を満たす任意のアプリケーション</p>
+        <div class="flex flex-wrap gap-1">
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">認証あり</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">DB操作あ��</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-bg text-gray-500">デプロイ済み</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">進め方（7ステップ）</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">1</div>
+          <h3 class="text-sm font-semibold text-gray-900">設計（CLAUDE.md + Custom Commands）</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> ���以下のアプリを設計して。CLAUDE.mdを作成し、
+>  .claude/commandsにreviewとdeployコマンドを作成して。
+>  [要件を記述]」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">2</div>
+          <h3 class="text-sm font-semibold text-gray-900">バックエンド実装（TDD）</h3>
+        </div>
+        <p class="text-xs text-gray-600">Ch.4で学んだTDDパターンで、テストを先に書いてから実装する。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">3</div>
+          <h3 class="text-sm font-semibold text-gray-900">フロントエンド実装</h3>
+        </div>
+        <p class="text-xs text-gray-600">コンポーネント設計→実装。サブエージェントで並列に複数ページを実装可能。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">4</div>
+          <h3 class="text-sm font-semibold text-gray-900">認証・権限設定（Ch.6）</h3>
+        </div>
+        <p class="text-xs text-gray-600">NextAuth.jsまたはSupabase Authで認証を実装。環境変数を適切に管理。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">5</div>
+          <h3 class="text-sm font-semibold text-gray-900">セキュリティレビュー（Ch.7）</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> /project:security-review</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">6</div>
+          <h3 class="text-sm font-semibold text-gray-900">CI/CD + デプロイ（Ch.6, Ch.7）</h3>
+        </div>
+        <p class="text-xs text-gray-600">GitHub Actionsでテスト自動化。Vercel/Railwayにデプロイ。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary-bg text-primary flex items-center justify-center text-xs font-bold">7</div>
+          <h3 class="text-sm font-semibold text-gray-900">最終レビュー + ドキュメント</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このプロジェクトの最終レビューをして。
+>  コード品質、セキュリティ、テストカバレッジ、
+>  ドキュメントの完成度を評価��て」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">完了チェックリスト</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-2">
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">CLAUDE.mdが作成されている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">Custom slash commandsが設���されている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">ユーザー認証が実装されている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">���ストが書かれている（カバレッジ50%以上���</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">セキュリティレビューを実施した</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">環境変数が適切に管理されている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">CI/CDパイプラインが設定されている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">本番環境にデプロイされている</span></div>
+        <div class="flex items-center gap-2"><span class="text-sm">☐</span><span class="text-xs text-gray-600">READMEが充実している</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-gradient-to-br from-primary-bg to-white rounded-xl p-6 border border-primary-border">
+      <div class="text-center">
+        <div class="text-4xl mb-3">🎓</div>
+        <h2 class="text-lg font-bold text-gray-900 mb-2">エンジニアコース完了おめでとうございます！</h2>
+        <p class="text-sm text-gray-600 mb-4">
+          Claude Codeを使いこなし、設計からデプロイまで一気通貫で開発できるスキルを習得しました。
+          これからは学んだスキルを実務で活かし、チーム全体の生産性向上に貢献してください。
+        </p>
+        <div class="flex justify-center gap-3">
+          <div class="px-4 py-2 bg-green-50 rounded-lg border border-green-200">
+            <p class="text-xs font-medium text-green-700">コアコース修了</p>
+          </div>
+          <div class="px-4 py-2 bg-purple-50 rounded-lg border border-purple-200">
+            <p class="text-xs font-medium text-purple-700">上級��ース修了</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

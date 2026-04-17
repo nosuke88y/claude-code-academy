@@ -1,0 +1,152 @@
+---
+// Eng Ch.8 Lesson 3: GitHub・Slack・DB連携の実践
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPで外部サービスと連携する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      MCPサーバーの真価は、複数の外部サービスとClaude Codeを繋ぐことで発揮される。
+      GitHub、Slack、データベースを連携させ、開発ワークフロー全体を自動化する実践テクニックを学ぶ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">GitHub MCP連携</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">セットアップ</h3>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# settings.json
+"mcpServers": {
+  "github": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-github"],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxx"
+    }
+  }
+}</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">GitHub MCPの活用例</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# Issue一覧を取得して分析
+> 「GitHubのIssue一覧を取得して、
+>  ラベル別に分類し、優先度が高いものを特定して」
+
+# Issue内容からPRを作成
+> 「Issue #42の内容を読んで、修正のPRを作成して。
+>  ブランチ作成 → コード修正 → テスト → PR作成
+>  まで一気通貫で実行して」
+
+# リポジトリの分析
+> 「このリポジトリの直近30日のPRマージ頻度と
+>  平均レビュー時間を分析して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Slack MCP連携</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <p class="text-[11px] text-yellow-600 bg-yellow-50 px-2 py-1 rounded mb-2 inline-block">コミュニティ製 — ソースコード確認推奨</p>
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">活用例</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# デプロイ完了通知
+> 「デプロイが完了したら #dev-notifications チャンネルに
+>  バージョン、変更内容、デプロイURLを通知して」
+
+# エラー報告の自動化
+> 「テストが失敗した場合、エラー内容をまとめて
+>  #alerts チャンネルに投稿して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">DB MCP連携の実践</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">スキーマの理解と操作</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# テーブル構造の全体把握
+> 「DBに接続して、全テーブルの構造を一覧にして。
+>  テーブル間のリレーション（外部キー）も図示して」
+
+# データ分析
+> 「ordersテーブルから月別の売上集計を出して。
+>  前月比も計算して」
+
+# マイグレーション支援
+> 「usersテーブルにprofile_image_urlカラムを追加する
+>  マイグレーションSQLを生成して。
+>  既存データにはデフォルト値nullを設定」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">複数MCPの組み合わせ</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">ワークフロー自動化の例</h3>
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「以下のワークフローを実行して:
+>  1. [GitHub MCP] Issue #50の内容を取得
+>  2. [コード編集] Issueに基づいてバグを修正
+>  3. [テスト実行] テストがパスすることを確認
+>  4. [GitHub MCP] PRを作成
+>  5. [Slack MCP] #dev チャンネルにPR作成を通知」</code>
+      </div>
+      <p class="text-xs text-gray-600">複数のMCPサーバーを組み合わせることで、サービスをまたいだワークフローの自動化が可能。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">GitHub MCPを設定</p>
+            <p class="text-xs text-gray-600">Personal Access Tokenを作成し、GitHub MCPサーバーを接続する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Issue一覧を取得</p>
+            <p class="text-xs text-gray-600">「GitHubのIssue一覧を取得して分析して」とClaude Codeに依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Issue→PR自動化を試す</p>
+            <p class="text-xs text-gray-600">特定のIssueを選び、Claude Codeに「このIssueの内容に基づいてPRを作成して」と依頼する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">MCPの真価は「組み合わせ」にある。GitHub + DB + Slackを連携させれば、Issue起票→修正→テスト→PR→通知までの一連のフローを自然言語の指示だけで自動化できる。</p>
+    </div>
+  </section>
+</div>

@@ -54,9 +54,10 @@ const trackConfigs: Record<string, TrackConfig> = {
   },
   engineer: {
     title: "エンジニアコース",
-    sub: "開発ワークフロー → CI/CD統合まで · 5チャプター",
+    sub: "コアコース（Ch.1-6）＋ 上級コース（Ch.7-9）· 9チャプター · 34レッスン",
     storageKey: "cca-progress-eng",
     chapters: [
+      // === コアコース ===
       { id: "ch1", title: "Ch.1 — Claude Codeをエンジニアが使うべき理由", meta: "3レッスン · 約25分 · 読み物＋クイズ", totalLessons: 3, lessons: [
         { id: "l1", name: "既存ツールとの違い・優位性", type: "読み物" },
         { id: "l2", name: "実際の開発フローへの組み込み方", type: "解説" },
@@ -68,29 +69,59 @@ const trackConfigs: Record<string, TrackConfig> = {
         { id: "l3", name: "複雑な要件定義の伝え方", type: "ハンズオン" },
         { id: "l4", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch3", title: "Ch.3 — 実践的な開発ワークフロー", meta: "4レッスン · 約50分 · Ch.2完了で解放", totalLessons: 4, lessons: [
+      { id: "ch3", title: "Ch.3 — 既存コードベースの理解と日常開発", meta: "4レッスン · 約55分 · Ch.2完了で解放 · ★新設", totalLessons: 4, lessons: [
+        { id: "l1", name: "既存プロジェクトへの導入・コードリーディング", type: "ハンズオン" },
+        { id: "l2", name: "Permission modesの理解と安全な操作", type: "ハンズオン" },
+        { id: "l3", name: "Custom slash commandsの作成と活用", type: "ハンズオン" },
+        { id: "l4", name: "本番障害の調査・修正フロー", type: "ハンズオン" },
+      ]},
+      { id: "ch4", title: "Ch.4 — 実践的な開発ワークフロー", meta: "4レッスン · 約45分 · Ch.3完了で解放", totalLessons: 4, lessons: [
         { id: "l1", name: "TDD（テスト駆動開発）とClaude Code", type: "ハンズオン" },
         { id: "l2", name: "リファクタリング・コードレビュー依頼", type: "ハンズオン" },
         { id: "l3", name: "デバッグの効率化", type: "ハンズオン" },
         { id: "l4", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch4", title: "Ch.4 — チーム開発での活用", meta: "3レッスン · 約30分 · Ch.3完了で解放", totalLessons: 3, lessons: [
+      { id: "ch5", title: "Ch.5 — チーム開発での活用", meta: "3レッスン · 約30分 · Ch.4完了で解放", totalLessons: 3, lessons: [
         { id: "l1", name: "PR作成・レビューの自動化", type: "ハンズオン" },
         { id: "l2", name: "ドキュメント自動生成", type: "ハンズオン" },
         { id: "l3", name: "チェックテスト", type: "クイズ" },
       ]},
-      { id: "ch5", title: "Ch.5 — 実践演習：本格アプリ開発", meta: "4レッスン · 約90分 · Ch.4完了で解放", totalLessons: 4, lessons: [
-        { id: "l1", name: "設計〜実装〜デプロイの一気通貫", type: "読み物" },
-        { id: "l2", name: "REST API開発", type: "ハンズオン" },
-        { id: "l3", name: "フロントエンド実装", type: "ハンズオン" },
-        { id: "l4", name: "最終演習", type: "プロジェクト" },
+      { id: "ch6", title: "Ch.6 — デプロイ・認証・運用", meta: "4レッスン · 約50分 · Ch.5完了で解放 · ★新設", totalLessons: 4, lessons: [
+        { id: "l1", name: "Vercel/Railway/Renderへのデプロイ自動化", type: "ハンズオン" },
+        { id: "l2", name: "認証実装（NextAuth/Supabase Auth）", type: "ハンズオン" },
+        { id: "l3", name: "環境変数・シークレット管理", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      // === 上級コース ===
+      { id: "ch7", title: "Ch.7 — Hooks・CI/CD・セキュリティ", meta: "4レッスン · 約50分 · Ch.6完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "Claude Code Hooksの設定と活用", type: "ハンズオン" },
+        { id: "l2", name: "GitHub ActionsとClaude Codeの連携", type: "ハンズオン" },
+        { id: "l3", name: "セキュリティレビュー自動化", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch8", title: "Ch.8 — MCPサーバーとツール連携", meta: "4レッスン · 約60分 · Ch.7完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "MCPとは何か・なぜ重要か", type: "読み物" },
+        { id: "l2", name: "MCPサーバーのセットアップ", type: "ハンズオン" },
+        { id: "l3", name: "GitHub・Slack・DB連携の実践", type: "ハンズオン" },
+        { id: "l4", name: "独自MCPサーバーの作成", type: "ハンズオン" },
+      ]},
+      { id: "ch9", title: "Ch.9 — サブエージェントと並列処理", meta: "4レッスン · 約70分 · Ch.8完了で解放 · 上級", totalLessons: 4, lessons: [
+        { id: "l1", name: "サブエージェントの仕組みと活用場面", type: "読み物" },
+        { id: "l2", name: "並列タスク処理の設計パターン", type: "ハンズオン" },
+        { id: "l3", name: "大規模タスクの分割と委譲", type: "ハンズオン" },
+        { id: "l4", name: "最終演習：フルスタック開発", type: "プロジェクト" },
       ]},
     ],
     achievements: [
       { id: "eng-intro", icon: "⚡", name: "エンジニア入門", condition: "Ch.1完了で解放", chapterId: "ch1" },
       { id: "eng-prompt", icon: "🧠", name: "プロンプトマスター", condition: "Ch.2完了で解放", chapterId: "ch2" },
-      { id: "eng-workflow", icon: "🔄", name: "ワークフローマスター", condition: "Ch.3完了で解放", chapterId: "ch3" },
-      { id: "eng-team", icon: "👥", name: "チーム開発マスター", condition: "Ch.4完了で解放", chapterId: "ch4" },
+      { id: "eng-codebase", icon: "📖", name: "コードリーダー", condition: "Ch.3完了で解放", chapterId: "ch3" },
+      { id: "eng-workflow", icon: "🔄", name: "ワークフローマスター", condition: "Ch.4完了で解放", chapterId: "ch4" },
+      { id: "eng-team", icon: "👥", name: "チーム開発マスター", condition: "Ch.5完了で解放", chapterId: "ch5" },
+      { id: "eng-deploy", icon: "🚀", name: "コアコース修了", condition: "Ch.6完了で解放", chapterId: "ch6" },
+      { id: "eng-security", icon: "🛡️", name: "セキュリティマスター", condition: "Ch.7完了で解放", chapterId: "ch7" },
+      { id: "eng-mcp", icon: "🔌", name: "MCP マスター", condition: "Ch.8完了で解放", chapterId: "ch8" },
+      { id: "eng-master", icon: "🎓", name: "上級コース修了", condition: "Ch.9完了で解放", chapterId: "ch9" },
     ],
   },
 };

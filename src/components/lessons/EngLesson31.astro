@@ -1,0 +1,124 @@
+---
+// Eng Ch.8 Lesson 1: MCPとは何か・なぜ重要か
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPでClaude Codeの能力を拡張する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      MCP（Model Context Protocol）は、AIモデルと外部ツール・データソースを接続するオープンプロトコル。
+      Claude CodeにMCPサーバーを接続すると、データベース操作、GitHub連携、Slack通知など、
+      標準機能にない操作が可能になる。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-2">MCPの仕組み</p>
+      <div class="bg-white rounded-lg p-4">
+        <div class="flex items-center justify-between text-center">
+          <div class="flex-1">
+            <div class="w-12 h-12 rounded-lg bg-primary-bg mx-auto flex items-center justify-center text-xl mb-1">🤖</div>
+            <p class="text-xs font-medium text-gray-900">Claude Code</p>
+            <p class="text-[10px] text-gray-500">MCPクライアント</p>
+          </div>
+          <div class="flex-1 text-gray-400">
+            <p class="text-lg">⟷</p>
+            <p class="text-[10px]">MCPプロトコル</p>
+          </div>
+          <div class="flex-1">
+            <div class="w-12 h-12 rounded-lg bg-green-50 mx-auto flex items-center justify-center text-xl mb-1">🔧</div>
+            <p class="text-xs font-medium text-gray-900">MCPサーバー</p>
+            <p class="text-[10px] text-gray-500">ツール・データ提供</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPで何ができるか</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-sm">🗃️</div>
+          <h3 class="text-sm font-semibold text-gray-900">データベース操作</h3>
+        </div>
+        <p class="text-xs text-gray-600">PostgreSQL、MySQL等のDBに直接クエリを実行。テーブル構造の確認、データの検索・更新が自然言語で可能。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-sm">📦</div>
+          <h3 class="text-sm font-semibold text-gray-900">GitHub連携</h3>
+        </div>
+        <p class="text-xs text-gray-600">Issue作成、PR管理、リポジトリ検索をClaude Codeから直接操作。ワークフローの完全自動化が可能。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center text-sm">💬</div>
+          <h3 class="text-sm font-semibold text-gray-900">Slack連携</h3>
+        </div>
+        <p class="text-xs text-gray-600">チャンネルへのメッセージ送信、通知の受信。デプロイ完了通知やエラーアラートの自動化に活用。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center text-sm">📁</div>
+          <h3 class="text-sm font-semibold text-gray-900">ファイルシステム拡張</h3>
+        </div>
+        <p class="text-xs text-gray-600">セキュアなファイル操作、特定ディレクトリへのアクセス制御。公式のfilesystem MCPサーバーで実現。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">公式 vs コミュニティ MCPサーバー</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-3">
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">公式MCPサーバー（Anthropic提供）</h3>
+          <p class="text-xs text-gray-600 mb-2">品質と安全性が保証されている。</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">filesystem</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">GitHub</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">PostgreSQL</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">Puppeteer</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900 mb-1">コミュニティ製MCPサーバー</h3>
+          <p class="text-xs text-gray-600 mb-2">サードパーティ開発。使用前にソースコードを確認推奨。</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Slack</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Notion</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Linear</span>
+            <span class="text-[11px] px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPの設定方法（概要）</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-xs text-gray-600 mb-2">Claude Codeでの設定先: <code class="bg-base-bg px-1 rounded">settings.json</code> の <code class="bg-base-bg px-1 rounded">mcpServers</code> キー</p>
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# Claude Codeの場合（settings.json）
+# ※ Claude Desktopとは設定ファイルが異なるので注意
+
+> 「MCPサーバーの設定方法を教えて。
+>  Claude Codeのsettings.jsonで
+>  mcpServersを設定する方法を
+>  ステップバイステップで説明して」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">MCPはClaude Codeの「拡張スロット」。標準機能で足りない操作は、MCPサーバーを接続することで追加できる。次のレッスンで実際にセットアップする。まずは「MCPで何ができるか」の全体像を掴もう。</p>
+    </div>
+  </section>
+</div>

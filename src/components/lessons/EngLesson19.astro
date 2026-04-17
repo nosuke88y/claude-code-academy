@@ -1,0 +1,125 @@
+---
+// Eng Ch.3 Lesson 1: 既存プロジェクトへの導入・コードリーディング依頼
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">既存コードベースを素早く理解する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      実務で最も多い場面は「既存プロジェクトへの途中参加」。
+      巨大なコードベースを短時間で把握するために、Claude Codeを活用するテクニックを学ぶ。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">このレッスンで学ぶこと</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>プロジェクト全体の構造を把握する方法</li>
+        <li>重要ファイル・エントリポイントの特定</li>
+        <li>依存関係とアーキテクチャの読み解き</li>
+        <li>既存プロジェクトにCLAUDE.mdを設定する</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: プロジェクト全体像の把握</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      新しいプロジェクトに参加したら、まずClaude Codeに全体像を聞こう。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# プロジェクト全体の構造を把握する
+> 「このプロジェクトの全体構造を説明して。
+>  1. 主要なディレクトリとその役割
+>  2. 使用している技術スタック
+>  3. エントリポイント（アプリケーションの起動地点）
+>  4. 設定ファイル（package.json, tsconfig等）の概要」
+
+# 特定の機能の実装を追いかける
+> 「ユーザー認証の処理フローを追いかけて。
+>  ログイン → セッション管理 → 認可チェック
+>  の流れで、関連するファイルを順番に説明して」</code>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: 依存関係の理解</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">パッケージの依存関係を調査</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「package.jsonを分析して。
+>  1. 主要な依存パッケージとその用途を一覧にして
+>  2. devDependenciesの中でビルド・テストに重要なものを説明
+>  3. 古いバージョンや非推奨のパッケージがあれば指摘して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">モジュール間の依存関係</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「src/ 配下のモジュール間の依存関係を分析して。
+>  どのモジュールがどのモジュールをimportしているか、
+>  循環依存（モジュールAがBを、BがAを参照する問題）がないか確認して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: CLAUDE.mdでオンボーディングを効率化</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      プロジェクトの理解が進んだら、CLAUDE.mdを作成して知見を蓄積しよう。
+      これにより、Claude Codeへの指示精度が上がり、チームメンバーの参加もスムーズになる。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このプロジェクトの構造を分析して、CLAUDE.mdを作成して。
+>  含める内容:
+>  - プロジェクト概要（何をするアプリか）
+>  - 技術スタック一覧
+>  - ディレクトリ構成と各ディレクトリの役割
+>  - 開発コマンド（dev, test, build, lint）
+>  - 命名規則やコーディングスタイル
+>  - よく使うファイルパス」</code>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">自分のプロジェクトを開く</p>
+            <p class="text-xs text-gray-600">既存のプロジェクト（GitHubからクローンしたOSSでもOK）のディレクトリでClaude Codeを起動する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">全体構造を調査</p>
+            <p class="text-xs text-gray-600">「このプロジェクトの全体構造を説明して」と依頼し、出力を確認する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">CLAUDE.mdを生成</p>
+            <p class="text-xs text-gray-600">Claude Codeに分析結果をもとにCLAUDE.mdを自動生成させ、内容をレビューする</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">既存プロジェクトの理解は「全体→部分」の順で進める。まず全体構造を把握してから、個別の機能やモジュールに潜っていく。CLAUDE.mdの作成は、自分の理解を整理するプロセスでもある。</p>
+    </div>
+  </section>
+</div>

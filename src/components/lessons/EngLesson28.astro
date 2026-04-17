@@ -1,0 +1,128 @@
+---
+// Eng Ch.7 Lesson 2: GitHub ActionsとClaude Codeの連携
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">GitHub ActionsでCI/CDを構築する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      GitHub Actionsは、コードのpushやPR作成をトリガーにして自動処理を実行するCI/CD（継続的インテグレーション/デリバリー）ツール。
+      Claude Codeを活用して、テスト・lint・デプロイのパイプラインを効率的に構築する。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">基本のワークフロー作成</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">テスト + Lint ワークフロー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「GitHub Actionsのワークフローを作成して。
+>  トリガー: PR作成・更新時
+>  ジョブ:
+>  1. ESLint + Prettier チェック
+>  2. TypeScript型チェック（tsc --noEmit）
+>  3. Vitest ユニットテスト
+>  4. テストカバレッジをPRコメントに投稿
+>  Node.js 20、pnpmを使用」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">自動デプロイワークフロー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「mainブランチへのマージ時に自動デプロイするワークフローを作って。
+>  手順:
+>  1. テスト実行（失敗したらデプロイしない）
+>  2. ビルド
+>  3. Vercelにデプロイ
+>  4. デプロイURLをSlackに通知
+>  シークレットは GitHub Secrets を使用」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Code + GitHub Actions</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">PRの自動レビュー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「GitHub ActionsでPR作成時にClaude Codeによる
+>  自動コードレビューを実行するワークフローを作って。
+>  claude -p コマンドでレビューを実行し、
+>  結果をPRコメントとして投稿する。
+>  ANTHROPIC_API_KEYはGitHub Secretsから取得」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Issue→PR自動生成</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「Issueに 'claude' ラベルが付いたら、
+>  Claude Codeが自動でブランチを作成し、
+>  Issue内容に基づいてコード変更を行い、
+>  PRを作成するワークフローを設計して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ワークフローのデバッグ</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このGitHub Actionsワークフローがエラーになる。
+>  エラーログ: [ログをペースト]
+>  原因を分析して修正して。
+>  よくある問題:
+>  - 権限不足（permissions設定）
+>  - キャッシュの不整合
+>  - Node.jsバージョンの不一致」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">CI ワークフローを作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「.github/workflows/ci.ymlを作成して、PR時にテストとlintを実行する設定にして」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">設定を確認・修正</p>
+            <p class="text-xs text-gray-600">生成されたYAMLファイルの内容を確認し、プロジェクトに合わせて調整する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">pushして動作確認</p>
+            <p class="text-xs text-gray-600">ワークフローをpushし、GitHub Actionsタブで実行結果を確認する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">GitHub Actionsのワークフロー作成はClaude Codeの得意分野。YAML構文のミスもなく、ベストプラクティスに沿った設定を生成してくれる。まずはテスト+lintの基本CIから始め、段階的にデプロイ自動化を追加しよう。</p>
+    </div>
+  </section>
+</div>

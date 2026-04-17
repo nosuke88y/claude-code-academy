@@ -1,0 +1,142 @@
+---
+// Eng Ch.6 Lesson 3: 環境変数・シークレット管理
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">環境変数とシークレットの安全な管理</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      APIキー、データベース接続文字列、OAuthシークレットなどの機密情報を安全に管理する方法を学ぶ。
+      漏洩すれば重大なセキュリティインシデントになるため、正しい運用が必須。
+    </p>
+    <div class="bg-red-50 rounded-xl p-5 mb-4 border border-red-200">
+      <p class="text-sm text-red-600 font-medium mb-1">絶対にやってはいけないこと</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>APIキーやパスワードをソースコードにハードコード（直接記述）する</li>
+        <li>.envファイルをGitにコミットする</li>
+        <li>シークレットをSlackやメールで共有する</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">.envファイルの設計</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">環境別ファイルの構成</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「環境変数の管理体制を整備して。
+>  1. .env.example を作成（値は空欄、説明コメント付き）
+>  2. .env.local（ローカル開発用）のテンプレート
+>  3. .env.test（テスト用）のテンプレート
+>  4. .gitignore に .env* を追加（.env.example は除外）
+>  5. READMEに環境変数の設定手順を追記」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">.env.example の例</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# データベース
+DATABASE_URL=          # PostgreSQL接続URL
+DIRECT_URL=            # Prisma直接接続（プーリング不使用）
+
+# 認証
+NEXTAUTH_SECRET=       # openssl rand -base64 32 で生成
+NEXTAUTH_URL=          # http://localhost:3000
+
+# OAuth
+GOOGLE_CLIENT_ID=      # Google Cloud Consoleで取得
+GOOGLE_CLIENT_SECRET=  # Google Cloud Consoleで取得
+
+# 外部API
+STRIPE_SECRET_KEY=     # Stripeダッシュボードで取得
+STRIPE_WEBHOOK_SECRET= # stripe listen で取得</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">シークレットの検出と防止</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Claude Codeでシークレット漏洩をチェック</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「プロジェクト全体をスキャンして、
+>  ハードコードされたシークレットがないか確認して。
+>  チェック対象:
+>  - APIキー（sk-xxx, api_key 等のパターン）
+>  - パスワード文字列
+>  - 接続文字列（postgresql://, mongodb:// 等）
+>  - JWTシークレット
+>  見つかった場合は環境変数への置き換え方法も提案して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">pre-commitフックで防止</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「git pre-commitフックを設定して、
+>  コミット時にシークレットが含まれていないかチェックする仕組みを作って。
+>  検出パターン: APIキー、パスワード、接続文字列」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">デプロイ先での環境変数設定</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「デプロイ環境での環境変数設定手順をまとめて。
+>  - Vercel: プロジェクト設定 → Environment Variables
+>  - Railway: Variables タブ
+>  - GitHub Actions: Repository secrets
+>  各プラットフォームでの設定方法とベストプラクティスを説明して」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">.env.exampleを生成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「このプロジェクトに必要な環境変数を分析して.env.exampleを作成して」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">シークレットスキャン</p>
+            <p class="text-xs text-gray-600">プロジェクト全体をスキャンさせ、ハードコードされたシークレットがないか確認する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">.gitignoreの確認</p>
+            <p class="text-xs text-gray-600">「.gitignoreを確認して、.envファイルが除外されているか確認して」と依頼する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">シークレット管理で最も重要なのは「予防」。.env.exampleの整備、.gitignoreの設定、pre-commitフックの導入を初期段階で行う。Claude Codeにプロジェクトのスキャンを依頼すれば、既存の漏洩リスクも発見できる。</p>
+    </div>
+  </section>
+</div>

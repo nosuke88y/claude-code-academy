@@ -51,7 +51,7 @@ import BizLesson15 from '../../components/lessons/BizLesson15.astro';
 import BizLesson16 from '../../components/lessons/BizLesson16.astro';
 import BizLesson17 from '../../components/lessons/BizLesson17.astro';
 import BizLesson18 from '../../components/lessons/BizLesson18.astro';
-// エンジニアコース (eng1-18)
+// エンジニアコース (eng1-14: 既存Ch.1-4, eng19-38: 新規Ch.3,6,7,8,9)
 import EngLesson1 from '../../components/lessons/EngLesson1.astro';
 import EngLesson2 from '../../components/lessons/EngLesson2.astro';
 import EngLesson3 from '../../components/lessons/EngLesson3.astro';
@@ -66,10 +66,26 @@ import EngLesson11 from '../../components/lessons/EngLesson11.astro';
 import EngLesson12 from '../../components/lessons/EngLesson12.astro';
 import EngLesson13 from '../../components/lessons/EngLesson13.astro';
 import EngLesson14 from '../../components/lessons/EngLesson14.astro';
-import EngLesson15 from '../../components/lessons/EngLesson15.astro';
-import EngLesson16 from '../../components/lessons/EngLesson16.astro';
-import EngLesson17 from '../../components/lessons/EngLesson17.astro';
-import EngLesson18 from '../../components/lessons/EngLesson18.astro';
+import EngLesson19 from '../../components/lessons/EngLesson19.astro';
+import EngLesson20 from '../../components/lessons/EngLesson20.astro';
+import EngLesson21 from '../../components/lessons/EngLesson21.astro';
+import EngLesson22 from '../../components/lessons/EngLesson22.astro';
+import EngLesson23 from '../../components/lessons/EngLesson23.astro';
+import EngLesson24 from '../../components/lessons/EngLesson24.astro';
+import EngLesson25 from '../../components/lessons/EngLesson25.astro';
+import EngLesson26 from '../../components/lessons/EngLesson26.astro';
+import EngLesson27 from '../../components/lessons/EngLesson27.astro';
+import EngLesson28 from '../../components/lessons/EngLesson28.astro';
+import EngLesson29 from '../../components/lessons/EngLesson29.astro';
+import EngLesson30 from '../../components/lessons/EngLesson30.astro';
+import EngLesson31 from '../../components/lessons/EngLesson31.astro';
+import EngLesson32 from '../../components/lessons/EngLesson32.astro';
+import EngLesson33 from '../../components/lessons/EngLesson33.astro';
+import EngLesson34 from '../../components/lessons/EngLesson34.astro';
+import EngLesson35 from '../../components/lessons/EngLesson35.astro';
+import EngLesson36 from '../../components/lessons/EngLesson36.astro';
+import EngLesson37 from '../../components/lessons/EngLesson37.astro';
+import EngLesson38 from '../../components/lessons/EngLesson38.astro';
 
 interface LessonInfo { chapter: string; title: string; type: string; duration: string; prev: string | null; next: string | null; isQuiz?: boolean; track: string; storageKey: string; homeHref: string; comp: string }
 
@@ -124,25 +140,50 @@ const lessonData: Record<string, LessonInfo> = {
   "biz-ch5-l2": { chapter: "Ch.5", title: "日報自動生成ツール", type: "ハンズオン", duration: "約15分", prev: "biz-ch5-l1", next: "biz-ch5-l3", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz16" },
   "biz-ch5-l3": { chapter: "Ch.5", title: "会議アジェンダ・議事録テンプレ作成", type: "ハンズオン", duration: "約12分", prev: "biz-ch5-l2", next: "biz-ch5-l4", track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz17" },
   "biz-ch5-l4": { chapter: "Ch.5", title: "最終演習", type: "プロジェクト", duration: "約30分", prev: "biz-ch5-l3", next: null, track: "business", storageKey: "cca-progress-biz", homeHref: "/track/business", comp: "biz18" },
-  // === エンジニアコース ===
+  // === エンジニアコース（9チャプター・34レッスン） ===
+  // Ch.1 — Claude Codeをエンジニアが使うべき理由（3L）
   "eng-ch1-l1": { chapter: "Ch.1", title: "既存ツールとの違い・優位性", type: "読み物", duration: "約10分", prev: null, next: "eng-ch1-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng1" },
   "eng-ch1-l2": { chapter: "Ch.1", title: "実際の開発フローへの組み込み方", type: "解説", duration: "約10分", prev: "eng-ch1-l1", next: "eng-ch1-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng2" },
   "eng-ch1-l3": { chapter: "Ch.1", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch1-l2", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng3" },
+  // Ch.2 — 高度なプロンプト設計（4L）
   "eng-ch2-l1": { chapter: "Ch.2", title: "コンテキスト最適化の技法", type: "読み物", duration: "約10分", prev: null, next: "eng-ch2-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng4" },
   "eng-ch2-l2": { chapter: "Ch.2", title: "CLAUDE.mdによるプロジェクト設定", type: "ハンズオン", duration: "約12分", prev: "eng-ch2-l1", next: "eng-ch2-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng5" },
   "eng-ch2-l3": { chapter: "Ch.2", title: "複雑な要件定義の伝え方", type: "ハンズオン", duration: "約12分", prev: "eng-ch2-l2", next: "eng-ch2-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng6" },
   "eng-ch2-l4": { chapter: "Ch.2", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch2-l3", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng7" },
-  "eng-ch3-l1": { chapter: "Ch.3", title: "TDD（テスト駆動開発）とClaude Code", type: "ハンズオン", duration: "約15分", prev: null, next: "eng-ch3-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng8" },
-  "eng-ch3-l2": { chapter: "Ch.3", title: "リファクタリング・コードレビュー依頼", type: "ハンズオン", duration: "約12分", prev: "eng-ch3-l1", next: "eng-ch3-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng9" },
-  "eng-ch3-l3": { chapter: "Ch.3", title: "デバッグの効率化", type: "ハンズオン", duration: "約12分", prev: "eng-ch3-l2", next: "eng-ch3-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng10" },
-  "eng-ch3-l4": { chapter: "Ch.3", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch3-l3", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng11" },
-  "eng-ch4-l1": { chapter: "Ch.4", title: "PR作成・レビューの自動化", type: "ハンズオン", duration: "約12分", prev: null, next: "eng-ch4-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng12" },
-  "eng-ch4-l2": { chapter: "Ch.4", title: "ドキュメント自動生成", type: "ハンズオン", duration: "約10分", prev: "eng-ch4-l1", next: "eng-ch4-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng13" },
-  "eng-ch4-l3": { chapter: "Ch.4", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch4-l2", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng14" },
-  "eng-ch5-l1": { chapter: "Ch.5", title: "設計〜実装〜デプロイの一気通貫", type: "読み物", duration: "約10分", prev: null, next: "eng-ch5-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng15" },
-  "eng-ch5-l2": { chapter: "Ch.5", title: "REST API開発", type: "ハンズオン", duration: "約20分", prev: "eng-ch5-l1", next: "eng-ch5-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng16" },
-  "eng-ch5-l3": { chapter: "Ch.5", title: "フロントエンド実装", type: "ハンズオン", duration: "約20分", prev: "eng-ch5-l2", next: "eng-ch5-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng17" },
-  "eng-ch5-l4": { chapter: "Ch.5", title: "最終演習", type: "プロジェクト", duration: "約60分", prev: "eng-ch5-l3", next: null, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng18" },
+  // Ch.3 — 既存コードベースの理解と日常開発（4L）★新設
+  "eng-ch3-l1": { chapter: "Ch.3", title: "既存プロジェクトへの導入・コードリーディング", type: "ハンズオン", duration: "約15分", prev: null, next: "eng-ch3-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng19" },
+  "eng-ch3-l2": { chapter: "Ch.3", title: "Permission modesの理解と安全な操作", type: "ハンズオン", duration: "約12分", prev: "eng-ch3-l1", next: "eng-ch3-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng20" },
+  "eng-ch3-l3": { chapter: "Ch.3", title: "Custom slash commandsの作成と活用", type: "ハンズオン", duration: "約12分", prev: "eng-ch3-l2", next: "eng-ch3-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng21" },
+  "eng-ch3-l4": { chapter: "Ch.3", title: "本番障害の調査・修正フロー", type: "ハンズオン", duration: "約15分", prev: "eng-ch3-l3", next: null, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng22" },
+  // Ch.4 — 実践的な開発ワークフロー（4L）※旧Ch.3
+  "eng-ch4-l1": { chapter: "Ch.4", title: "TDD（テスト駆動開発）とClaude Code", type: "ハンズオン", duration: "約15分", prev: null, next: "eng-ch4-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng8" },
+  "eng-ch4-l2": { chapter: "Ch.4", title: "リファクタリング・コードレビュー依頼", type: "ハンズオン", duration: "約12分", prev: "eng-ch4-l1", next: "eng-ch4-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng9" },
+  "eng-ch4-l3": { chapter: "Ch.4", title: "デバッグの効率化", type: "ハンズオン", duration: "約12分", prev: "eng-ch4-l2", next: "eng-ch4-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng10" },
+  "eng-ch4-l4": { chapter: "Ch.4", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch4-l3", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng11" },
+  // Ch.5 — チーム開発での活用（3L）※旧Ch.4
+  "eng-ch5-l1": { chapter: "Ch.5", title: "PR作成・レビューの自動化", type: "ハンズオン", duration: "約12分", prev: null, next: "eng-ch5-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng12" },
+  "eng-ch5-l2": { chapter: "Ch.5", title: "ドキュメント自動生成", type: "ハンズオン", duration: "約10分", prev: "eng-ch5-l1", next: "eng-ch5-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng13" },
+  "eng-ch5-l3": { chapter: "Ch.5", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch5-l2", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng14" },
+  // Ch.6 — デプロイ・認証・運用（4L）★新設
+  "eng-ch6-l1": { chapter: "Ch.6", title: "Vercel/Railway/Renderへのデプロイ自動化", type: "ハンズオン", duration: "約15分", prev: null, next: "eng-ch6-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng23" },
+  "eng-ch6-l2": { chapter: "Ch.6", title: "認証実装（NextAuth/Supabase Auth）", type: "ハンズオン", duration: "約15分", prev: "eng-ch6-l1", next: "eng-ch6-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng24" },
+  "eng-ch6-l3": { chapter: "Ch.6", title: "環境変数・シークレット管理", type: "ハンズオン", duration: "約12分", prev: "eng-ch6-l2", next: "eng-ch6-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng25" },
+  "eng-ch6-l4": { chapter: "Ch.6", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch6-l3", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng26" },
+  // Ch.7 — Hooks・CI/CD・セキュリティ（4L）★新設
+  "eng-ch7-l1": { chapter: "Ch.7", title: "Claude Code Hooksの設定と活用", type: "ハンズオン", duration: "約15分", prev: null, next: "eng-ch7-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng27" },
+  "eng-ch7-l2": { chapter: "Ch.7", title: "GitHub ActionsとClaude Codeの連携", type: "ハンズオン", duration: "約15分", prev: "eng-ch7-l1", next: "eng-ch7-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng28" },
+  "eng-ch7-l3": { chapter: "Ch.7", title: "セキュリティレビュー自動化", type: "ハンズオン", duration: "約12分", prev: "eng-ch7-l2", next: "eng-ch7-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng29" },
+  "eng-ch7-l4": { chapter: "Ch.7", title: "チェックテスト", type: "クイズ", duration: "約5分", prev: "eng-ch7-l3", next: null, isQuiz: true, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng30" },
+  // Ch.8 — MCPサーバーとツール連携（4L）★新設
+  "eng-ch8-l1": { chapter: "Ch.8", title: "MCPとは何か・なぜ重要か", type: "読み物", duration: "約10分", prev: null, next: "eng-ch8-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng31" },
+  "eng-ch8-l2": { chapter: "Ch.8", title: "MCPサーバーのセットアップ", type: "ハンズオン", duration: "約15分", prev: "eng-ch8-l1", next: "eng-ch8-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng32" },
+  "eng-ch8-l3": { chapter: "Ch.8", title: "GitHub・Slack・DB連携の実践", type: "ハンズオン", duration: "約15分", prev: "eng-ch8-l2", next: "eng-ch8-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng33" },
+  "eng-ch8-l4": { chapter: "Ch.8", title: "独自MCPサーバーの作成", type: "ハンズオン", duration: "約20分", prev: "eng-ch8-l3", next: null, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng34" },
+  // Ch.9 — サブエージェントと並列処理（4L）★新設
+  "eng-ch9-l1": { chapter: "Ch.9", title: "サブエージェントの仕組みと活用場面", type: "読み物", duration: "約10分", prev: null, next: "eng-ch9-l2", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng35" },
+  "eng-ch9-l2": { chapter: "Ch.9", title: "並列タスク処理の設計パターン", type: "ハンズオン", duration: "約15分", prev: "eng-ch9-l1", next: "eng-ch9-l3", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng36" },
+  "eng-ch9-l3": { chapter: "Ch.9", title: "大規模タスクの分割と委譲", type: "ハンズオン", duration: "約15分", prev: "eng-ch9-l2", next: "eng-ch9-l4", track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng37" },
+  "eng-ch9-l4": { chapter: "Ch.9", title: "最終演習：フルスタック開発", type: "プロジェクト", duration: "約90分", prev: "eng-ch9-l3", next: null, track: "engineer", storageKey: "cca-progress-eng", homeHref: "/track/engineer", comp: "eng38" },
 };
 
 export function getStaticPaths() {
@@ -160,12 +201,16 @@ export function getStaticPaths() {
     "biz-ch3-l1","biz-ch3-l2","biz-ch3-l3","biz-ch3-l4",
     "biz-ch4-l1","biz-ch4-l2","biz-ch4-l3",
     "biz-ch5-l1","biz-ch5-l2","biz-ch5-l3","biz-ch5-l4",
-    // エンジニアコース
+    // エンジニアコース（9チャプター・34レッスン）
     "eng-ch1-l1","eng-ch1-l2","eng-ch1-l3",
     "eng-ch2-l1","eng-ch2-l2","eng-ch2-l3","eng-ch2-l4",
     "eng-ch3-l1","eng-ch3-l2","eng-ch3-l3","eng-ch3-l4",
-    "eng-ch4-l1","eng-ch4-l2","eng-ch4-l3",
-    "eng-ch5-l1","eng-ch5-l2","eng-ch5-l3","eng-ch5-l4",
+    "eng-ch4-l1","eng-ch4-l2","eng-ch4-l3","eng-ch4-l4",
+    "eng-ch5-l1","eng-ch5-l2","eng-ch5-l3",
+    "eng-ch6-l1","eng-ch6-l2","eng-ch6-l3","eng-ch6-l4",
+    "eng-ch7-l1","eng-ch7-l2","eng-ch7-l3","eng-ch7-l4",
+    "eng-ch8-l1","eng-ch8-l2","eng-ch8-l3","eng-ch8-l4",
+    "eng-ch9-l1","eng-ch9-l2","eng-ch9-l3","eng-ch9-l4",
   ].map(id => ({ params: { id } }));
 }
 
@@ -215,12 +260,16 @@ const trackName = lesson.track === 'business' ? 'ビジネス職コース' : les
     {lesson.comp === "biz8" && <BizLesson8 />}{lesson.comp === "biz9" && <BizLesson9 />}{lesson.comp === "biz10" && <BizLesson10 />}{lesson.comp === "biz11" && <BizLesson11 />}
     {lesson.comp === "biz12" && <BizLesson12 />}{lesson.comp === "biz13" && <BizLesson13 />}{lesson.comp === "biz14" && <BizLesson14 />}
     {lesson.comp === "biz15" && <BizLesson15 />}{lesson.comp === "biz16" && <BizLesson16 />}{lesson.comp === "biz17" && <BizLesson17 />}{lesson.comp === "biz18" && <BizLesson18 />}
-    <!-- エンジニアコース -->
+    <!-- エンジニアコース（Ch.1-2: eng1-7, Ch.3新設: eng19-22, Ch.4: eng8-11, Ch.5: eng12-14, Ch.6-9新設: eng23-38） -->
     {lesson.comp === "eng1" && <EngLesson1 />}{lesson.comp === "eng2" && <EngLesson2 />}{lesson.comp === "eng3" && <EngLesson3 />}
     {lesson.comp === "eng4" && <EngLesson4 />}{lesson.comp === "eng5" && <EngLesson5 />}{lesson.comp === "eng6" && <EngLesson6 />}{lesson.comp === "eng7" && <EngLesson7 />}
     {lesson.comp === "eng8" && <EngLesson8 />}{lesson.comp === "eng9" && <EngLesson9 />}{lesson.comp === "eng10" && <EngLesson10 />}{lesson.comp === "eng11" && <EngLesson11 />}
     {lesson.comp === "eng12" && <EngLesson12 />}{lesson.comp === "eng13" && <EngLesson13 />}{lesson.comp === "eng14" && <EngLesson14 />}
-    {lesson.comp === "eng15" && <EngLesson15 />}{lesson.comp === "eng16" && <EngLesson16 />}{lesson.comp === "eng17" && <EngLesson17 />}{lesson.comp === "eng18" && <EngLesson18 />}
+    {lesson.comp === "eng19" && <EngLesson19 />}{lesson.comp === "eng20" && <EngLesson20 />}{lesson.comp === "eng21" && <EngLesson21 />}{lesson.comp === "eng22" && <EngLesson22 />}
+    {lesson.comp === "eng23" && <EngLesson23 />}{lesson.comp === "eng24" && <EngLesson24 />}{lesson.comp === "eng25" && <EngLesson25 />}{lesson.comp === "eng26" && <EngLesson26 />}
+    {lesson.comp === "eng27" && <EngLesson27 />}{lesson.comp === "eng28" && <EngLesson28 />}{lesson.comp === "eng29" && <EngLesson29 />}{lesson.comp === "eng30" && <EngLesson30 />}
+    {lesson.comp === "eng31" && <EngLesson31 />}{lesson.comp === "eng32" && <EngLesson32 />}{lesson.comp === "eng33" && <EngLesson33 />}{lesson.comp === "eng34" && <EngLesson34 />}
+    {lesson.comp === "eng35" && <EngLesson35 />}{lesson.comp === "eng36" && <EngLesson36 />}{lesson.comp === "eng37" && <EngLesson37 />}{lesson.comp === "eng38" && <EngLesson38 />}
 
     {!isQuiz && (
       <div class="max-w-3xl mt-8 border-t border-base-border pt-6" id="lesson-footer" data-ch={chId} data-lesson={lId} data-storage={lesson.storageKey}>

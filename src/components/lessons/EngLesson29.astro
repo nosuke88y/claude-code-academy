@@ -1,0 +1,142 @@
+---
+// Eng Ch.7 Lesson 3: セキュリティレビュー自動化
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">セキュリティレビューをClaude Codeで自動化する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Webアプリケーションのセキュリティは、開発の全段階で意識すべき重要事項。
+      Claude Codeを活用して、OWASP Top 10（Webアプリの代表的な脆弱性トップ10）に基づく
+      体系的なセキュリティレビューを実施する方法を学ぶ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">OWASP Top 10 チェック</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">包括的なセキュリティ監査</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このプロジェクトのセキュリティ監査を実施して。
+>  OWASP Top 10 に基づいてチェック:
+>  1. インジェクション（SQL, NoSQL, OS コマンド）
+>  2. 認証の不備
+>  3. 機密データの露出
+>  4. XXE（XML外部エンティティ）
+>  5. アクセス制御の不備
+>  6. セキュリティ設定ミス
+>  7. XSS（クロスサイトスクリプティング）
+>  8. 安全でないデシリアライゼーション
+>  9. 既知の脆弱性を含むコンポーネント
+>  10. 不十分なログと監視
+>  各項目の結果を重大度（高/中/低）で報告して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">SQLインジェクション対策</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「プロジェクト内のSQL文を全てスキャンして。
+>  - 文字列連結でSQLを組み立てている箇所
+>  - プレースホルダーを使っていないクエリ
+>  - ユーザー入力を直接SQLに埋め込んでいる箇所
+>  見つかったら、パラメータ化クエリに修正して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">XSS対策</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「XSS脆弱性をチェックして。
+>  - dangerouslySetInnerHTML の使用箇所
+>  - サニタイズ（無害化）なしのユーザー入力表示
+>  - URLパラメータの直接レンダリング
+>  修正方法もあわせて提案して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">依存パッケージの脆弱性チェック</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「npm auditを実行して、脆弱性のある
+>  パッケージを一覧にして。
+>  各脆弱性について:
+>  - 深刻度（critical/high/moderate/low）
+>  - 影響するパッケージ名とバージョン
+>  - 修正方法（アップデート or 代替パッケージ）
+>  を提案して」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">セキュリティレビューのCustom Command</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-[11px] text-gray-500 mb-2">.claude/commands/security-review.md</p>
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+変更されたファイルのセキュリティレビューを実施してください。
+
+チェック項目:
+- SQLインジェクション / NoSQLインジェクション
+- XSS（DOM-based, Reflected, Stored）
+- CSRF対策の有無
+- 認証・認可の適切性
+- 入力バリデーションの漏れ
+- ハードコードされたシークレット
+- 依存パッケージの脆弱性
+
+結果を以下のフォーマットで報告:
+[重大度] ファイル名:行番号 - 問題の説明 - 修正提案</code>
+      </div>
+      <div class="bg-base-bg rounded-lg p-3">
+        <p class="text-[11px] text-gray-600 font-mono">使い方: > /project:security-review</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">セキュリティ監査を実施</p>
+            <p class="text-xs text-gray-600">自分のプロジェクトでClaude Codeに「OWASP Top 10に基づくセキュリティ監査を実施して」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">セキュリティレビューコマンドを作成</p>
+            <p class="text-xs text-gray-600">.claude/commands/security-review.md を作成し、<code class="bg-base-bg px-1 rounded">/project:security-review</code> で使えるようにする</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">npm auditの結果を分析</p>
+            <p class="text-xs text-gray-600">依存パッケージの脆弱性をチェックし、Claude Codeに修正方針を提案させる</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">セキュリティレビューは「一度やって終わり」ではなく、継続的に実施するもの。Custom Commandとして登録し、PRごとに実行する習慣をつけよう。Claude Codeは既知の脆弱性パターンに精通しており、人間が見落としやすい問題も検出できる。</p>
+    </div>
+  </section>
+</div>

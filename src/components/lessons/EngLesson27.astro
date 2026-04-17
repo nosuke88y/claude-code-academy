@@ -1,0 +1,134 @@
+---
+// Eng Ch.7 Lesson 1: Claude Code Hooksの設定と活用
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Hooksで開発ワークフローを自動化する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Code Hooksは、特定のイベント発生時にシェルコマンドを自動実行する仕組み。
+      コード編集後の自動lint、コミット前の自動テスト、ファイル変更後の自動ビルドなど、
+      開発ワークフローの自動化に使える。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">Hooksのメリット</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>手動で繰り返す作業を自動化</li>
+        <li>コード品質を自動で担保</li>
+        <li>チーム全体の開発フローを統一</li>
+        <li>ヒューマンエラーを防止</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Hooksの種類</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">PreToolUse</h3>
+        <p class="text-xs text-gray-600 mb-2">ツール実行前に発火。入力の検証や確認に使う。</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 例: 本番DB接続文字列が含まれるコマンドをブロック
+# .claude/settings.json
+"hooks": {
+  "PreToolUse": [{
+    "matcher": "Bash",
+    "hooks": [{
+      "type": "command",
+      "command": "if echo \"$TOOL_INPUT\" | grep -q 'production'; then echo 'BLOCK: 本番環境への操作は禁止されています' >&2; exit 1; fi"
+    }]
+  }]
+}</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">PostToolUse</h3>
+        <p class="text-xs text-gray-600 mb-2">ツール実行後に発火。後処理や通知に使う。</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 例: ファイル編集後に自動でlintを実行
+"hooks": {
+  "PostToolUse": [{
+    "matcher": "Edit|Write",
+    "hooks": [{
+      "type": "command",
+      "command": "npx eslint --fix \"$TOOL_INPUT_FILE_PATH\" 2>/dev/null || true"
+    }]
+  }]
+}</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Notification</h3>
+        <p class="text-xs text-gray-600 mb-2">Claude Codeがユーザーへの通知を送る時に発火。</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 例: タスク完了時にデスクトップ通知
+"hooks": {
+  "Notification": [{
+    "matcher": "",
+    "hooks": [{
+      "type": "command",
+      "command": "notify-send 'Claude Code' \"$NOTIFICATION_MESSAGE\""
+    }]
+  }]
+}</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践的なHooks設定</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「以下のHooksを.claude/settings.jsonに設定して。
+>  1. ファイル編集後にESLint自動修正
+>  2. テストファイル編集後にVitest実行
+>  3. 本番DBへの操作コマンドをブロック
+>  4. .envファイルへの書き込みをブロック」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Hooks設定ファイルを作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「.claude/settings.jsonにHooksを設定して」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">PostToolUseフックを設定</p>
+            <p class="text-xs text-gray-600">ファイル編集後にlintが自動実行されるフックを設定し、動作を確認する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">安全ガードを設定</p>
+            <p class="text-xs text-gray-600">本番環境への操作をブロックするPreToolUseフックを設定する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Hooksは「自動化」と「安全ガード」の2つの用途がある。まずは安全ガード（危険な操作のブロック）から始め、慣れてきたら自動lint・自動テストを追加していくのがおすすめ。</p>
+    </div>
+  </section>
+</div>

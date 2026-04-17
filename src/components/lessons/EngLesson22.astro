@@ -1,0 +1,140 @@
+---
+// Eng Ch.3 Lesson 4: 本番障害の調査・修正フロー
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">本番障害をClaude Codeで素早く解決する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      本番環境での障害は、迅速な対応が求められる。
+      Claude Codeを活用することで、エラーログの分析から修正・検証までを効率的に進められる。
+    </p>
+    <div class="bg-red-50 rounded-xl p-5 mb-4 border border-red-200">
+      <p class="text-sm text-red-600 font-medium mb-1">注意</p>
+      <p class="text-sm text-gray-700">本番環境の障害対応では、必ずPermission modeをAsk（デフォルト）にして作業する。自動実行による二次障害を防ぐため。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">障害対応の5ステップ</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">1</div>
+          <h3 class="text-sm font-semibold text-gray-900">エラーログの分析</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「以下のエラーログを分析して。
+>  原因の仮説を3つ挙げて、最も可能性が高い順に並べて。
+>
+>  [エラーログをペースト]」
+
+# ログファイルを直接読ませる場合
+> 「@logs/error.log の直近100行を分析して。
+>  エラーパターンを分類し、根本原因を特定して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xs font-bold">2</div>
+          <h3 class="text-sm font-semibold text-gray-900">影響範囲の特定</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「この関数を呼び出している箇所をすべて洗い出して。
+>  影響を受けるAPIエンドポイントと
+>  フロントエンドのページを一覧にして」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xs font-bold">3</div>
+          <h3 class="text-sm font-semibold text-gray-900">Hotfix（緊急修正）の作成</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このバグを修正するhotfixブランチを作って。
+>  修正は最小限にして、副作用がないことを確認。
+>  テストも追加して。
+>  ブランチ名: hotfix/fix-payment-null-error」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">4</div>
+          <h3 class="text-sm font-semibold text-gray-900">テストと検証</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「修正をテストして。
+>  1. 既存テストが全てパスすることを確認
+>  2. 今回のバグを再現するテストを追加
+>  3. 追加テストがパスすることを確認
+>  結果をサマリーにまとめて」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-bold">5</div>
+          <h3 class="text-sm font-semibold text-gray-900">ポストモーテム（振り返り）</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「今回の障害のポストモーテム（事後分析レポート）を作成して。
+>  - 何が起きたか（タイムライン）
+>  - 根本原因
+>  - 影響範囲
+>  - 修正内容
+>  - 再発防止策（コード・プロセス・監視の観点）」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">シミュレーション: 決済エラーの調査</p>
+      <p class="text-xs text-gray-600 mb-3">以下のシナリオでClaude Codeに障害調査を依頼してみよう。</p>
+      <div class="bg-red-50 rounded-lg p-3 border border-red-200 mb-4">
+        <p class="text-xs text-red-600 font-medium mb-1">障害報告</p>
+        <p class="text-xs text-gray-700">「決済完了後にユーザーのサブスクリプションステータスが更新されないケースが発生。エラー: "TypeError: Cannot read property 'status' of null"」</p>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">エラーを分析させる</p>
+            <p class="text-xs text-gray-600">上記エラーをClaude Codeに貼り付けて原因の仮説を出させる</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">修正方針を相談する</p>
+            <p class="text-xs text-gray-600">「nullチェックの追加」と「データ不整合の根本修正」のどちらが適切か、Claude Codeと議論する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">再発防止策を考える</p>
+            <p class="text-xs text-gray-600">Claude Codeにポストモーテムのドラフトを作成させる</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">障害対応で最も大切なのは「修正の最小化」。関連する改善はhotfixとは別ブランチで行う。Claude Codeには「最小限の修正」を明示的に指示し、スコープを広げないようにする。</p>
+    </div>
+  </section>
+</div>

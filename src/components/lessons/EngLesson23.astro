@@ -1,0 +1,130 @@
+---
+// Eng Ch.6 Lesson 1: Vercel/Railway/Renderへのデプロイ自動化
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeでデプロイを自動化する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      「作ったけどデプロイ（公開）できない」は最大の挫折ポイント。
+      Claude Codeを活用して、主要なプラットフォームへのデプロイを素早く実現する方法を学ぶ。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">このレッスンで扱うプラットフォーム</p>
+      <div class="grid grid-cols-3 gap-3 mt-2">
+        <div class="bg-white rounded-lg p-3 text-center">
+          <p class="text-lg mb-1">▲</p>
+          <p class="text-xs font-medium text-gray-900">Vercel</p>
+          <p class="text-[10px] text-gray-500">フロントエンド最適</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 text-center">
+          <p class="text-lg mb-1">🚂</p>
+          <p class="text-xs font-medium text-gray-900">Railway</p>
+          <p class="text-[10px] text-gray-500">フルスタック対応</p>
+        </div>
+        <div class="bg-white rounded-lg p-3 text-center">
+          <p class="text-lg mb-1">🔵</p>
+          <p class="text-xs font-medium text-gray-900">Render</p>
+          <p class="text-[10px] text-gray-500">バックエンド向け</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Vercelへのデプロイ</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">初期セットアップ</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このプロジェクトをVercelにデプロイする準備をして。
+>  1. vercel.jsonの設定ファイルを作成
+>  2. 環境変数の一覧（.env.exampleから）を表示
+>  3. ビルドコマンドと出力ディレクトリの確認
+>  4. デプロイ手順をステップバイステップで説明」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Git連携による自動デプロイ</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「Vercelの自動デプロイ設定を説明して。
+>  - mainブランチへのpushで本番デプロイ
+>  - PRごとにプレビューデプロイ
+>  - 必要な環境変数の設定方法」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Railwayへのデプロイ</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">バックエンド + DB のデプロイ</h3>
+      <div class="bg-gray-900 rounded-lg p-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このNode.js APIをRailwayにデプロイする設定をして。
+>  - Dockerfileを作成（マルチステージビルド）
+>  - PostgreSQLアドオンの追加手順
+>  - 環境変数DATABASE_URLの設定
+>  - ヘルスチェックエンドポイントの追加」</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Dockerfileの自動生成</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このプロジェクト用のDockerfileを作成して。
+>  要件:
+>  - マルチステージビルド（ビルドと実行を分離し、最終イメージを軽量化する手法）
+>  - Node.js 20 Alpine（軽量Linux）ベース
+>  - npm ci で依存関係を再現性高くインストール
+>  - 非rootユーザーで実行（セキュリティ対策）
+>  - .dockerignoreも作成」</code>
+      </div>
+      <p class="text-xs text-gray-600">Claude Codeはプロジェクトの構造を理解した上で最適なDockerfileを生成する。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">デプロイ設定ファイルの生成</p>
+            <p class="text-xs text-gray-600">自分のプロジェクトに対して、Claude Codeにvercel.jsonまたはDockerfileを生成させる</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">環境変数の整理</p>
+            <p class="text-xs text-gray-600">「.env.exampleを作成して、必要な環境変数を一覧にして」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">実際にデプロイ</p>
+            <p class="text-xs text-gray-600">Vercel CLIまたはGit pushで実際にデプロイし、動作を確認する</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">デプロイは「最初の1回」が最もハードルが高い。Claude Codeに設定ファイルの生成を任せることで、そのハードルを大幅に下げられる。一度設定すれば、以降はgit pushだけで自動デプロイできる。</p>
+    </div>
+  </section>
+</div>

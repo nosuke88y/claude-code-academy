@@ -1,0 +1,157 @@
+---
+// Eng Ch.8 Lesson 2: MCPサーバーのセットアップ
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPサーバーをセットアップする</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      実際にMCPサーバーをClaude Codeに接続し、外部ツールとの連携を実現する。
+      ここでは公式のfilesystem MCPサーバーとPostgreSQL MCPサーバーを例にセットアップする。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">settings.jsonでの設定</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">設定ファイルの場所</h3>
+        <div class="bg-gray-900 rounded-lg p-3 mb-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# グローバル設定（全プロジェクト共通）
+~/.claude/settings.json
+
+# プロジェクト固有の設定
+.claude/settings.json</code>
+        </div>
+        <p class="text-xs text-gray-600">MCPサーバーの設定は用途に応じてグローバルまたはプロジェクト固有に配置する。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">Filesystem MCPサーバー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「Claude Codeの設定にfilesystem MCPサーバーを追加して。
+>  設定内容:
+>  - npxで@modelcontextprotocol/server-filesystemを実行
+>  - アクセスを許可するディレクトリ: /home/user/projects
+>  - settings.jsonのmcpServersキーに追加」
+
+# 設定例
+"mcpServers": {
+  "filesystem": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem",
+      "/home/user/projects"
+    ]
+  }
+}</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">PostgreSQL MCPサーバー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「PostgreSQL MCPサーバーをセットアップして。
+>  接続先: ローカルのPostgreSQL
+>  設定内容:
+>  - npxで@modelcontextprotocol/server-postgresを実行
+>  - 接続文字列は環境変数から取得」
+
+# 設定例
+"mcpServers": {
+  "postgres": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-postgres",
+      "postgresql://localhost:5432/mydb"
+    ]
+  }
+}</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">接続の確認</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="bg-gray-900 rounded-lg p-3 mb-3">
+        <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# Claude Codeを再起動して設定を反映
+$ claude
+
+# 接続されたMCPサーバーを確認
+> /mcp
+
+# MCPサーバーのツール一覧を確認
+> 「利用可能なMCPツールを一覧にして」</code>
+      </div>
+      <p class="text-xs text-gray-600">MCPサーバーが正しく接続されると、Claude Codeのツール一覧にMCPサーバーの機能が追加される。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">MCPサーバー使用例</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">DBのテーブル構造を確認</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「PostgreSQLに接続して、usersテーブルの構造を確認して。
+>  カラム名、型、制約を一覧にして」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">データの検索</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「直近1週間に登録されたユーザーを検索して。
+>  名前、メールアドレス、登録日時を表示して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ハンズオン演習</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-3">実際にやってみよう</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">settings.jsonを作成</p>
+            <p class="text-xs text-gray-600">Claude Codeに「.claude/settings.jsonにfilesystem MCPサーバーの設定を追加して」と依頼する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">Claude Codeを再起動</p>
+            <p class="text-xs text-gray-600">設定を反映するためにClaude Codeを再起動し、<code class="bg-base-bg px-1 rounded">/mcp</code> で接続を確認する</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">MCPツールを使ってみる</p>
+            <p class="text-xs text-gray-600">接続したMCPサーバー経由でファイル一覧の取得やDB操作を試す</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">MCPサーバーはnpxコマンドで簡単に起動できる。設定後はClaude Codeの再起動が必要。まずはfilesystem MCPで感覚を掴み、次のレッスンでGitHub・Slack・DB連携に進もう。</p>
+    </div>
+  </section>
+</div>
