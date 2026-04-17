@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Sidebar from '../components/Sidebar.astro';
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
 ---
 
 <Layout title="Tips & テクニック集 — Claude Code Academy">
@@ -313,6 +313,7 @@ function renderCard(t) {
     <h3 class="text-sm font-semibold text-gray-900 mb-1.5">${escapeHtml(t.title)}</h3>
     <p class="text-xs text-gray-600 leading-relaxed">${escapeHtml(t.desc)}</p>
     ${codeBlock}
+    <a href="/tips/tip-${t.id}" class="inline-block mt-3 text-[11px] text-primary font-medium no-underline hover:underline">詳しく見る →</a>
   </div>`;
 }
 

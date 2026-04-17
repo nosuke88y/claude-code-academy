@@ -1,0 +1,1311 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+
+// 全150 Tips詳細データ
+const T = [
+// id,slug,cat,title,level,impact,summary,scenes,steps,code,advanced,related,caution,exercise
+{id:1,slug:"tip-1",cat:"ui",title:"Shift+Tab でPermission mode即切替",level:"初級",impact:"高",
+summary:"作業中にワンキーでAsk/Auto Edit/Full Autoを瞬時に切り替える",
+scenes:["コード調査中はAskモードで安全に確認しながら作業したい","信頼できる修正作業に入ったらAuto Editで高速化したい","テスト環境で自由に実験する時はFull Autoに"],
+steps:["Claude Codeを起動する","Shift+Tab を押すとモード表示が切り替わる","現在のモードがプロンプトバーに表示される","作業フェーズに応じて適切なモードを選択"],
+code:"# プロンプトバーの表示が変わる\n[Ask] → [Auto Edit] → [Full Auto] → [Ask]...\n\n# Shift+Tabを押すたびにサイクル",
+advanced:"Windowsの一部ターミナルではAlt+Mが代替キー。VS Code Terminalでは/terminal-setupを先に実行すると確実。",
+related:[67,110,128],caution:"Full Autoモードは全操作が自動承認される。本番環境では必ずAskモードを使うこと。",
+exercise:"Claude Codeを起動して、Shift+Tabを3回押してモードが巡回することを確認してください。各モードでファイル作成を試し、確認プロンプトの違いを体感しましょう。"},
+
+{id:2,slug:"tip-2",cat:"ui",title:"Ctrl+R でコマンド履歴を逆検索",level:"初級",impact:"中",
+summary:"過去のプロンプトをインクリメンタル検索して再利用する",
+scenes:["昨日使った長いプロンプトを再利用したい","特定のキーワードを含む過去の指示を探したい"],
+steps:["Ctrl+R を押す","検索したいキーワードを入力","マッチした過去のプロンプトが表示される","Enterで選択、Ctrl+Rで次の候補に移動"],
+code:"# Ctrl+R → 検索キーワード入力\n(reverse-i-search)`test': npm run testを実行して結果を分析して",
+advanced:"シェルのCtrl+Rと同じ操作感。検索結果が見つかったらCtrl+Eで編集モードに入り、プロンプトを修正してから送信できる。",
+related:[49,54],caution:"",
+exercise:"Claude Codeで3つ以上のプロンプトを送信した後、Ctrl+Rで最初のプロンプトを検索して呼び出してください。"},
+
+{id:3,slug:"tip-3",cat:"ui",title:"Ctrl+O でトランスクリプトビューア表示",level:"中級",impact:"高",
+summary:"Claude Codeの内部動作（ツール呼び出しの詳細ログ）を確認する",
+scenes:["Claude Codeが予期しないファイルを変更した原因を調べたい","サブエージェントの動作プロセスを確認したい","トークン消費がどこで発生しているか知りたい"],
+steps:["Ctrl+O を押す","トランスクリプトビューアが表示される","↑↓キーでスクロール","Ctrl+Eで全コンテンツ表示を切り替え","qまたはEscで閉じる"],
+code:"# トランスクリプトビューア内のショートカット\nCtrl+E  全コンテンツ表示切替\n[       会話をネイティブスクロールバックに出力\nv       会話をファイルに保存してエディタで開く\nq/Esc   閉じる",
+advanced:"vキーでファイルに保存すると$EDITORで開かれる。ログの検索や他メンバーとの共有に便利。",
+related:[103,104,27],caution:"",
+exercise:"何か指示を出した後にCtrl+Oを押して、Claude Codeがどのツール（Read, Edit, Bash等）をどの順番で使ったか確認してください。"},
+
+{id:4,slug:"tip-4",cat:"ui",title:"バックスラッシュ+Enter で複数行入力",level:"初級",impact:"高",
+summary:"全ターミナル対応の改行方法で長いプロンプトを構造化して入力する",
+scenes:["複数のステップを含む長い指示を書きたい","コードブロックを含むプロンプトを送りたい","Shift+Enterが効かないターミナルで改行したい"],
+steps:["プロンプト入力中に \\ を入力","続けてEnterキーを押す","次の行に移動して入力を続ける","最後の行でそのままEnterを押すと送信"],
+code:"この関数を修正して。\\\nステップ1: エラーハンドリング追加\\\nステップ2: テストも書いて\\\nステップ3: ドキュメントも更新",
+advanced:"Ctrl+Jでも改行可能（全ターミナル対応）。iTerm2/WezTerm/Ghostty/KittyではShift+Enterがデフォルトで使える。",
+related:[102,134],caution:"VS Code Terminalでは/terminal-setupを先に実行するとShift+Enterも使えるようになる。",
+exercise:"バックスラッシュ+Enterで3行以上のプロンプトを作成し、番号付きステップで指示を送信してください。"},
+
+{id:5,slug:"tip-5",cat:"ui",title:"Ctrl+V で画像をクリップボードから貼付",level:"中級",impact:"高",
+summary:"スクリーンショットやUI画像を直接貼り付けてClaude Codeに分析させる",
+scenes:["エラー画面のスクリーンショットを見せて修正を依頼したい","デザインモックのスクショからUIコンポーネントを生成したい","実機のバグ画面を共有して原因調査を依頼したい"],
+steps:["ブラウザやアプリでスクリーンショットをクリップボードにコピー","Claude Codeのプロンプトに戻る","Ctrl+V（macOSはCmd+V）で貼り付け","画像が[Image #1]として表示される","「この画像のエラーを修正して」等の指示を送信"],
+code:"# 画像貼り付け後のプロンプト例\n> [Image #1]\n> このエラー画面を分析して修正方法を提案して\n\n# 複数画像も可能\n> [Image #1] [Image #2]\n> この2つの画面の違いを説明して",
+advanced:"PDF読み込みも対応。@file.pdfでPDFの内容を分析できる。複数画像を同時に貼り付けて比較分析も可能。",
+related:[148,150],caution:"WindowsではAlt+Vの場合もある。クリップボードに画像がない場合はテキストが貼り付けられる。",
+exercise:"ブラウザのスクリーンショットを撮り、Claude Codeに貼り付けて「この画面の構成要素を説明して」と依頼してください。"},
+
+{id:6,slug:"tip-6",cat:"ui",title:"Ctrl+B でバックグラウンドタスク実行",level:"中級",impact:"中",
+summary:"長時間のビルドやテストをバックグラウンドで実行しながら別作業を続ける",
+scenes:["npm run buildに数分かかるが待ちたくない","テストスイートの実行中に別の質問をしたい"],
+steps:["通常通りタスクを依頼する","Ctrl+B を押してバックグラウンドに送る","プロンプトが再び使えるようになる","Ctrl+Tでバックグラウンドタスクの進捗を確認"],
+code:"# バックグラウンドタスクの操作\nCtrl+B  タスクをバックグラウンドに送る\nCtrl+T  タスクリスト表示/非表示\n/tasks  バックグラウンドタスク一覧",
+advanced:"/tasksコマンドでもバックグラウンドタスクの一覧を確認できる。完了時にNotificationフックで通知を受け取る設定も可能。",
+related:[7,80,61],caution:"バックグラウンドタスクもトークンを消費する。同時に多数のタスクを実行するとコストが増加する。",
+exercise:"「npm run buildを実行して」と依頼した直後にCtrl+Bを押し、バックグラウンドで実行させながら別の質問をしてみてください。"},
+
+{id:7,slug:"tip-7",cat:"ui",title:"Ctrl+T でタスクリスト表示/非表示",level:"中級",impact:"中",
+summary:"バックグラウンドで実行中のタスク一覧をリアルタイムで確認する",
+scenes:["バックグラウンドタスクの進捗を知りたい","完了したタスクの結果を確認したい"],
+steps:["Ctrl+T を押す","タスクリストが表示される","各タスクのステータス（実行中/完了/エラー）を確認","再度Ctrl+Tで非表示"],
+code:"Ctrl+T  タスクリスト表示/非表示\n/tasks  同等のコマンド",
+advanced:"/tasksコマンドでも同等の操作が可能。",related:[6,12],caution:"",
+exercise:"Ctrl+Bでタスクをバックグラウンドに送った後、Ctrl+Tで進捗を確認してください。"},
+
+{id:8,slug:"tip-8",cat:"ui",title:"Alt+P でモデルを即切替",level:"中級",impact:"高",
+summary:"Opus/Sonnet/Haikuをキー一つで切替えてコストと品質を最適化する",
+scenes:["設計検討はOpusで深く考えさせ、定型コード生成はSonnetで高速化したい","簡単な質問にHaikuを使ってトークンを節約したい","モデルの回答品質を比較したい"],
+steps:["Alt+P（macOSはOption+P）を押す","モデル選択メニューが表示される","使いたいモデルを選択","選択したモデルで次のプロンプトから適用"],
+code:"Alt+P (Windows) / Option+P (macOS)\n\n# または/modelコマンドで指定\n/model sonnet\n/model opus\n/model haiku",
+advanced:"/effortコマンドと組み合わせると最適化の幅が広がる。Haiku + effort:lowで最速、Opus + effort:maxで最高品質。",
+related:[9,10,28],caution:"モデル変更はそのセッション内でのみ有効。新しいセッションではデフォルトモデルに戻る。",
+exercise:"Alt+Pで3つのモデルを切り替え、同じ質問をして回答の違いを比較してください。"},
+
+{id:9,slug:"tip-9",cat:"ui",title:"Alt+T で Extended Thinking を切替",level:"中級",impact:"中",
+summary:"複雑な推論が必要な時だけ深い思考モードをONにしてトークン節約する",
+scenes:["アルゴリズム設計やアーキテクチャの検討で深い分析が欲しい","バグの根本原因分析で複数の仮説を検討させたい"],
+steps:["Alt+T（macOSはOption+T）を押す","Extended Thinkingの有効/無効が切り替わる","複雑な質問の前にON、終わったらOFFに"],
+code:"Alt+T (Windows) / Option+T (macOS)",
+advanced:"settings.jsonでalwaysThinkingEnabled: trueにすると常時有効。",related:[8,28,140],caution:"Extended Thinkingはトークン消費が増える。日常的なタスクでは不要。",
+exercise:"簡単な質問と複雑な設計質問を、Extended ThinkingのON/OFFそれぞれで試し、回答の深さの違いを確認してください。"},
+
+{id:10,slug:"tip-10",cat:"ui",title:"Alt+O で高速モード（Fast Mode）切替",level:"初級",impact:"中",
+summary:"同じモデルのまま出力速度だけ向上させる",
+scenes:["レスポンス待ちが気になる時","大量のコード生成で速度を優先したい時"],
+steps:["Alt+O（macOSはOption+O）を押す","Fast Modeが有効になる","再度押すと通常モードに戻る"],
+code:"Alt+O (Windows) / Option+O (macOS)\n# または\n/fast",
+advanced:"/fastコマンドでも切替可能。品質は変わらないので、基本的にONにしておいてよい。",related:[8,124],caution:"",
+exercise:"/fastコマンドでFast Modeを有効にし、コード生成の速度変化を体感してください。"},
+
+{id:11,slug:"tip-11",cat:"ui",title:"Ctrl+G で外部エディタでプロンプト編集",level:"上級",impact:"低",
+summary:"VS Code等でプロンプトを編集してから送信する",
+scenes:["100行を超える仕様書をプロンプトとして送りたい","複雑なマークダウン形式の指示を書きたい"],
+steps:["Ctrl+G（またはCtrl+X Ctrl+E）を押す","$EDITORで設定されたエディタが開く","プロンプトを編集","保存して閉じると自動的に送信される"],
+code:"# $EDITORの設定例\nexport EDITOR='code --wait'  # VS Code\nexport EDITOR='vim'          # Vim",
+advanced:"エディタでMarkdown形式で書くと見やすい。シンタックスハイライトも使える。",related:[4,134],caution:"$EDITOR環境変数が設定されていないとエラーになる。",
+exercise:"$EDITORを設定し、Ctrl+Gでエディタを開いて複数行のプロンプトを書いて送信してください。"},
+
+{id:12,slug:"tip-12",cat:"ui",title:"Ctrl+X Ctrl+K で全バックグラウンドエージェント終了",level:"上級",impact:"低",
+summary:"暴走したサブエージェントを一括停止する緊急停止ボタン",
+scenes:["サブエージェントが意図しないファイルを大量に変更し始めた","バックグラウンドタスクがリソースを消費しすぎている"],
+steps:["Ctrl+X を押す","続けて Ctrl+K を押す","確認メッセージが表示される","もう一度同じキーを押して確認"],
+code:"Ctrl+X Ctrl+K  全バックグラウンドエージェント終了\n（2回押しで確認が入る安全設計）",
+advanced:"個別のタスク停止は/tasksから行える。",related:[6,7],caution:"全てのバックグラウンドタスクが停止される。特定のタスクだけ止めたい場合は/tasksを使う。",
+exercise:"バックグラウンドタスクを2つ起動し、Ctrl+X Ctrl+Kで一括停止を試してください。"},
+
+{id:13,slug:"tip-13",cat:"ui",title:"/config → Vim Mode を有効化",level:"中級",impact:"中",
+summary:"Vimキーバインドでプロンプト入力を効率化する",
+scenes:["Vim歴のあるエンジニアがClaude Codeの入力効率を上げたい","hjklナビゲーションに慣れている人"],
+steps:["/config を実行","Settings → Editor modeを選択","Vimを選択","EscでNORMALモード、i/aでINSERTモードに"],
+code:"# NORMALモードの主要操作\nhjkl   移動\ndd     行削除\nyy/p   コピー/ペースト\nw/b    単語単位移動\n0/$    行頭/行末",
+advanced:"Vim modeとCtrl系ショートカット（Ctrl+O等）は独立して動作する。両方の恩恵を受けられる。",related:[14],caution:"Vim未経験者には推奨しない。誤操作の原因になる。",
+exercise:"/configでVim modeを有効にし、Escキーでノーマルモード、iキーで挿入モードを行き来してください。"},
+
+{id:14,slug:"tip-14",cat:"ui",title:"Vim modeとCtrlショートカットは独立動作",level:"中級",impact:"低",
+summary:"Vim操作とClaude Code固有ショートカットを併用できる",
+scenes:["VimモードでもCtrl+Oのトランスクリプトを使いたい"],
+steps:["Vim modeを有効にする","EscでNORMALモードに入る","Ctrl+O等のショートカットはそのまま動作する"],
+code:"Esc        → Vim NORMALモード\nCtrl+O     → トランスクリプト（Vimに関係なく動作）\nCtrl+R     → 履歴検索（Vimに関係なく動作）",
+advanced:"",related:[13],caution:"",exercise:"Vim modeを有効にした状態で、Ctrl+OやCtrl+Rが正常に動作することを確認してください。"},
+
+{id:15,slug:"tip-15",cat:"ui",title:"VS Code拡張でエディタから直接起動",level:"初級",impact:"高",
+summary:"VS Code内でClaude Codeをシームレスに実行し、開いているファイルを自動でコンテキストに含める",
+scenes:["VS Codeでコーディング中にClaude Codeに質問したい","エディタで開いているファイルをそのままレビューさせたい","IDE内で完結した開発体験がほしい"],
+steps:["VS Code拡張機能マーケットプレイスで「Claude Code」を検索","Anthropic公式拡張をインストール","コマンドパレットから「Claude Code: Start Session」を実行","Terminalパネルにセッションが開始される"],
+code:"# VS Codeのコマンドパレット\nCtrl+Shift+P → Claude Code: Start Session",
+advanced:"claude --ideオプションでCLIからIDE連携状態を確認・管理できる。",related:[16,19],caution:"VS Codeの最新版が推奨。古いバージョンでは一部機能が制限される場合がある。",
+exercise:"VS Code拡張をインストールし、エディタからClaude Codeセッションを開始してください。開いているファイルについて質問してみましょう。"},
+
+{id:16,slug:"tip-16",cat:"ui",title:"JetBrains拡張でIntelliJ/WebStorm連携",level:"初級",impact:"高",
+summary:"JetBrains IDE内でClaude Codeを実行しデバッガーとも連携する",
+scenes:["IntelliJ IDEAでJava/Kotlin開発中にClaude Codeを使いたい","WebStormでフロントエンド開発をしながらAIアシスト"],
+steps:["JetBrains Marketplace で「Claude Code」を検索","プラグインをインストール","IDE再起動後、ツールウィンドウにClaude Codeが追加される"],
+code:"# JetBrains IDE内で利用可能",
+advanced:"デバッガーのブレークポイント情報を活用した分析も可能。",related:[15],caution:"",
+exercise:"JetBrainsプラグインをインストールし、IDE内からClaude Codeにコードの説明を依頼してみてください。"},
+
+{id:17,slug:"tip-17",cat:"ui",title:"Desktop版のSide Chats機能",level:"中級",impact:"中",
+summary:"メインの作業スレッドに影響を与えず別の質問ができる",
+scenes:["実装中に仕様の確認をしたいがメインコンテキストを汚したくない","設計相談しながら実装を並行して進めたい"],
+steps:["Desktop版でSide Chat を開く","メインスレッドとは独立した会話が始まる","質問・回答してもメインの作業に影響しない"],
+code:"",advanced:"Side Chatの結果をメインスレッドに「インポート」することも可能。",related:[29],caution:"Desktop版（Mac/Windows）のみの機能。CLI版では利用不可。",
+exercise:"Desktop版でSide Chatを開き、メインスレッドの作業と並行して別の質問を試してください。"},
+
+{id:18,slug:"tip-18",cat:"ui",title:"Desktop版のLive App Preview",level:"中級",impact:"高",
+summary:"devサーバーやHTMLファイルをDesktopアプリ内でプレビュー表示する",
+scenes:["フロントエンド開発でブラウザとターミナルを行き来したくない","HTMLレポートの出力結果を即座に確認したい"],
+steps:["Desktop版でClaude Codeを起動","devサーバーを起動する指示を出す","Live Previewペインが自動で表示される","コード変更がリアルタイムでプレビューに反映"],
+code:"",advanced:"PDFプレビューにも対応。レポート生成→確認のサイクルが高速化。",related:[19],caution:"Desktop版のみ。",
+exercise:"「シンプルなHTMLページを作成して」と依頼し、Live Previewで表示されることを確認してください。"},
+
+{id:19,slug:"tip-19",cat:"ui",title:"Desktop版のVisual Diff Review",level:"中級",impact:"高",
+summary:"コード変更をインラインコメント付きの差分ビューアで確認する",
+scenes:["PRレビューをビジュアルに行いたい","Claude Codeの変更内容を承認前に詳細確認したい"],
+steps:["Desktop版でコード変更を行う","Visual Diff Reviewが自動表示される","変更箇所にインラインコメントを追加可能","承認または却下を選択"],
+code:"",advanced:"/diffコマンドでもCLI上で差分確認は可能だが、Desktop版はよりリッチなUI。",related:[25],caution:"Desktop版のみ。",
+exercise:"Desktop版でファイル変更を行い、Visual Diff Reviewで差分を確認してみてください。"},
+
+{id:20,slug:"tip-20",cat:"prompt",title:"/compact [指示] で焦点を絞って圧縮",level:"初級",impact:"高",
+summary:"コンテキストが大きくなった時に焦点を指定して効率的に圧縮する",
+scenes:["長時間作業でコンテキストが80%を超えた","話題が変わるため不要な情報を削りたい","特定の作業に集中するため関連情報だけ残したい"],
+steps:["/compact を入力","オプションで焦点を指定（例: /compact 認証周りに集中）","Claude Codeが会話を要約・圧縮","圧縮後もCLAUDE.mdの内容は全文保持される"],
+code:"/compact\n/compact パフォーマンス改善に集中して\n/compact 認証バグの修正に関連する情報だけ残して",
+advanced:"compact後もCLAUDE.mdは全文再注入される。重要情報はCLAUDE.mdに書いておくと安全。自動compactもあるが、手動で焦点指定した方が保持率が高い。",
+related:[105,107,27],caution:"compact後は会話の詳細な履歴は失われる。重要な決定事項はCLAUDE.mdに記録しておくこと。",
+exercise:"/compact を実行して会話が圧縮されることを確認してください。次に /compact テスト作業に集中 のように焦点を指定して違いを確認しましょう。"},
+
+{id:21,slug:"tip-21",cat:"prompt",title:"/batch で大規模変更を並列処理",level:"上級",impact:"高",
+summary:"5〜30個の独立した変更を自動分割してサブエージェントで並列実行する",
+scenes:["全APIルートにバリデーションを一括追加したい","全コンポーネントの型定義をanyから具体型に変更したい","全テストファイルにカバレッジ改善を適用したい"],
+steps:["/batch に続けて指示を入力","Claude Codeがタスクを自動的に独立した単位に分割","各サブエージェントが並列で実行","完了後に全結果がまとめて報告される"],
+code:"/batch 全APIルートにバリデーションを追加して\n/batch src/配下のany型を全て具体的な型に置き換えて",
+advanced:"依存関係のあるタスクは自動的に順次実行される。完全に独立したタスクほど並列化の効果が大きい。",
+related:[58,60,133],caution:"大量のサブエージェントが起動するためトークン消費が増える。事前に/costで予算を確認。",
+exercise:"/batch を使って「src/配下の全ファイルにcopyrightコメントを追加して」のような一括変更を試してください。"},
+
+{id:22,slug:"tip-22",cat:"prompt",title:"/review でPRレビューを自動実行",level:"初級",impact:"高",
+summary:"現在のdiffまたはPR番号を指定して自動コードレビューを実行する",
+scenes:["コミット前にセルフレビューしたい","チームメンバーのPRをレビューする時間を短縮したい","セキュリティ・パフォーマンスの観点で漏れがないか確認したい"],
+steps:["/review を実行（引数なしで現在のdiff）","PR番号を指定する場合は /review 42","レビュー結果がカテゴリ別に表示される","指摘に基づいて修正を依頼できる"],
+code:"/review           # 現在のdiffをレビュー\n/review 42        # PR #42をレビュー\n/security-review  # セキュリティ特化レビュー",
+advanced:"/security-reviewと組み合わせるとOWASP観点の深いレビューも可能。Web版の/ultrareviewはさらに多角的。",
+related:[23,66,64],caution:"レビュー結果はあくまで参考。最終判断は人間が行うこと。",
+exercise:"/reviewを実行して、現在の変更に対するレビュー結果を確認してください。指摘があればその修正も依頼してみましょう。"},
+
+{id:23,slug:"tip-23",cat:"prompt",title:"/security-review でセキュリティ監査",level:"中級",impact:"高",
+summary:"OWASP Top 10の観点で保留中の変更をセキュリティレビューする",
+scenes:["認証・認可のコードを変更した後にセキュリティチェックしたい","外部入力を扱う処理のXSS/SQLインジェクション対策を確認したい","本番デプロイ前の最終セキュリティチェック"],
+steps:["/security-review を実行","変更されたファイルが自動分析される","脆弱性が重大度別に報告される","修正が必要な箇所にはコード例も提示される"],
+code:"/security-review",
+advanced:"Custom Commandとして.claude/commands/security-review.mdを作成し、プロジェクト固有のチェック項目を追加することも可能。",
+related:[22,29,76],caution:"ツールは既知パターンに基づく検出。未知の脆弱性やビジネスロジックの欠陥は検出できない場合がある。",
+exercise:"/security-reviewを実行して、プロジェクト内のセキュリティ上の指摘を確認してください。"},
+
+{id:24,slug:"tip-24",cat:"prompt",title:"/init でCLAUDE.mdを自動生成",level:"初級",impact:"高",
+summary:"プロジェクト構造を自動分析して最適なCLAUDE.mdを生成する",
+scenes:["新しいプロジェクトでClaude Codeを使い始める時","既存プロジェクトにClaude Codeを初めて導入する時","CLAUDE.mdの書き方がわからない時"],
+steps:["/init を実行","Claude Codeがプロジェクト構造を分析","技術スタック、ディレクトリ構成、開発コマンド等を検出","CLAUDE.mdが自動生成される"],
+code:"/init\n\n# 生成されるCLAUDE.mdの例\n# プロジェクト概要\nNext.js 15 + TypeScript + Prisma\n\n# 開発コマンド\nnpm run dev  # 開発サーバー\nnpm run test # テスト実行",
+advanced:"生成後にプロジェクト固有のルール（命名規則、コーディングスタイル等）を手動で追加するとさらに効果的。",
+related:[43,47,45],caution:"既存のCLAUDE.mdがある場合は上書きされる可能性がある。事前にバックアップ推奨。",
+exercise:"/initを実行してCLAUDE.mdを自動生成してください。生成内容を確認し、プロジェクト固有の情報を追加してみましょう。"},
+
+{id:25,slug:"tip-25",cat:"prompt",title:"/diff でインタラクティブdiffビューア",level:"中級",impact:"中",
+summary:"Claude Codeが行った変更をインタラクティブに確認・取り消しできる",
+scenes:["コミット前に変更内容を最終確認したい","意図しない変更がないか確認したい"],
+steps:["/diff を実行","変更ファイルの一覧が表示される","各ファイルの差分を確認","必要に応じて変更を取り消し"],
+code:"/diff",advanced:"git diffコマンドより見やすいフォーマットで表示される。",related:[19,109],caution:"",
+exercise:"/diffで変更内容を確認してからgit commitしてください。"},
+
+{id:26,slug:"tip-26",cat:"prompt",title:"/cost でトークン使用量を確認",level:"初級",impact:"中",
+summary:"セッションのコスト・トークン消費・レート制限をリアルタイムで確認する",
+scenes:["今日のAPI利用コストを把握したい","レート制限に近づいていないか確認したい"],
+steps:["/cost を実行","トークン使用量、APIコスト、レート制限が表示される"],
+code:"/cost",advanced:"CI環境では--max-budget-usdでコスト上限を設定できる。",related:[94,139],caution:"",
+exercise:"/costを実行して現在のセッションのトークン消費量を確認してください。"},
+
+{id:27,slug:"tip-27",cat:"prompt",title:"/context でコンテキスト使用状況を可視化",level:"中級",impact:"中",
+summary:"コンテキストウィンドウの何%が何で占有されているかを視覚的に確認する",
+scenes:["コンテキストが圧迫されている原因を特定したい","compactのタイミングを判断したい"],
+steps:["/context を実行","コンテキストの使用状況がグラフ等で表示される"],
+code:"/context",advanced:"/compactと組み合わせて効果的にコンテキストを管理する。",related:[20,105],caution:"",
+exercise:"/contextを実行してコンテキストの使用状況を確認し、80%を超えていたら/compactを実行してください。"},
+
+{id:28,slug:"tip-28",cat:"prompt",title:"/effort [level] で推論の深さを調整",level:"中級",impact:"中",
+summary:"low〜maxの5段階で推論の深さを調整し、速度とコストを最適化する",
+scenes:["ファイル名変更のような簡単なタスクを高速化したい","アーキテクチャ設計で深い推論を引き出したい"],
+steps:["/effort low で軽い推論（高速・低コスト）","/effort max で最も深い推論（低速・高コスト）"],
+code:"/effort low     # 最速・簡単なタスク向け\n/effort medium  # バランス\n/effort high    # やや深い推論\n/effort xhigh   # 深い推論\n/effort max     # 最も深い推論",
+advanced:"モデル選択（Alt+P）と組み合わせると最適化の幅が広がる。Haiku+low=最速、Opus+max=最高品質。",
+related:[8,9,140],caution:"effort:maxはトークン消費が大きい。必要な時だけ使用。",
+exercise:"/effort low と /effort max それぞれで同じ質問をして、回答の深さとレスポンス速度の違いを比較してください。"},
+
+{id:29,slug:"tip-29",cat:"prompt",title:"/branch で会話をブランチ分岐",level:"上級",impact:"中",
+summary:"現在の会話を分岐して別のアプローチを試し比較する",
+scenes:["React版とVue版のどちらが適切か比較したい","異なるアルゴリズムを試して性能比較したい"],
+steps:["/branch 名前 で分岐を作成","分岐した会話で別のアプローチを試す","元の会話に戻って比較"],
+code:"/branch react-approach\n/branch vue-approach",
+advanced:"A/Bテスト的にアプローチを比較できる。",related:[117,55],caution:"分岐ごとにコンテキストが消費される。",
+exercise:"/branchで会話を分岐し、同じ問題に対して2つの異なるアプローチを試してください。"},
+
+{id:30,slug:"tip-30",cat:"prompt",title:"/export で会話をテキスト出力",level:"初級",impact:"低",
+summary:"会話全体をテキストファイルとしてエクスポートする",
+scenes:["作業ログをチームに共有したい","後から読み返すために保存したい"],
+steps:["/export ファイル名 を実行","会話がテキスト形式で保存される"],
+code:"/export session-log.txt",advanced:"",related:[49],caution:"",
+exercise:"/exportで会話をファイルに保存してください。"},
+
+{id:31,slug:"tip-31",cat:"prompt",title:"/insights でセッション使用分析",level:"中級",impact:"低",
+summary:"過去のセッション傾向をレポート化して使い方の改善点を発見する",
+scenes:["自分のClaude Codeの使い方パターンを分析したい"],
+steps:["/insights を実行","使用統計レポートが表示される"],
+code:"/insights",advanced:"",related:[26],caution:"",exercise:"/insightsで使用統計を確認してください。"},
+
+{id:32,slug:"tip-32",cat:"prompt",title:"/team-onboarding でチーム用ガイド生成",level:"中級",impact:"中",
+summary:"プロジェクト分析に基づく新メンバー向けオンボーディングガイドを自動生成する",
+scenes:["新メンバーがプロジェクトに参加する時のセットアップを効率化したい"],
+steps:["/team-onboarding を実行","プロジェクト構造が分析される","オンボーディングガイドが生成される"],
+code:"/team-onboarding",advanced:"生成されたガイドをREADMEやWikiに転記すると継続的に活用できる。",related:[24],caution:"",
+exercise:"/team-onboardingでガイドを生成し、内容を確認してください。"},
+
+{id:33,slug:"tip-33",cat:"prompt",title:"/simplify でコード品質を自動改善",level:"中級",impact:"中",
+summary:"変更されたファイルを自動レビューし冗長なコードを簡略化する",
+scenes:["コードレビュー前に品質を上げておきたい","リファクタリングのポイントを見つけたい"],
+steps:["/simplify を実行","変更ファイルが分析される","改善提案が表示・適用される"],
+code:"/simplify\n/simplify パフォーマンスに集中",advanced:"focusオプションで改善の観点を指定可能。",related:[22,33],caution:"",
+exercise:"/simplifyを実行して、コード品質の改善提案を確認してください。"},
+
+{id:34,slug:"tip-34",cat:"prompt",title:"@ファイルパス でファイルを明示参照",level:"初級",impact:"高",
+summary:"@記法でファイルを明示的にコンテキストに含めてから指示を出す",
+scenes:["特定のファイルをレビューさせたい","別ファイルの内容を参照しながら作業したい"],
+steps:["@を入力するとファイルパス補完が始まる","Tabで候補を選択","ファイル内容がコンテキストに含まれる","続けて指示を入力"],
+code:"@src/api/auth.ts このファイルをレビューして\n@package.json 依存パッケージを分析して",
+advanced:"@フォルダ/でディレクトリ全体も参照可能。複数の@を並べて複数ファイルを一度に参照できる。",related:[35,36],caution:"大きなファイルを@で参照するとコンテキストを圧迫する。",
+exercise:"@で任意のファイルを参照し、そのファイルの内容について質問してください。タブ補完を使って素早く入力してみましょう。"},
+
+{id:35,slug:"tip-35",cat:"prompt",title:"@フォルダ/ でディレクトリ全体を参照",level:"初級",impact:"高",
+summary:"ディレクトリ配下の全ファイルをコンテキストに投入する",
+scenes:["モジュール全体の構造を理解させたい","関連ファイルをまとめてリファクタリングさせたい"],
+steps:["@フォルダ名/ を入力","配下のファイルがコンテキストに含まれる"],
+code:"@src/components/ 型定義を統一して\n@src/api/ エラーハンドリングをレビューして",
+advanced:"サブディレクトリにCLAUDE.mdがあると自動適用される。",related:[34,44,115],caution:"大きなディレクトリは大量のトークンを消費する。",
+exercise:"@src/のようにディレクトリを参照し、その構造を説明させてください。"},
+
+{id:36,slug:"tip-36",cat:"prompt",title:"@URL でWebページを参照",level:"中級",impact:"中",
+summary:"外部ドキュメントやAPI仕様を参照して作業に反映する",
+scenes:["ライブラリの公式ドキュメントを参照しながら実装したい","外部APIの仕様書に基づいてクライアントを生成したい"],
+steps:["@URL形式でWebページを参照","内容がコンテキストに含まれる","参照内容に基づいた作業が可能"],
+code:"@https://docs.example.com/api この仕様に合わせてクライアントを実装して",
+advanced:"",related:[34,35],caution:"全てのWebページがアクセス可能とは限らない。認証が必要なページは取得できない場合がある。",
+exercise:"@で任意のWebページのURLを参照し、その内容について質問してください。"},
+
+{id:37,slug:"tip-37",cat:"prompt",title:"! でBashコマンドを直接実行",level:"初級",impact:"中",
+summary:"Claude Codeを経由せずシェルコマンドを直接実行する",
+scenes:["git statusやnpm testを素早く確認したい","Claude Codeにトークンを消費させずにコマンドを実行したい"],
+steps:["プロンプトの先頭に ! を入力","続けてコマンドを入力","Enterで直接実行される","結果は会話コンテキストに含まれる"],
+code:"!git status\n!npm run test\n!ls -la src/",
+advanced:"結果がコンテキストに含まれるので、続けて「このテスト結果を分析して」と依頼できる。",related:[],caution:"危険なコマンド（rm -rf等）もそのまま実行されるので注意。",
+exercise:"!git statusと!npm run testを実行し、結果を確認してください。"},
+
+{id:38,slug:"tip-38",cat:"prompt",title:"「テストも書いて」の一文を追加",level:"初級",impact:"高",
+summary:"修正指示にテスト作成を追加してTDD的ワークフローを実現する",
+scenes:["バグ修正時に再発防止テストも同時に欲しい","新機能実装時にテストカバレッジも確保したい"],
+steps:["通常の修正指示を書く","末尾に「テストも書いて」を追加","修正とテストが同時に生成される"],
+code:"このバグを修正して。テストも書いて。\nこの関数をリファクタリングして。テストも書いて。",
+advanced:"「テストを先に書いて、それからテストが通る実装を書いて」とするとTDD（テスト駆動開発）になる。",related:[39,40],caution:"",
+exercise:"何かコード修正を依頼する際に「テストも書いて」を追加し、テストが一緒に生成されることを確認してください。"},
+
+{id:39,slug:"tip-39",cat:"prompt",title:"「最小限の変更で」と明示する",level:"初級",impact:"高",
+summary:"スコープクリープを防ぎ変更行数を最小化して副作用リスクを下げる",
+scenes:["バグ修正で関係ない箇所まで変更されるのを防ぎたい","hotfixで安全に最小の修正をしたい"],
+steps:["修正指示に「最小限の変更で」を追加","変更範囲が限定される"],
+code:"このバグを最小限の変更で修正して。\nhotfix: 決済エラーを最小限の修正で直して。関連するリファクタリングは別PRで。",
+advanced:"「変更前後のdiffを表示して」と追加すると変更範囲を確認しやすい。",related:[38,40,109],caution:"",
+exercise:"バグ修正を「最小限の変更で」と指定して依頼し、変更がコンパクトに抑えられることを確認してください。"},
+
+{id:40,slug:"tip-40",cat:"prompt",title:"番号付きステップで段階的に指示",level:"初級",impact:"高",
+summary:"段階を明示してClaude Codeの精度を向上させる",
+scenes:["複雑なタスクを段階的に進めたい","各ステップの完了を確認しながら進めたい"],
+steps:["番号付きリストで指示を構造化","各ステップが順番に実行される"],
+code:"以下の手順で進めて:\n1. エラーログを分析して原因を特定\n2. 修正を実装\n3. テストを追加して実行\n4. 変更のdiffを表示",
+advanced:"「各ステップの結果を報告して」を追加すると進捗を逐次確認できる。",related:[38,39],caution:"",
+exercise:"3ステップ以上の番号付き指示を送信し、各ステップが順番に実行されることを確認してください。"},
+
+{id:41,slug:"tip-41",cat:"prompt",title:"「〜の観点で」とレビュー観点を限定",level:"中級",impact:"高",
+summary:"焦点を絞ったレビューで的確なフィードバックを得る",
+scenes:["パフォーマンスだけに焦点を当てたレビューが欲しい","セキュリティ観点のチェックに集中したい"],
+steps:["レビュー依頼に観点を明示する","指定した観点に特化した分析が返る"],
+code:"パフォーマンスの観点でレビューして\nセキュリティとテスタビリティの観点でレビューして",
+advanced:"観点を3つ以内に絞ると各観点の分析が深くなる。",related:[22,23],caution:"",
+exercise:"同じコードを「パフォーマンスの観点で」「セキュリティの観点で」の2パターンでレビューさせ、結果の違いを確認してください。"},
+
+{id:42,slug:"tip-42",cat:"prompt",title:"ネガティブ制約を明示する",level:"中級",impact:"中",
+summary:"「やってはいけないこと」を明示して意図しない変更を防ぐ",
+scenes:["既存テストを壊さずに修正したい","新しい依存パッケージを追加せずに実装したい"],
+steps:["指示に禁止事項を追加する"],
+code:"修正して。ただし:\n- 既存のテストを変更しないで\n- 新しい依存を追加しないで\n- このファイルは変更しないで",
+advanced:"CLAUDE.mdに恒久的なルールとして書くと毎回指示する必要がなくなる。",related:[39,47],caution:"",
+exercise:"「〜しないで」の制約をつけた指示を送り、制約が守られることを確認してください。"},
+
+{id:43,slug:"tip-43",cat:"prompt",title:"CLAUDE.mdに @ファイル名 でインポート",level:"中級",impact:"高",
+summary:"CLAUDE.md内で@記法を使い外部ファイルの最新内容を自動参照する",
+scenes:["READMEの内容をClaude Codeに常に把握させたい","API仕様書を常にコンテキストに含めたい"],
+steps:["CLAUDE.mdを開く","@README.md のように記載","保存する","Claude Codeが自動的に参照先ファイルの内容を読み込む"],
+code:"# CLAUDE.md\n@README.md\n@package.json\n@docs/api-spec.md",
+advanced:"参照先ファイルが更新されると自動的に最新内容が反映される。手動更新不要。",related:[24,47],caution:"大きなファイルを大量にインポートするとコンテキストを圧迫する。",
+exercise:"CLAUDE.mdに@README.mdを追加し、Claude Codeがその内容を把握していることを確認してください。"},
+
+{id:44,slug:"tip-44",cat:"prompt",title:"サブディレクトリにCLAUDE.mdを配置",level:"中級",impact:"中",
+summary:"モジュール別のルールをサブディレクトリごとに設定する",
+scenes:["APIモジュールとUIモジュールで異なるコーディングルールがある","チーム別のルールを分離管理したい"],
+steps:["サブディレクトリにCLAUDE.mdを作成","モジュール固有のルールを記載","そのディレクトリのファイルを読む時に自動適用される"],
+code:"# src/api/CLAUDE.md\nこのディレクトリはREST APIを管理。\nエラーは必ずResult型で返すこと。",
+advanced:"compact後は一時的に失われるが、次にそのディレクトリのファイルを読む時に自動再適用される。",related:[43,45,46],caution:"",
+exercise:"src/配下にCLAUDE.mdを作成し、そのディレクトリの作業時にルールが適用されることを確認してください。"},
+
+{id:45,slug:"tip-45",cat:"prompt",title:"CLAUDE.local.md で個人設定を分離",level:"中級",impact:"中",
+summary:".gitignoreに入れる個人設定用ファイルでチーム設定と個人の好みを分離する",
+scenes:["「返答は日本語で」等の個人設定をチーム設定と分けたい"],
+steps:["CLAUDE.local.mdをプロジェクトルートに作成","個人的なルールを記載",".gitignoreにCLAUDE.local.mdを追加"],
+code:"# CLAUDE.local.md\n返答は必ず日本語で。\nコメントは英語で書く。",
+advanced:"",related:[43,46],caution:".gitignoreに追加しないとチームに個人設定がpushされてしまう。",
+exercise:"CLAUDE.local.mdを作成し、.gitignoreに追加してください。"},
+
+{id:46,slug:"tip-46",cat:"prompt",title:"CLAUDE.mdの4段階優先順位を理解する",level:"上級",impact:"中",
+summary:"管理者>プロジェクト>ユーザー>ローカルの優先順位でルールが適用される",
+scenes:["組織のポリシーとプロジェクトのルールの関係を理解したい"],
+steps:["管理者設定（システムディレクトリ）が最高優先度","プロジェクトのCLAUDE.md（Git管理）が次","ユーザー設定（~/.claude/CLAUDE.md）","CLAUDE.local.md（個人・ローカル）が最低優先度"],
+code:"# 優先順位（高→低）\n1. 管理者設定（組織全体）\n2. プロジェクトCLAUDE.md\n3. ~/.claude/CLAUDE.md\n4. CLAUDE.local.md",
+advanced:"上位設定は下位で上書きできない。セキュリティポリシーの強制に活用。",related:[43,44,45],caution:"",
+exercise:"~/.claude/CLAUDE.mdとプロジェクトのCLAUDE.mdに異なるルールを書き、どちらが優先されるか確認してください。"},
+
+{id:47,slug:"tip-47",cat:"prompt",title:"開発コマンド一覧をCLAUDE.mdに記載",level:"初級",impact:"高",
+summary:"開発・テスト・ビルドコマンドを書いておくとClaude Codeが正しいコマンドを使う",
+scenes:["プロジェクト固有のコマンドをClaude Codeに覚えさせたい"],
+steps:["CLAUDE.mdに開発コマンドセクションを追加","npm/yarn/pnpm等のコマンドを列挙"],
+code:"# CLAUDE.md に追加\n# 開発コマンド\nnpm run dev    # 開発サーバー（port 3000）\nnpm run test   # Vitest実行\nnpm run lint   # ESLint\nnpm run build  # プロダクションビルド",
+advanced:"プロジェクト固有のスクリプト（npm run migrate等）も含めると効果的。",related:[24,43],caution:"",
+exercise:"CLAUDE.mdに開発コマンドを記載し、Claude Codeにテスト実行を依頼して正しいコマンドが使われるか確認してください。"},
+
+{id:48,slug:"tip-48",cat:"prompt",title:"/debug でデバッグログを有効化",level:"中級",impact:"中",
+summary:"問題診断のためのデバッグログを有効化する",
+scenes:["予期しないエラーの原因を調査したい"],
+steps:["/debug に続けて問題を記述","デバッグモードで詳細な情報が表示される"],
+code:"/debug API接続エラーの原因を調査",
+advanced:"--debugフラグでCLI起動時から有効にすることも可能。",related:[101,103],caution:"",
+exercise:"/debugで何か問題の診断を試みてください。"},
+
+{id:49,slug:"tip-49",cat:"prompt",title:"/copy [N] で応答をクリップボードコピー",level:"初級",impact:"中",
+summary:"Claude Codeの応答をクリップボードにコピーしてSlack等に貼り付ける",
+scenes:["回答をSlackやドキュメントに貼り付けたい"],
+steps:["/copy で直前の応答をコピー","/copy 3 で3番目前の応答をコピー"],
+code:"/copy\n/copy 3",advanced:"",related:[30],caution:"",
+exercise:"/copyで応答をコピーし、テキストエディタに貼り付けて確認してください。"},
+
+{id:50,slug:"tip-50",cat:"workflow",title:"claude -w でworktree隔離セッション",level:"上級",impact:"高",
+summary:"Git worktreeを自動作成しメインブランチに影響なく独立した環境で作業する",
+scenes:["新機能開発をメインブランチに影響なく進めたい","複数機能の並列開発がしたい","安全に実験的なコード変更を試したい"],
+steps:["claude -w 機能名 でworktreeセッションを起動","自動でブランチとworktreeが作成される","独立した環境で自由に作業","完了したらPRを作成してマージ"],
+code:"claude -w feature-auth    # 認証機能用\nclaude -w refactor-api    # APIリファクタ用",
+advanced:".worktreeincludeで.envファイルを自動コピー可能。symlinkDirectoriesでnode_modules共有も。",related:[51,52,53],caution:"worktree間でnode_modulesを共有しない場合、各worktreeでnpm installが必要。",
+exercise:"claude -w test-featureでworktreeセッションを起動し、メインブランチとは独立して作業できることを確認してください。"},
+
+{id:51,slug:"tip-51",cat:"workflow",title:"--tmux でtmuxペイン付きworktree",level:"上級",impact:"中",
+summary:"worktreeと同時にtmuxの複数ペインを自動作成する",
+scenes:["エディタ・ターミナル・プレビューを同時表示したい"],
+steps:["claude -w 機能名 --tmux で起動","tmuxセッションが自動作成される"],
+code:"claude -w feature --tmux",advanced:"",related:[50],caution:"tmuxがインストールされている必要がある。",
+exercise:"tmuxがインストールされている環境で --tmux オプションを試してください。"},
+
+{id:52,slug:"tip-52",cat:"workflow",title:".worktreeinclude で.envを自動コピー",level:"上級",impact:"高",
+summary:"gitignoreされたファイルをworktreeに自動コピーして環境変数を引き継ぐ",
+scenes:["worktreeで環境変数が必要な時"],
+steps:["プロジェクトルートに.worktreeincludeを作成","コピーしたいファイルを記載"],
+code:"# .worktreeinclude\n.env\n.env.local\nconfig/local.json",
+advanced:"",related:[50,53],caution:"機密ファイルがworktreeにコピーされるため、worktreeの管理に注意。",
+exercise:".worktreeincludeを作成し、worktreeで.envが正しくコピーされることを確認してください。"},
+
+{id:53,slug:"tip-53",cat:"workflow",title:"symlinkDirectories でnode_modules共有",level:"上級",impact:"中",
+summary:"worktreeでnode_modulesをシンボリックリンクにしてディスク節約する",
+scenes:["複数worktreeでnpm installを繰り返したくない"],
+steps:["settings.jsonにsymlinkDirectories設定を追加","worktree作成時に自動でシンボリックリンクが張られる"],
+code:'// settings.json\n"worktree": {\n  "symlinkDirectories": ["node_modules", ".cache"]\n}',
+advanced:"",related:[50,52],caution:"シンボリックリンクなので、一方のworktreeでパッケージを変更すると他にも影響する。",
+exercise:"settings.jsonにsymlinkDirectoriesを設定し、worktree作成時にnode_modulesが共有されることを確認してください。"},
+
+{id:54,slug:"tip-54",cat:"workflow",title:"claude -c で最新セッションを即再開",level:"初級",impact:"高",
+summary:"前回の会話をそのまま続行する最速の方法",
+scenes:["朝イチで昨日の作業を続けたい","一時中断後に素早く復帰したい"],
+steps:["claude -c を実行","最新のセッションが復元される","前回の会話コンテキストがそのまま使える"],
+code:"claude -c",advanced:"-c -p で非対話モードでの続行も可能。",related:[55,56],caution:"",
+exercise:"一度セッションを終了し、claude -cで再開して前回の会話が続いていることを確認してください。"},
+
+{id:55,slug:"tip-55",cat:"workflow",title:"--resume で名前付きセッション復帰",level:"中級",impact:"高",
+summary:"名前をつけたセッションに後から簡単に復帰する",
+scenes:["複数プロジェクトのセッションを管理したい"],
+steps:["/rename でセッションに名前をつける","終了後 --resume 名前 で復帰"],
+code:"/rename auth-refactor\n# 後日...\nclaude --resume auth-refactor",
+advanced:"--resumeだけ（引数なし）でセッションピッカーが表示される。",related:[54,56],caution:"",
+exercise:"セッションに/renameで名前をつけ、終了後に--resumeで復帰してください。"},
+
+{id:56,slug:"tip-56",cat:"workflow",title:"claude -n でセッション名を指定して開始",level:"中級",impact:"中",
+summary:"最初からセッション名をつけて管理しやすくする",
+scenes:["機能別にセッションを整理したい"],
+steps:["claude -n \"名前\" で新規セッション開始"],
+code:'claude -n "payment-integration"',advanced:"",related:[54,55],caution:"",
+exercise:"claude -nで名前付きセッションを開始してください。"},
+
+{id:57,slug:"tip-57",cat:"workflow",title:"/color でセッションの色を変更",level:"初級",impact:"低",
+summary:"プロンプトバーの色を変えて複数ターミナルを視覚的に区別する",
+scenes:["複数ターミナルで作業する時の混同防止"],
+steps:["/color 色名 で変更"],code:"/color blue\n/color red",advanced:"",related:[55,56],caution:"",
+exercise:"/color で好きな色に変更してみてください。"},
+
+{id:58,slug:"tip-58",cat:"workflow",title:"「並列で実行して」と明示的に指示",level:"中級",impact:"高",
+summary:"サブエージェントの並列処理を明示的にトリガーして調査時間を短縮する",
+scenes:["複数ディレクトリの同時調査","独立した複数タスクの一括実行"],
+steps:["「以下の3つを並列で実行して」のように明示的に指示","Claude Codeがサブエージェントを起動","各タスクが並列実行される","全結果がまとめて報告"],
+code:"以下を並列で調査して:\n1. src/api/のエラーハンドリング\n2. src/components/の型定義\n3. tests/のカバレッジ",
+advanced:"依存関係のあるタスクは自動で順次実行に切り替わる。",related:[21,59,60,133],caution:"並列実行はトークン消費が増える。",
+exercise:"3つの独立した調査タスクを「並列で実行して」と指示し、結果を確認してください。"},
+
+{id:59,slug:"tip-59",cat:"workflow",title:"「調査→実装」の2フェーズで進める",level:"中級",impact:"高",
+summary:"Phase1で並列調査、Phase2で順次実装して品質と速度を両立する",
+scenes:["大規模な変更を安全に進めたい"],
+steps:["Phase1:「以下を並列で調査して」","結果を確認","Phase2:「調査結果に基づいて順番に実装して」"],
+code:"# Phase1\n以下を並列で調査して:\n- パフォーマンスボトルネック\n- セキュリティ脆弱性\n\n# Phase2\n調査結果に基づいて、優先度が高い問題から順に修正して",
+advanced:"調査は並列、実装は順次がベストプラクティス。",related:[58,60],caution:"",
+exercise:"2フェーズ戦略で何かの調査→修正を試してください。"},
+
+{id:60,slug:"tip-60",cat:"workflow",title:"ディレクトリ単位でタスクを分割",level:"中級",impact:"高",
+summary:"ディレクトリ別に指示を分けるとサブエージェントが効率的に並列処理する",
+scenes:["大規模リファクタリング","全モジュールへの横断的な変更"],
+steps:["ディレクトリ別に作業を分割","各ディレクトリへの指示を明示"],
+code:"以下のディレクトリごとにレビューして:\n- src/api/ セキュリティ\n- src/components/ パフォーマンス\n- src/lib/ 型安全性",
+advanced:"",related:[58,59],caution:"同じファイルを複数サブエージェントが変更すると競合する。",
+exercise:"ディレクトリ別に分割した指示で並列レビューを試してください。"},
+
+{id:61,slug:"tip-61",cat:"workflow",title:"/loop で定期実行タスクを設定",level:"上級",impact:"中",
+summary:"指定間隔でプロンプトを自動繰り返し実行する",
+scenes:["ビルド結果の定期チェック","デプロイ監視"],
+steps:["/loop 間隔 プロンプト で設定"],
+code:"/loop 5m ビルドが通るか確認して\n/loop 10m デプロイ状況を確認して",
+advanced:"",related:[64],caution:"ループ中もトークンが消費される。",
+exercise:"/loop 1m 現在時刻を表示して で動作を確認してください。"},
+
+{id:62,slug:"tip-62",cat:"workflow",title:"claude --remote でクラウドセッション",level:"上級",impact:"高",
+summary:"AnthropicのクラウドVMで実行しローカルに負荷をかけない",
+scenes:["長時間の大規模タスクを処理したい","ローカルマシンのスペックが不足している時"],
+steps:["claude --remote \"タスク\" で起動","クラウドVMで実行が開始","Web版やモバイルから進捗を監視"],
+code:'claude --remote "認証バグを修正して"',
+advanced:"/teleportでクラウド→ローカルにハンドオフ可能。",related:[63,64],caution:"Web版の機能。ネットワーク接続が必要。",
+exercise:"--remoteでクラウドセッションを開始し、進捗を確認してください。"},
+
+{id:63,slug:"tip-63",cat:"workflow",title:"/teleport でクラウド→ローカルにハンドオフ",level:"上級",impact:"中",
+summary:"Web版で始めた作業をローカルCLIに引き継ぐ",
+scenes:["クラウドで計画→ローカルで実装のワークフロー"],
+steps:["/teleport を実行","クラウドセッションがローカルに転送される"],
+code:"/teleport\nclaude --teleport",advanced:"",related:[62],caution:"Web版との連携が必要。",
+exercise:"Web版でセッションを開始し、/teleportでローカルに引き継いでください。"},
+
+{id:64,slug:"tip-64",cat:"workflow",title:"/autofix-pr でPR自動修正（Web版）",level:"上級",impact:"高",
+summary:"PRを監視してCI失敗やレビューコメントに自動対応する",
+scenes:["PRのCI失敗を自動修正してほしい","レビューコメントへの自動対応"],
+steps:["/autofix-pr を実行","PRの監視が開始される","CI失敗やコメントに自動対応"],
+code:"/autofix-pr",advanced:"",related:[22,66],caution:"Web版の機能。自動修正が意図しない場合もあるのでマージ前に確認。",
+exercise:"/autofix-prでPR監視を開始してください。"},
+
+{id:65,slug:"tip-65",cat:"workflow",title:"/ultraplan でクラウド計画立案（Web版）",level:"上級",impact:"中",
+summary:"クラウドの計算リソースで複雑な実装計画を多角的に検証する",
+scenes:["大規模リファクタリングの計画を立てたい"],
+steps:["/ultraplan 指示 で計画立案開始"],
+code:"/ultraplan 認証システムのリニューアル計画を立てて",advanced:"",related:[62,66],caution:"Web版の機能。",
+exercise:"/ultraplanで計画を立てて内容を確認してください。"},
+
+{id:66,slug:"tip-66",cat:"workflow",title:"/ultrareview で多エージェントPRレビュー（Web版）",level:"上級",impact:"高",
+summary:"クラウドで複数エージェントが並列でPRを多角的にレビューする",
+scenes:["重要なPRを徹底レビューしたい","セキュリティ・パフォーマンス・設計を同時チェック"],
+steps:["/ultrareview PR番号 で開始","複数エージェントが並列レビュー","結果がまとまって表示される"],
+code:"/ultrareview 42",advanced:"/reviewの上位版。通常レビューより深い分析。",related:[22,23],caution:"Web版の機能。トークン消費が多い。",
+exercise:"/ultrareviewでPRをレビューし、/reviewとの違いを確認してください。"},
+
+{id:67,slug:"tip-67",cat:"config",title:"plan モードで計画だけ立てさせる",level:"中級",impact:"高",
+summary:"ファイル変更を禁止し読み取りのみの計画モードで安全に設計レビューする",
+scenes:["変更前に影響範囲を調査したい","設計方針を相談したい"],
+steps:["claude --permission-mode plan で起動","ファイルの読み取りと分析のみ実行される","変更指示は実行されない"],
+code:"claude --permission-mode plan\n# または\n/plan 認証バグの修正方針を検討して",
+advanced:"/planスキルでプロンプト付きで即座に計画モードを開始できる。",related:[110,123],caution:"計画モードではファイル変更ができない。実行に移る時はモードを切り替える。",
+exercise:"--permission-mode planで起動し、プロジェクトの改善計画を立ててもらってください。"},
+
+{id:68,slug:"tip-68",cat:"config",title:"allow/deny でツール単位の細かい制御",level:"中級",impact:"高",
+summary:"パターンマッチでツール使用を細かく許可/禁止する",
+scenes:["npm runは許可するがgit pushは要確認にしたい","特定のディレクトリだけ編集を許可したい"],
+steps:["settings.jsonのpermissions.allowに許可パターンを追加","permissions.denyに禁止パターンを追加"],
+code:'// .claude/settings.json\n"permissions": {\n  "allow": ["Bash(npm run *)", "Read"],\n  "deny": ["Bash(git push *)"] \n}',
+advanced:"ワイルドカード(*)でパターンマッチ可能。",related:[69,67],caution:"",
+exercise:"settings.jsonにallow/denyルールを設定し、許可されたコマンドだけ実行されることを確認してください。"},
+
+{id:69,slug:"tip-69",cat:"config",title:"deny で危険なコマンドをブロック",level:"中級",impact:"高",
+summary:"curl/env読み取り等の危険なコマンドを事前にブロックする",
+scenes:["データ漏洩リスクのあるコマンドを禁止したい","チーム全体のセキュリティポリシーを強制したい"],
+steps:["settings.jsonのpermissions.denyに追加"],
+code:'"deny": [\n  "Bash(curl *)",\n  "Bash(wget *)",\n  "Read(./.env)",\n  "Bash(rm -rf *)"\n]',
+advanced:".claude/settings.jsonをgitにコミットしてチーム全体に適用。",related:[68,111],caution:"",
+exercise:"denyにcurlを追加し、Claude Codeがcurlコマンドを実行できないことを確認してください。"},
+
+{id:70,slug:"tip-70",cat:"config",title:"auto モードでバックグラウンド安全チェック",level:"上級",impact:"中",
+summary:"自動承認しつつ裏でセキュリティ分類器が危険操作を検出する",
+scenes:["高速作業したいが安全性も確保したい"],
+steps:["claude --permission-mode auto で起動","操作が自動承認される","危険な操作は分類器がブロック"],
+code:"claude --permission-mode auto",advanced:"",related:[67,68],caution:"信頼できるプロジェクトでのみ使用。",
+exercise:"autoモードで作業し、安全チェックの動作を確認してください。"},
+
+{id:71,slug:"tip-71",cat:"config",title:".claude/skills/ でスキルを作成（推奨）",level:"中級",impact:"高",
+summary:"SKILL.mdのfrontmatterでツール制限やモデル指定が可能な高機能カスタムコマンド",
+scenes:["チーム共通のレビューコマンドを作りたい","プロジェクト固有のデプロイコマンドを定義したい"],
+steps:[".claude/skills/スキル名/ ディレクトリを作成","SKILL.mdを作成してfrontmatterとプロンプトを記載","/project:スキル名 で実行"],
+code:"# .claude/skills/review/SKILL.md\n---\nname: review\ndescription: コードレビュー\nallowed-tools: Read Grep\n---\n変更されたファイルをレビューしてください。",
+advanced:"$ARGUMENTSで引数受け取り、allowed-toolsでツール制限が可能。",related:[72,73,74,75],caution:"",
+exercise:".claude/skills/に簡単なスキルを作成し、/project:スキル名で実行できることを確認してください。"},
+
+{id:72,slug:"tip-72",cat:"config",title:"$ARGUMENTS で引数を受け取る",level:"中級",impact:"高",
+summary:"スキル実行時の引数をSKILL.md内で参照する",
+scenes:["Issue番号を引数で受け取るfix-issueコマンドを作りたい"],
+steps:["SKILL.mdに$ARGUMENTSを記載","/project:スキル名 引数 で実行"],
+code:"# SKILL.md\nIssue #$ARGUMENTS を修正してください。\n\n# 使い方\n/project:fix-issue 123",
+advanced:"$0, $1で複数引数を個別に受け取ることも可能。",related:[71,73],caution:"",
+exercise:"$ARGUMENTSを使ったスキルを作成し、引数を渡して動作確認してください。"},
+
+{id:73,slug:"tip-73",cat:"config",title:"$0, $1 で複数引数を分解",level:"上級",impact:"中",
+summary:"スキルで複数の引数を個別に受け取る",
+scenes:["マイグレーションで元と先のフレームワークを指定したい"],
+steps:["SKILL.mdに$0, $1等を記載","スペース区切りの引数がそれぞれに入る"],
+code:"# SKILL.md\n$0 を $1 から $2 に移行してください。\n\n# 使い方\n/project:migrate Button React Vue",
+advanced:"",related:[72],caution:"",exercise:"複数引数のスキルを作成して動作確認してください。"},
+
+{id:74,slug:"tip-74",cat:"config",title:"allowed-tools でスキル内のツール制限",level:"上級",impact:"中",
+summary:"スキルが使用できるツールを制限して安全性を確保する",
+scenes:["レビュースキルではRead/Grepのみ許可したい"],
+steps:["SKILL.mdのfrontmatterにallowed-toolsを追加"],
+code:"---\nallowed-tools: Read Grep\n---",advanced:"",related:[71],caution:"",
+exercise:"allowed-toolsを設定したスキルで、制限外のツールが使えないことを確認してください。"},
+
+{id:75,slug:"tip-75",cat:"config",title:"ユーザースキル vs プロジェクトスキル",level:"中級",impact:"中",
+summary:"個人用とチーム共有用のスキルを使い分ける",
+scenes:["個人のワークフローとチームのワークフローを分離したい"],
+steps:["~/.claude/skills/ に個人用スキルを配置",".claude/skills/ にチーム用スキルを配置（Git管理）"],
+code:"~/.claude/skills/my-helper/  → 個人用（全プロジェクト共通）\n.claude/skills/team-review/  → チーム用（Git管理）",
+advanced:"",related:[71],caution:"",exercise:"ユーザースキルとプロジェクトスキルを1つずつ作成し、両方が利用できることを確認してください。"},
+
+{id:76,slug:"tip-76",cat:"config",title:"PreToolUse フックで危険操作をブロック",level:"中級",impact:"高",
+summary:"ツール実行前に検証して危険な操作を自動ブロックする",
+scenes:["本番DB接続を含むコマンドをブロックしたい",".envファイルへの書き込みを防ぎたい"],
+steps:["settings.jsonのhooks.PreToolUseに設定を追加","matcherでツールを指定","フックスクリプトで検証"],
+code:'// settings.json\n"hooks": {\n  "PreToolUse": [{\n    "matcher": "Bash",\n    "hooks": [{\n      "type": "command",\n      "command": "if echo \\"$TOOL_INPUT\\" | grep -q production; then exit 2; fi"\n    }]\n  }]\n}',
+advanced:"exit 2でブロック、exit 0で続行、それ以外は警告表示。",related:[77,83],caution:"フックの設定ミスで正常な操作もブロックされる可能性がある。",
+exercise:"PreToolUseフックで特定キーワードを含むコマンドをブロックする設定を試してください。"},
+
+{id:77,slug:"tip-77",cat:"config",title:"PostToolUse フックで自動lint実行",level:"中級",impact:"高",
+summary:"ファイル変更後にESLint自動修正を実行してコード品質を自動担保する",
+scenes:["Claude Codeのコード出力を常にlint準拠にしたい"],
+steps:["settings.jsonのhooks.PostToolUseに設定","matcherをEdit|Writeに指定"],
+code:'"PostToolUse": [{\n  "matcher": "Edit|Write",\n  "hooks": [{\n    "type": "command",\n    "command": "npx eslint --fix \\"$TOOL_INPUT_FILE_PATH\\""\n  }]\n}]',
+advanced:"Prettier等の他のフォーマッターにも応用可能。",related:[76,83],caution:"lint修正がエラーになる場合はフックがブロックする可能性がある。|| true で回避。",
+exercise:"PostToolUseフックでlint自動実行を設定し、ファイル変更後に自動修正されることを確認してください。"},
+
+{id:78,slug:"tip-78",cat:"config",title:"UserPromptSubmit フックでプロンプト検証",level:"上級",impact:"中",
+summary:"ユーザー入力時にバリデーションやコンテキスト自動注入を行う",
+scenes:["入力にNGワードが含まれていないかチェックしたい"],
+steps:["hooks.UserPromptSubmitに設定"],code:"",advanced:"",related:[76,79],caution:"",
+exercise:"UserPromptSubmitフックを設定して入力検証を試してください。"},
+
+{id:79,slug:"tip-79",cat:"config",title:"SessionStart フックで環境初期化",level:"上級",impact:"中",
+summary:"セッション開始時に環境チェックやDB接続確認を自動実行する",
+scenes:["セッション開始時にDB接続を自動確認したい"],
+steps:["hooks.SessionStartに設定"],code:"",advanced:"",related:[78,80],caution:"",
+exercise:"SessionStartフックで環境情報を表示する設定を試してください。"},
+
+{id:80,slug:"tip-80",cat:"config",title:"Notification フックでデスクトップ通知",level:"中級",impact:"中",
+summary:"長時間タスクの完了をOS通知で知らせる",
+scenes:["バックグラウンドタスク完了を見逃したくない"],
+steps:["hooks.Notificationに通知コマンドを設定"],
+code:'"Notification": [{\n  "matcher": "",\n  "hooks": [{"type":"command","command":"notify-send Claude \\"$NOTIFICATION_MESSAGE\\""}]\n}]',
+advanced:"",related:[6,79],caution:"OS側の通知設定が必要。",
+exercise:"Notificationフックを設定し、タスク完了時に通知が来ることを確認してください。"},
+
+{id:81,slug:"tip-81",cat:"config",title:"PermissionRequest フックで権限オーバーライド",level:"上級",impact:"中",
+summary:"権限確認をプログラマブルに自動判定する",
+scenes:["CI環境での自動承認"],steps:["hooks.PermissionRequestに設定"],code:"",advanced:"",related:[76],caution:"権限の自動承認はセキュリティリスクに注意。",
+exercise:"PermissionRequestフックを設定して動作を確認してください。"},
+
+{id:82,slug:"tip-82",cat:"config",title:"matcher で正規表現パターンを使用",level:"上級",impact:"中",
+summary:"フックのmatcherで正規表現を使って柔軟にツールをマッチさせる",
+scenes:["MCPの特定サーバーの全ツールにフックを適用したい"],
+steps:["matcherに正規表現パターンを指定"],
+code:'"matcher": "mcp__memory__.*"   # MCPメモリの全ツール\n"matcher": "Edit|Write"         # 複数ツール\n"matcher": "^Notebook"          # 前方一致',
+advanced:"",related:[76,77],caution:"正規表現の誤りで意図しないマッチが発生する可能性。",
+exercise:"正規表現matcherを使ったフックを設定してください。"},
+
+{id:83,slug:"tip-83",cat:"config",title:"終了コード2でHookからブロック",level:"上級",impact:"高",
+summary:"Hook内でexit 2を返すとツール実行を完全にブロックできる",
+scenes:["安全ガードの実装"],steps:["フックスクリプト内でexit 2を返す"],
+code:"# exit 0 = 成功（続行）\n# exit 2 = ブロッキングエラー（実行停止）\n# その他 = 警告表示（続行）",
+advanced:"",related:[76,77],caution:"",exercise:"exit 2を使ったブロッキングフックを設定し、コマンドがブロックされることを確認してください。"},
+
+{id:84,slug:"tip-84",cat:"config",title:"${CLAUDE_SESSION_ID} でログ管理",level:"上級",impact:"低",
+summary:"スキルやフック内でセッションIDを参照してログを紐付ける",
+scenes:["デバッグログをセッション別に管理したい"],
+steps:["スキルやフック内で$CLAUDE_SESSION_IDを参照"],
+code:'echo "Session: $CLAUDE_SESSION_ID" >> debug.log',advanced:"",related:[],caution:"",
+exercise:"フック内でセッションIDをログに記録する設定を試してください。"},
+
+{id:85,slug:"tip-85",cat:"external",title:"/mcp で接続中MCPサーバーを管理",level:"中級",impact:"中",
+summary:"MCPサーバーの接続状態を確認し対話的に管理する",
+scenes:["MCPが正しく接続されているか確認したい"],
+steps:["/mcp を実行","接続中のサーバー一覧が表示される"],
+code:"/mcp",advanced:"",related:[86,88],caution:"",
+exercise:"/mcpで接続状態を確認してください。"},
+
+{id:86,slug:"tip-86",cat:"external",title:".mcp.json でプロジェクト固有MCP設定",level:"中級",impact:"高",
+summary:"プロジェクトルートにMCP設定ファイルを配置してチームで共有する",
+scenes:["チーム全員が同じMCPサーバーを使えるようにしたい"],
+steps:["プロジェクトルートに.mcp.jsonを作成","MCP設定を記載","gitにコミットしてチーム共有"],
+code:'// .mcp.json\n{\n  "mcpServers": {\n    "github": {\n      "command": "npx",\n      "args": ["-y","@modelcontextprotocol/server-github"]\n    }\n  }\n}',
+advanced:"",related:[85,88],caution:"認証情報は.mcp.jsonに含めず環境変数で管理する。",
+exercise:".mcp.jsonを作成しMCPサーバーを設定してください。"},
+
+{id:87,slug:"tip-87",cat:"external",title:"--mcp-config でMCP設定ファイルを指定",level:"上級",impact:"中",
+summary:"起動時にMCP設定ファイルを明示指定して環境別に切り替える",
+scenes:["開発用と本番用で異なるMCP設定を使い分けたい"],
+steps:["claude --mcp-config ファイルパス で起動"],
+code:"claude --mcp-config ./mcp-dev.json\nclaude --mcp-config ./mcp-prod.json",
+advanced:"--strict-mcp-configで指定ファイルのみを使用する強制モードも。",related:[85,86],caution:"",
+exercise:"MCP設定ファイルを2つ作り、--mcp-configで切り替えてください。"},
+
+{id:88,slug:"tip-88",cat:"external",title:"公式MCPサーバー4種を活用",level:"中級",impact:"高",
+summary:"Anthropic公式のfilesystem/GitHub/PostgreSQL/Puppeteerを活用する",
+scenes:["DB操作・GitHub連携・ブラウザ操作を自動化したい"],
+steps:["settings.jsonまたは.mcp.jsonにサーバーを設定","Claude Code再起動で反映"],
+code:"# 公式MCPサーバー\nfilesystem  ファイル操作\nGitHub      Issue/PR管理\nPostgreSQL  DB操作\nPuppeteer   ブラウザ操作",
+advanced:"複数MCPを組み合わせたワークフロー自動化が最強。",related:[86,89],caution:"コミュニティ製MCPはソースコードを確認してから使用。",
+exercise:"公式MCPサーバーを1つ設定して動作確認してください。"},
+
+{id:89,slug:"tip-89",cat:"external",title:"複数MCPの組み合わせワークフロー",level:"上級",impact:"高",
+summary:"GitHub+DB+Slack MCPでIssue→修正→PR→通知の全自動化を実現する",
+scenes:["開発ワークフロー全体を自動化したい"],
+steps:["複数MCPサーバーを同時に設定","ワークフローを指示"],
+code:"「以下を実行して:\n1. [GitHub MCP] Issue #50を取得\n2. コード修正\n3. [GitHub MCP] PR作成\n4. [Slack MCP] #devに通知」",
+advanced:"",related:[88],caution:"MCPサーバーの認証情報管理に注意。",
+exercise:"2つ以上のMCPを組み合わせたワークフローを試してください。"},
+
+{id:90,slug:"tip-90",cat:"external",title:"管理者MCP設定で組織的に制御",level:"上級",impact:"中",
+summary:"managed-mcp.jsonで組織レベルのMCPサーバー許可/禁止を管理する",
+scenes:["組織のセキュリティポリシーに準拠したMCP環境を全メンバーに強制したい"],
+steps:["managed-mcp.jsonを作成","許可/禁止サーバーを定義"],
+code:"",advanced:"allowManagedMcpServersOnly: trueで管理者設定のみに制限可能。",related:[86],caution:"管理者権限が必要。",
+exercise:"managed-mcp.jsonの構造を確認してください。"},
+
+{id:91,slug:"tip-91",cat:"external",title:"claude -p で非対話モードCI実行",level:"中級",impact:"高",
+summary:"CIパイプラインからClaude Codeを呼び出して自動分析する",
+scenes:["GitHub Actionsで自動コードレビューしたい","CIでテスト失敗時の原因分析を自動化したい"],
+steps:["claude -p \"指示\" でワンショット実行","結果が標準出力に返される","CIスクリプト内で後処理"],
+code:'claude -p "このコードを分析して"\ncat error.log | claude -p "エラー原因を特定して"',
+advanced:"--output-format jsonで構造化出力、--max-turnsでターン制限。",related:[92,93,94],caution:"--dangerously-skip-permissionsは隔離環境でのみ使用。",
+exercise:"claude -pでワンショット実行を試してください。"},
+
+{id:92,slug:"tip-92",cat:"external",title:"--output-format json で構造化出力",level:"中級",impact:"高",
+summary:"CI/CDスクリプトで結果をパースしやすいJSON形式で出力する",
+scenes:["CIの結果をjqで自動処理したい"],
+steps:["claude -p --output-format json で実行"],
+code:'claude -p --output-format json "分析して" | jq .result',
+advanced:"--json-schemaで出力形式をさらに厳密に制御可能。",related:[91,97],caution:"",
+exercise:"--output-format jsonで実行し、jqでパースしてください。"},
+
+{id:93,slug:"tip-93",cat:"external",title:"--max-turns N でターン数制限",level:"中級",impact:"高",
+summary:"CIでの無限ループ防止にターン数上限を設定する",
+scenes:["CIで予想外の長時間実行を防ぎたい"],
+steps:["claude -p --max-turns N で上限指定"],
+code:"claude -p --max-turns 5 \"分析して\"",advanced:"",related:[91,94],caution:"制限に達すると途中で終了する。",
+exercise:"--max-turns 3で実行し、ターン制限を確認してください。"},
+
+{id:94,slug:"tip-94",cat:"external",title:"--max-budget-usd N でコスト上限設定",level:"中級",impact:"高",
+summary:"1回の実行あたりのコスト上限を設定して予算超過を防止する",
+scenes:["CI環境でのコスト暴走を防ぎたい"],
+steps:["claude -p --max-budget-usd N で上限指定"],
+code:"claude -p --max-budget-usd 5.00 \"分析して\"",advanced:"",related:[91,93],caution:"",
+exercise:"--max-budget-usd 1.00で実行してコスト制限を確認してください。"},
+
+{id:95,slug:"tip-95",cat:"external",title:"--no-session-persistence でセッション非保存",level:"中級",impact:"中",
+summary:"CI環境でセッションデータの蓄積を防止する",
+scenes:["CI実行の一時的なセッションを保存したくない"],
+steps:["--no-session-persistence を追加"],
+code:"claude -p --no-session-persistence \"分析して\"",advanced:"",related:[91],caution:"",
+exercise:"--no-session-persistenceで実行し、セッション一覧に残らないことを確認してください。"},
+
+{id:96,slug:"tip-96",cat:"external",title:"パイプでファイル内容を直接投入",level:"中級",impact:"高",
+summary:"CIで生成されたログやテスト結果をパイプでClaude Codeに投入する",
+scenes:["CIのエラーログを自動分析したい"],
+steps:["cat ファイル | claude -p \"指示\" で投入"],
+code:'cat error.log | claude -p "エラー原因を分析して"\ngit diff | claude -p "この変更をレビューして"',
+advanced:"",related:[91],caution:"大きなファイルはコンテキストを圧迫する。",
+exercise:"テストファイルをパイプで投入して分析結果を確認してください。"},
+
+{id:97,slug:"tip-97",cat:"external",title:"--json-schema で出力スキーマを強制",level:"上級",impact:"高",
+summary:"指定したJSONスキーマに準拠した出力を確実に取得する",
+scenes:["CIパイプラインで決まった形式のJSONが必要"],
+steps:["--json-schema にスキーマを指定"],
+code:'claude -p --json-schema \'{"type":"object","properties":{"score":{"type":"number"}}}\' "コード品質を評価"',
+advanced:"",related:[92],caution:"複雑なスキーマはJSON文字列のエスケープに注意。",
+exercise:"--json-schemaで構造化出力を試してください。"},
+
+{id:98,slug:"tip-98",cat:"external",title:"CLAUDE_CODE_USE_BEDROCK でAWS経由",level:"上級",impact:"中",
+summary:"AWS Bedrock経由でClaude APIを利用しデータ管理ポリシーに準拠する",
+scenes:["企業のAWS環境でClaude Codeを使いたい"],
+steps:["環境変数CLAUDE_CODE_USE_BEDROCK=1を設定"],
+code:"export CLAUDE_CODE_USE_BEDROCK=1",advanced:"",related:[99],caution:"AWS認証情報の設定が別途必要。",
+exercise:"Bedrock環境がある場合、環境変数を設定して接続を確認してください。"},
+
+{id:99,slug:"tip-99",cat:"external",title:"CLAUDE_CODE_USE_VERTEX でGCP経由",level:"上級",impact:"中",
+summary:"Google Vertex AI経由でClaude APIを利用する",
+scenes:["GCPベースの企業インフラでClaude Codeを使いたい"],
+steps:["環境変数CLAUDE_CODE_USE_VERTEX=1を設定"],
+code:"export CLAUDE_CODE_USE_VERTEX=1",advanced:"",related:[98],caution:"GCP認証情報の設定が必要。",
+exercise:"Vertex環境がある場合、環境変数を設定して接続を確認してください。"},
+
+{id:100,slug:"tip-100",cat:"external",title:"settings.jsonのenvキーで環境変数管理",level:"中級",impact:"中",
+summary:"プロジェクト別にMCPの認証情報等を環境変数として管理する",
+scenes:["MCPサーバーの認証トークンを安全に管理したい"],
+steps:["settings.jsonのenvキーに環境変数を追加"],
+code:'// settings.json\n"env": {\n  "GITHUB_TOKEN": "ghp_xxx",\n  "DATABASE_URL": "postgresql://..."\n}',
+advanced:"",related:[86],caution:"settings.jsonをgitにコミットする場合、機密情報は含めない。",
+exercise:"settings.jsonのenvに環境変数を設定し、MCPサーバーで利用できることを確認してください。"},
+
+{id:101,slug:"tip-101",cat:"trouble",title:"/doctor で環境を自動診断・修正",level:"初級",impact:"高",
+summary:"インストール・設定・MCP接続の問題を自動診断して修正提案する",
+scenes:["Claude Codeが正しく動かない","MCPが接続できない","設定が反映されない"],
+steps:["/doctor を実行","診断結果が表示される","修正提案に従って対処"],
+code:"/doctor",advanced:"定期的に実行して環境の健全性を確認するのがおすすめ。",related:[102,103],caution:"",
+exercise:"/doctorを実行して環境の診断結果を確認してください。"},
+
+{id:102,slug:"tip-102",cat:"trouble",title:"/terminal-setup でShift+Enterを修正",level:"初級",impact:"高",
+summary:"Shift+Enterが効かないターミナルの設定を自動修正する",
+scenes:["VS Code TerminalでShift+Enterが改行にならない","Alacrittyで複数行入力ができない"],
+steps:["/terminal-setup を実行","キーバインド設定が自動修正される"],
+code:"/terminal-setup",advanced:"修正対象: VS Code, Alacritty, Zed, Warp等。",related:[4,134],caution:"",
+exercise:"/terminal-setupを実行し、Shift+Enterで改行できるようになったか確認してください。"},
+
+{id:103,slug:"tip-103",cat:"trouble",title:"--debug でデバッグモード有効化",level:"上級",impact:"高",
+summary:"API通信やHook実行の詳細ログを出力して原因不明のエラーを調査する",
+scenes:["原因不明のエラーが発生した","Hookが正しく動作しない"],
+steps:["claude --debug \"対象\" で起動","詳細ログが表示される"],
+code:'claude --debug "api,hooks"',advanced:"--debug-fileでログをファイルに保存も可能。",related:[104,101],caution:"ログにAPIキー等が含まれる場合がある。共有時は注意。",
+exercise:"--debugモードで起動し、内部ログの内容を確認してください。"},
+
+{id:104,slug:"tip-104",cat:"trouble",title:"--debug-file でログをファイル出力",level:"上級",impact:"中",
+summary:"デバッグログを画面に表示せずファイルに保存する",
+scenes:["作業を妨げずにログを蓄積したい"],
+steps:["--debug-file パス で起動"],
+code:"claude --debug-file /tmp/debug.log",advanced:"",related:[103],caution:"",
+exercise:"--debug-fileでログファイルを作成し、内容を確認してください。"},
+
+{id:105,slug:"tip-105",cat:"trouble",title:"コンテキスト80%超えたら /compact",level:"初級",impact:"高",
+summary:"コンテキスト圧迫時に手動で焦点を指定してcompactする",
+scenes:["長時間作業でレスポンスが遅くなった","コンテキスト不足エラーが出た"],
+steps:["/contextで使用率を確認","80%超えなら/compact","焦点を指定するとさらに効果的"],
+code:"/context          # 使用率確認\n/compact          # 通常圧縮\n/compact 認証に集中  # 焦点指定",
+advanced:"CLAUDE.mdの内容はcompact後も保持される。重要情報はCLAUDE.mdに。",related:[20,27,107],caution:"compact後は会話の詳細が失われる。",
+exercise:"/contextで使用率を確認し、/compactの前後で変化を比較してください。"},
+
+{id:106,slug:"tip-106",cat:"trouble",title:"/clear で完全リセット（復帰可能）",level:"初級",impact:"高",
+summary:"会話をリセットして新規セッションに。/resumeで元に戻れる",
+scenes:["話題が大きく変わる時","コンテキストがごちゃごちゃになった時"],
+steps:["/clear で新規セッション開始","必要なら/resumeで元のセッションに復帰"],
+code:"/clear\n# 戻りたい場合\n/resume",advanced:"",related:[54,55],caution:"",
+exercise:"/clearでリセット後、/resumeで元のセッションに戻れることを確認してください。"},
+
+{id:107,slug:"tip-107",cat:"trouble",title:"CLAUDE.mdはcompact後も保持される",level:"中級",impact:"高",
+summary:"compact後もCLAUDE.mdは全文再注入されるため重要情報はここに書くべき",
+scenes:["compact後も常に必要な情報がある"],
+steps:["重要なルール・コマンド・構造をCLAUDE.mdに記載","compact後も自動で再読み込みされる"],
+code:"",advanced:"サブディレクトリのCLAUDE.mdはcompact後に一時的に失われるが、次にそのディレクトリのファイルを読む時に再適用される。",related:[20,105,43],caution:"",
+exercise:"/compact後にCLAUDE.mdの内容がClaude Codeに認識されていることを確認してください。"},
+
+{id:108,slug:"tip-108",cat:"trouble",title:"サブディレクトリCLAUDE.mdの再読み込み",level:"上級",impact:"中",
+summary:"compact後に失われたサブディレクトリのCLAUDE.mdは自動再適用される",
+scenes:["compact後にモジュール別ルールが適用されなくなった"],
+steps:["そのディレクトリのファイルを参照するとCLAUDE.mdが自動再読み込みされる"],
+code:"",advanced:"",related:[44,107],caution:"",
+exercise:"サブディレクトリにCLAUDE.mdを作成し、compact後に再適用されることを確認してください。"},
+
+{id:109,slug:"tip-109",cat:"trouble",title:"「変更前にgit statusを確認して」と指示",level:"初級",impact:"高",
+summary:"作業前後のgit状態を確認させて意図しない変更を検出する",
+scenes:["変更範囲が予想外に広がっていないか確認したい"],
+steps:["作業指示に「変更前にgit statusを確認して」を追加","完了後は「git diffで変更内容を表示して」も追加"],
+code:"修正して。ただし:\n- 変更前にgit statusを確認\n- 変更後にgit diffで差分を表示",
+advanced:"",related:[39,110],caution:"",
+exercise:"指示にgit status確認を追加し、変更範囲が適切か確認してください。"},
+
+{id:110,slug:"tip-110",cat:"trouble",title:"plan モードで確認してから実行",level:"中級",impact:"高",
+summary:"まず計画を見せてもらい承認後に実行する安全パターン",
+scenes:["大規模変更の前に影響範囲を確認したい"],
+steps:["planモードで計画を立ててもらう","内容を確認して承認","通常モードに切り替えて実行"],
+code:"# Step1: 計画\nclaude --permission-mode plan\n# Step2: 実行\nShift+Tab でAuto Editに切替",
+advanced:"",related:[67,1],caution:"",
+exercise:"planモードで計画を確認してから実行モードで実施するフローを試してください。"},
+
+{id:111,slug:"tip-111",cat:"trouble",title:".claude/settings.json をgitにコミット",level:"中級",impact:"高",
+summary:"チーム全員が同じPermission設定で作業して設定ミスを防止する",
+scenes:["新メンバーの環境セットアップを自動化したい","チーム全体のセキュリティ設定を統一したい"],
+steps:[".claude/settings.jsonを作成","Permission・Hooks・MCP設定を記載","gitにコミットしてpush"],
+code:"git add .claude/settings.json\ngit commit -m 'チーム共通のClaude Code設定を追加'",
+advanced:"",related:[68,69],caution:"機密情報（APIキー等）はsettings.jsonに含めない。",
+exercise:".claude/settings.jsonを作成してgitにコミットしてください。"},
+
+{id:112,slug:"tip-112",cat:"trouble",title:"--system-prompt で行動制約を追加",level:"上級",impact:"中",
+summary:"システムプロンプトでCLAUDE.mdより強い制約を適用する",
+scenes:["テストファイルの変更を絶対に禁止したい"],
+steps:["--system-prompt \"制約\" で起動"],
+code:'claude --system-prompt "Never modify test files"',advanced:"",related:[113],caution:"",
+exercise:"--system-promptで制約を追加し、制約が守られることを確認してください。"},
+
+{id:113,slug:"tip-113",cat:"trouble",title:"--append-system-prompt-file でルール適用",level:"上級",impact:"中",
+summary:"外部ファイルからシステムプロンプトを追加してチームルールを管理する",
+scenes:["コーディングスタイルガイドをファイル管理して適用したい"],
+steps:["ルールファイルを作成","--append-system-prompt-file パス で起動"],
+code:"claude --append-system-prompt-file ./style-rules.txt",advanced:"",related:[112],caution:"",
+exercise:"ルールファイルを作成して適用し、ルールが守られることを確認してください。"},
+
+{id:114,slug:"tip-114",cat:"hidden",title:"--bare で最小限モード起動",level:"上級",impact:"中",
+summary:"スキル・MCP・CLAUDE.mdを全スキップして最速で起動する",
+scenes:["シンプルな質問に素早く回答が欲しい"],
+steps:["claude --bare で起動"],
+code:'claude --bare -p "この関数の意味は？"',advanced:"",related:[],caution:"CLAUDE.mdのルールも無視される。",
+exercise:"--bareモードで起動し、通常起動との速度差を確認してください。"},
+
+{id:115,slug:"tip-115",cat:"hidden",title:"--add-dir で追加ディレクトリをコンテキストに",level:"中級",impact:"高",
+summary:"monorepoで別パッケージのコードをコンテキストに含める",
+scenes:["共有ライブラリの変更が他パッケージに与える影響を分析したい","プロジェクト横断の変更を行いたい"],
+steps:["claude --add-dir パス1 パス2 で起動","指定ディレクトリがコンテキストに追加される"],
+code:"claude --add-dir ../libs ../shared",advanced:"",related:[35,50],caution:"大きなディレクトリはコンテキストを圧迫する。",
+exercise:"--add-dirで別ディレクトリを追加し、その内容について質問してください。"},
+
+{id:116,slug:"tip-116",cat:"hidden",title:"/copy [N] で過去の応答をコピー",level:"初級",impact:"中",
+summary:"N番目前の応答をクリップボードにコピーする",
+scenes:["過去の回答をSlackに貼りたい"],steps:["/copy N を実行"],
+code:"/copy    # 直前\n/copy 3  # 3番目前",advanced:"",related:[49],caution:"",
+exercise:"/copyで過去の応答をコピーしてテキストエディタに貼り付けてください。"},
+
+{id:117,slug:"tip-117",cat:"hidden",title:"--fork-session でセッションを分岐",level:"上級",impact:"中",
+summary:"現在のコンテキストを保持したまま新セッションIDで開始する",
+scenes:["同じ状態から異なるアプローチを試したい"],
+steps:["--fork-session で起動"],code:"claude --fork-session",advanced:"",related:[29],caution:"",
+exercise:"--fork-sessionで分岐し、別のアプローチを試してください。"},
+
+{id:118,slug:"tip-118",cat:"hidden",title:"DISABLE_GIT_INSTRUCTIONS で自動指示無効化",level:"上級",impact:"低",
+summary:"Claude Codeの自動Git指示が干渉する場合に無効化する",
+scenes:["特殊なGitワークフローで標準指示が干渉する"],
+steps:["環境変数を設定"],code:"export CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1",advanced:"",related:[],caution:"",
+exercise:"環境変数を設定して動作の違いを確認してください。"},
+
+{id:119,slug:"tip-119",cat:"hidden",title:"Dispatch from Phone（Desktop版）",level:"中級",impact:"中",
+summary:"iOSやAndroidのClaudeアプリからDesktopにタスクを送信する",
+scenes:["外出先からリファクタリングを開始したい"],
+steps:["モバイルアプリからタスクを送信","Desktopで実行される"],
+code:"",advanced:"",related:[62],caution:"Desktop版が起動している必要がある。",
+exercise:"モバイルアプリからDesktopにタスクを送信してみてください。"},
+
+{id:120,slug:"tip-120",cat:"hidden",title:"--remote-control でWeb版から監視・操作",level:"上級",impact:"中",
+summary:"ローカルCLIセッションをWeb版ブラウザから監視・操作可能にする",
+scenes:["ペアプログラミングでセッションを共有したい"],
+steps:["claude --remote-control \"名前\" で起動","Web版から接続"],
+code:'claude --remote-control "My Project"',advanced:"",related:[62],caution:"",
+exercise:"--remote-controlで起動しWeb版から接続を試してください。"},
+
+{id:121,slug:"tip-121",cat:"hidden",title:"/plugin でプラグイン管理",level:"上級",impact:"低",
+summary:"サードパーティプラグインの追加・管理を行う",
+scenes:["Claude Codeの機能を拡張したい"],steps:["/plugin を実行"],
+code:"/plugin",advanced:"",related:[],caution:"信頼できるプラグインのみインストールすること。",
+exercise:"/pluginで利用可能なプラグインを確認してください。"},
+
+{id:122,slug:"tip-122",cat:"hidden",title:"sparsePaths でworktreeの部分チェックアウト",level:"上級",impact:"中",
+summary:"巨大monorepoで必要なパスだけworktreeにチェックアウトする",
+scenes:["巨大リポジトリでworktree作成を高速化したい"],
+steps:["settings.jsonにsparsePathsを設定"],
+code:'// settings.json\n"worktree": {\n  "sparsePaths": ["packages/my-app","shared/utils"]\n}',
+advanced:"",related:[50,53],caution:"",
+exercise:"sparsePathsを設定してworktreeの作成速度を確認してください。"},
+
+// === 新規追加Tips ===
+{id:123,slug:"tip-123",cat:"prompt",title:"/plan でプロンプト付き計画モード開始",level:"初級",impact:"高",
+summary:"--permission-mode planの代わりにプロンプト付きで即座に計画モードを開始する",
+scenes:["変更前に計画を確認したい","修正方針を相談したい"],
+steps:["/plan に続けて指示を入力","計画モードで分析・提案が行われる","ファイル変更は行われない"],
+code:"/plan 認証バグの修正方針を立てて",advanced:"",related:[67,110],caution:"計画モードではファイル変更ができない。",
+exercise:"/planで修正計画を立ててもらい、内容を確認してください。"},
+
+{id:124,slug:"tip-124",cat:"ui",title:"/fast でFast Mode即切替",level:"初級",impact:"中",
+summary:"高速モードをスラッシュコマンドで即座にON/OFFする",
+scenes:["素早くFast Modeを有効化したい"],steps:["/fast を実行"],
+code:"/fast",advanced:"Alt+Oでも切替可能。",related:[10],caution:"",
+exercise:"/fastでFast Modeを切り替えてみてください。"},
+
+{id:125,slug:"tip-125",cat:"workflow",title:"/recap でセッション概要を手動生成",level:"初級",impact:"中",
+summary:"長時間離席後に「今どこまで作業したか」の要約を表示する",
+scenes:["離席後に作業状態を確認したい"],steps:["/recap を実行"],
+code:"/recap",advanced:"自動要約とは別に任意のタイミングで実行可能。",related:[54],caution:"",
+exercise:"/recapで現在のセッション概要を確認してください。"},
+
+{id:126,slug:"tip-126",cat:"hidden",title:"/release-notes で変更履歴を確認",level:"初級",impact:"低",
+summary:"Claude Codeのバージョン別変更履歴を参照する",
+scenes:["新機能を発見したい","アップデート後の変更を確認したい"],
+steps:["/release-notes を実行"],code:"/release-notes",advanced:"",related:[129],caution:"",
+exercise:"/release-notesで最新の変更履歴を確認してください。"},
+
+{id:127,slug:"tip-127",cat:"ui",title:"/powerup で対話的機能チュートリアル",level:"初級",impact:"中",
+summary:"アニメーション付きの対話的チュートリアルで新機能を学ぶ",
+scenes:["Claude Codeの機能を探索したい","新機能のキャッチアップ"],
+steps:["/powerup を実行","チュートリアルが開始される"],
+code:"/powerup",advanced:"",related:[101],caution:"",
+exercise:"/powerupでチュートリアルを1つ完了してみてください。"},
+
+{id:128,slug:"tip-128",cat:"config",title:"/less-permission-prompts で権限プロンプト削減",level:"中級",impact:"高",
+summary:"頻繁に許可する操作を自動で許可リストに追加する",
+scenes:["毎回の「許可しますか？」プロンプトが煩わしい"],
+steps:["/less-permission-prompts を実行","頻出操作が許可リストに追加される"],
+code:"/less-permission-prompts",advanced:"",related:[1,68],caution:"必要な確認まで省略されないよう注意。",
+exercise:"/less-permission-promptsを実行して権限プロンプトの減少を確認してください。"},
+
+{id:129,slug:"tip-129",cat:"config",title:"claude update でCLI自動更新",level:"初級",impact:"高",
+summary:"Claude Code CLIを最新バージョンにアップデートする",
+scenes:["新機能やバグ修正を適用したい"],
+steps:["claude update を実行","最新バージョンにアップデートされる"],
+code:"claude --version  # 現在バージョン確認\nclaude update     # 更新実行",
+advanced:"",related:[126],caution:"メジャーバージョンアップ時は互換性の確認を。",
+exercise:"claude --versionで現在のバージョンを確認し、claude updateで更新してください。"},
+
+{id:130,slug:"tip-130",cat:"external",title:"claude setup-token でCI用トークン生成",level:"中級",impact:"高",
+summary:"CI/CDパイプライン用の長期有効トークンを生成する",
+scenes:["GitHub ActionsでClaude Codeを認証したい"],
+steps:["claude setup-token を実行","生成されたトークンをCIのSecretsに設定"],
+code:"claude setup-token\n# 生成されたトークンをGitHub Secretsに設定",
+advanced:"",related:[91],caution:"トークンは安全に管理すること。gitにコミットしない。",
+exercise:"claude setup-tokenでトークンを生成してみてください。"},
+
+{id:131,slug:"tip-131",cat:"workflow",title:"--from-pr でPR関連セッションを再開",level:"中級",impact:"高",
+summary:"PR番号を指定して関連セッションを自動検索・再開する",
+scenes:["PRレビュー中の修正を続行したい"],
+steps:["claude --from-pr PR番号 で起動","関連セッションが復元される"],
+code:"claude --from-pr 123",advanced:"",related:[55,64],caution:"",
+exercise:"--from-prで過去のPR作業を再開してみてください。"},
+
+{id:132,slug:"tip-132",cat:"config",title:"--fallback-model で自動フォールバック",level:"上級",impact:"中",
+summary:"デフォルトモデル過負荷時に自動的に別モデルに切り替える",
+scenes:["CIスクリプトの安定稼働を確保したい"],
+steps:["--fallback-model モデル名 で指定"],
+code:'claude -p --fallback-model sonnet "分析して"',advanced:"",related:[8],caution:"-pモードでのみ有効。",
+exercise:"--fallback-modelを指定して実行してください。"},
+
+{id:133,slug:"tip-133",cat:"workflow",title:"Agent Teams で複数エージェント並列定義",level:"上級",impact:"高",
+summary:"/agentsで専門エージェントを定義して並列分析・実装する",
+scenes:["レビュー・実装・テストを並列で進めたい"],
+steps:["/agents で設定","複数エージェントが並列実行される"],
+code:"/agents",advanced:"",related:[58,21],caution:"トークン消費が増える。",
+exercise:"/agentsで利用可能なエージェント設定を確認してください。"},
+
+{id:134,slug:"tip-134",cat:"ui",title:"Ctrl+J で改行（全ターミナル対応）",level:"初級",impact:"高",
+summary:"すべてのターミナルで確実に動作する改行キー",
+scenes:["Shift+Enterが効かない環境で改行したい"],
+steps:["Ctrl+J を押すと改行が追加される"],
+code:"Ctrl+J  → 改行追加（全ターミナル対応）",
+advanced:"バックスラッシュ+Enterと同等。Shift+Enterより確実。",related:[4,102],caution:"",
+exercise:"Ctrl+Jで複数行プロンプトを入力してみてください。"},
+
+{id:135,slug:"tip-135",cat:"workflow",title:"複数プロジェクト間のコンテキスト予算管理",level:"中級",impact:"高",
+summary:"複数プロジェクトを並行する場合はセッション分割と優先度で効率化する",
+scenes:["複数プロジェクトを日替わりで進行している"],
+steps:["高優先度: 独立セッション（フルコンテキスト）","中優先度: worktreeで並列","低優先度: /compactで効率化"],
+code:"# 高優先度プロジェクト\nclaude -n main-project\n\n# 低優先度の保守作業\nclaude -n maintenance\n/compact 必要最小限の情報だけ残して",
+advanced:"プロジェクト別にセッション名をつけて--resumeで切り替え。",related:[54,55,56],caution:"",
+exercise:"2つのプロジェクト用セッションを名前付きで作成し、--resumeで切り替えてください。"},
+
+{id:136,slug:"tip-136",cat:"workflow",title:"大量生成タスクの /batch + /loop 使い分け",level:"上級",impact:"高",
+summary:"検証不要なら/batchで並列化、品質チェック必須なら/loopで段階実行する",
+scenes:["100個以上のファイルを一括生成したい","品質管理しながら段階的に進めたい"],
+steps:["独立・検証不要 → /batchで並列","品質チェック必要 → /loopで段階実行"],
+code:"/batch 全コンポーネントにテストを追加して\n/loop 1h 次の10ファイルを生成して品質チェックして",
+advanced:"バッチ生成→ループ検証のハイブリッドパターンが最強。",related:[21,61],caution:"",
+exercise:"/batchと/loopの両方を試して使い分けを体感してください。"},
+
+{id:137,slug:"tip-137",cat:"prompt",title:"Glob→Grepの2段階検索で高速化",level:"中級",impact:"高",
+summary:"大規模コードベースでは先にファイル種別を絞ってから内容検索する",
+scenes:["10万行以上のコードベースで特定パターンを探したい"],
+steps:["まずGlobでファイル種別を絞る","次にGrepで絞った範囲を検索"],
+code:"「まず*.tsファイルを一覧にして、\nその中からdeprecatedを含むファイルを探して」",
+advanced:"Claude Codeが自動で最適化する場合もあるが、明示指示した方が確実。",related:[34,35],caution:"",
+exercise:"2段階検索パターンで特定のキーワードを効率的に検索してください。"},
+
+{id:138,slug:"tip-138",cat:"trouble",title:"長時間セッション(5h+)のcompact戦略",level:"上級",impact:"高",
+summary:"5-6時間連続作業の前にcompactを実行し重要情報をCLAUDE.mdに退避する",
+scenes:["8時間以上の長時間セッション"],
+steps:["5時間経過時点で/contextを確認","80%超えなら/compactを実行","重要な決定事項はCLAUDE.mdに記録しておく"],
+code:"/context  # 使用率確認\n/compact 現在の作業に集中して\n/memory   # 重要情報をメモリに保存",
+advanced:"CLAUDE.mdに書いた情報はcompact後も保持される。",related:[105,107],caution:"",
+exercise:"長時間作業中に/contextでコンテキスト使用率を定期的にチェックしてください。"},
+
+{id:139,slug:"tip-139",cat:"workflow",title:"PR規模別の /review vs /ultrareview 選択",level:"中級",impact:"高",
+summary:"PRの規模に応じてレビュー方法を使い分けてコストと品質を最適化する",
+scenes:["小さなPRと大きなPRで適切なレビュー方法を選びたい"],
+steps:["200行未満 → /review（高速・低コスト）","200行以上 → /ultrareview（多角的・高品質）"],
+code:"/review           # 小〜中規模PR\n/ultrareview 42   # 大規模・重要PR",
+advanced:"",related:[22,66],caution:"/ultrareviewはWeb版の機能。",
+exercise:"サイズの異なる2つのPRで/reviewと/ultrareviewを使い分けてください。"},
+
+{id:140,slug:"tip-140",cat:"prompt",title:"Extended Thinkingで複雑な問題の品質向上",level:"中級",impact:"高",
+summary:"設計判断やアルゴリズム選択等の複雑な問題でAlt+TをONにして深い推論を引き出す",
+scenes:["アーキテクチャ設計で最適な方針を検討したい","バグの根本原因分析で複数仮説を検討させたい"],
+steps:["Alt+TでExtended ThinkingをONにする","複雑な質問を投入","回答後にOFFに戻す（トークン節約）"],
+code:"Alt+T → ON\n「このアーキテクチャの3つの選択肢を比較して」\nAlt+T → OFF（通常タスクに戻る時）",
+advanced:"/effortコマンドと組み合わせるとさらに効果的。",related:[9,28],caution:"常時ONだとトークン消費が増大する。",
+exercise:"Extended ThinkingのON/OFFで同じ設計質問の回答品質を比較してください。"},
+
+{id:141,slug:"tip-141",cat:"hidden",title:"Glob+Grepの型指定でファイル絞り込み",level:"中級",impact:"中",
+summary:"Grepのtype/glob指定で検索対象を絞って高速化とノイズ除去を行う",
+scenes:["特定の言語のファイルだけを検索したい"],
+steps:["検索指示にファイル種別を明示する"],
+code:"「*.tsxファイルの中からuseStateを使っている箇所を検索して」",
+advanced:"",related:[137],caution:"",
+exercise:"ファイル種別を指定した検索を試してください。"},
+
+{id:142,slug:"tip-142",cat:"ui",title:"初めてのClaude Code：起動から最初の操作まで",level:"初級",impact:"高",
+summary:"ターミナルでclaudeと入力→日本語で依頼→結果確認→Y/Nで承認の基本フロー",
+scenes:["Claude Codeを初めて使う","基本操作を覚えたい"],
+steps:["ターミナルで claude と入力してEnter","プロンプトが表示されたら日本語で依頼を入力","結果を確認","ファイル変更時はYキーで承認、Nキーで却下"],
+code:"$ claude\n> 自己紹介を100文字で書いて\n\n# ファイル作成時\n> 売上データのCSVサンプルを作って\n[Claude Codeが確認を求める → Y で承認]",
+advanced:"操作に慣れたらShift+TabでAuto Editモードに切り替えると毎回の確認が省略される。",related:[1,150],caution:"最初はAskモード（デフォルト）で安全に操作することを推奨。",
+exercise:"claude を起動し、「Hello World を表示するhello.jsを作って」と依頼してみてください。"},
+
+{id:143,slug:"tip-143",cat:"prompt",title:"日本語でのファイル操作指示パターン集",level:"初級",impact:"高",
+summary:"「読んで」「抽出して」「作成して」等の定型パターンで日本語ファイル操作する",
+scenes:["CSVデータを加工したい","レポートを生成したい","ファイルの内容を分析したい"],
+steps:["ファイル名と操作を日本語で指示"],
+code:"# 読み込み系\nsales.csv を読んで内容を要約して\n\n# 加工系\ndata.csv の重複を削除して\n\n# 生成系\n月次レポートのテンプレートをHTMLで作って\n\n# 抽出系\nログから エラー を含む行だけ抽出して",
+advanced:"複数のファイル操作を1つの指示に組み合わせることも可能。",related:[34,147],caution:"",
+exercise:"手元のCSVやテキストファイルに対して日本語で加工指示を出してください。"},
+
+{id:144,slug:"tip-144",cat:"prompt",title:"日本語プロンプトを正確に伝える3つのコツ",level:"初級",impact:"高",
+summary:"何を・どのファイルに・完成イメージは何かの3点セットで指示する",
+scenes:["指示が曖昧で意図と違う結果になる","より精度の高い結果が欲しい"],
+steps:["1. 何をして欲しいか（操作）","2. どのファイルに対してか（対象）","3. 完成イメージは何か（ゴール）"],
+code:"# NG: 曖昧\nこれを直して\n\n# OK: 3点セット\ndata.csv（対象）の日付列を（操作）\nYYYY-MM-DD形式に統一して（ゴール）",
+advanced:"番号付きステップと組み合わせるとさらに精度向上。",related:[40,143],caution:"",
+exercise:"3点セット形式で指示を出し、曖昧な指示との結果の違いを比較してください。"},
+
+{id:145,slug:"tip-145",cat:"trouble",title:"初心者がやりがちな5つの失敗パターン",level:"初級",impact:"高",
+summary:"対象未指定・指示曖昧・確認なし・compact忘れ・バックアップなしの5大失敗を回避する",
+scenes:["Claude Codeで失敗したくない","よくあるミスを事前に知りたい"],
+steps:["1. 対象ファイルを必ず指定する","2. 指示は具体的に書く","3. 変更前にgit statusで確認する","4. 長時間作業では/compactを定期実行","5. 大事なファイルは事前にgit commitしておく"],
+code:"# 失敗例と対策\n❌ 全部修正して → 意図しないファイルも変更\n✓ src/api/auth.ts のバリデーションを修正して\n\n❌ compactせず長時間作業 → コンテキスト切れ\n✓ /contextで定期チェック → 80%超えで/compact",
+advanced:"",related:[39,105,109],caution:"",
+exercise:"上記5つの対策を意識しながら何かタスクを実行してください。"},
+
+{id:146,slug:"tip-146",cat:"workflow",title:"コード不要で使えるユースケース10選",level:"初級",impact:"高",
+summary:"プログラミング知識ゼロでも使えるCSV処理・文書整形・テンプレ生成等のユースケース",
+scenes:["ビジネス職がClaude Codeの活用法を知りたい"],
+steps:["やりたいことを日本語で伝えるだけ"],
+code:"# コード不要ユースケース\n1. CSVの重複排除・整形\n2. 議事録からToDoリスト抽出\n3. テンプレート一括生成\n4. ファイル名一括変更\n5. メール文案作成\n6. 競合比較表作成\n7. データのグラフ化（HTML）\n8. PDF内容の要約\n9. 定型レポート生成\n10. ファイルの整理・分類",
+advanced:"",related:[143,147,148],caution:"",
+exercise:"上記ユースケースから1つ選んで実際に試してください。"},
+
+{id:147,slug:"tip-147",cat:"prompt",title:"Excel/CSVデータ処理の実践パターン",level:"初級",impact:"高",
+summary:"集計・重複排除・マージ等のデータ処理を日本語で依頼するだけで完了する",
+scenes:["Excelを開かずにデータクリーニングしたい","CSVの集計レポートを作成したい"],
+steps:["CSVファイルを@で参照","日本語で処理内容を指示"],
+code:"@expense.csv を読んで、部署別・費目別に集計表を作成して\n@sales.csv の重複を削除して、売上順にソートして",
+advanced:"HTMLやMarkdownでレポートを出力させることも可能。",related:[143,146],caution:"大きなファイル（10万行以上）は処理に時間がかかる場合がある。",
+exercise:"CSVファイルを作成してデータ処理を試してください。"},
+
+{id:148,slug:"tip-148",cat:"ui",title:"Claude.ai（チャット）vs Claude Code の使い分け",level:"初級",impact:"高",
+summary:"質問・相談はClaude.ai、ファイル加工・自動化はClaude Codeと使い分ける",
+scenes:["どちらを使えばいいか迷う場面"],
+steps:["Claude.ai（Web）: 質問、相談、ブレスト、文章校正","Claude Code: ファイル操作、データ処理、コード生成、自動化"],
+code:"# Claude.ai向き\n「マーケティング戦略のアイデアを出して」\n「この文章を校正して」\n\n# Claude Code向き\n「このCSVを集計してHTMLレポートを作って」\n「100個のファイルの名前を一括変更して」",
+advanced:"",related:[142,150],caution:"",
+exercise:"同じ質問をClaude.aiとClaude Codeの両方で試し、得意分野の違いを体感してください。"},
+
+{id:149,slug:"tip-149",cat:"config",title:"ビジネス職が知るべきセキュリティ3点",level:"初級",impact:"高",
+summary:"パスワード非共有・個人情報匿名化・denyでのコマンドブロックの3点を守る",
+scenes:["安全にClaude Codeを使いたい","情報漏洩リスクを最小化したい"],
+steps:["1. パスワード・APIキーを含むファイルを渡さない","2. 個人情報は匿名化してから処理","3. deny設定でcurlや.envアクセスをブロック"],
+code:"# 安全な使い方\n✓ 売上データ（金額のみ）の集計\n✓ 匿名化済みアンケートの分析\n\n# 危険な使い方\n❌ パスワード入りの設定ファイルを渡す\n❌ 顧客の個人情報をそのまま処理",
+advanced:"deny設定をsettings.jsonに追加して自動ブロック。",related:[69,111],caution:"",
+exercise:"settings.jsonにdeny設定を追加して、危険なコマンドがブロックされることを確認してください。"},
+
+{id:150,slug:"tip-150",cat:"ui",title:"Claude Codeの「できる/できない」境界線",level:"初級",impact:"高",
+summary:"ファイル操作・コード生成は得意だが外部API呼び出しやリアルタイムデータは制限がある",
+scenes:["Claude Codeに何が頼めるか把握したい"],
+steps:["できる: ファイル読み書き、テキスト/データ整形、コード生成・修正","制限あり: 外部API（MCP要）、メール送信（設定要）","できない: リアルタイムデータ取得、GUI操作（Puppeteer除く）"],
+code:"# できる\nファイルの読み書き・加工 ✓\nコード生成・修正 ✓\nテスト実行 ✓\nGit操作 ✓\n\n# 制限あり\n外部API → MCP設定が必要\nメール送信 → SMTP設定が必要\n\n# できない\nリアルタイム株価取得 ✗\nGUIアプリ操作 ✗",
+advanced:"MCPサーバーを追加することで「制限あり」の機能を「できる」に拡張可能。",related:[88,142,148],caution:"",
+exercise:"Claude Codeに「できること」と「できないこと」を1つずつ試して境界線を体感してください。"},
+];
+
+export function getStaticPaths() {
+  return Array.from({length:150},(_,i)=>({params:{slug:`tip-${i+1}`}}));
+}
+
+const { slug } = Astro.params;
+const tip = T.find(t => t.slug === slug) || T[0];
+const prevTip = T.find(t => t.id === tip.id - 1);
+const nextTip = T.find(t => t.id === tip.id + 1);
+const relatedTips = (tip.related || []).map(id => T.find(t => t.id === id)).filter(Boolean);
+
+const catLabels: Record<string,string> = {ui:"UI・操作",prompt:"プロンプト",workflow:"ワークフロー",config:"設定",external:"外部連携",trouble:"トラブルシューティング",hidden:"隠れ機能"};
+const levelColors: Record<string,string> = {"初級":"bg-green-100 text-green-700","中級":"bg-blue-100 text-blue-700","上級":"bg-purple-100 text-purple-700"};
+const impactColors: Record<string,string> = {"高":"bg-red-50 text-red-600","中":"bg-yellow-50 text-yellow-600","低":"bg-gray-50 text-gray-500"};
+---
+
+<Layout title={`${tip.title} — Tips — Claude Code Academy`}>
+  <Sidebar currentTrack="" currentPage="tips" />
+
+  <main class="ml-[260px] p-8 min-h-screen">
+    <!-- パンくずリスト -->
+    <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
+      <a href="/tips" class="hover:text-primary transition-colors no-underline text-gray-400">Tips集</a>
+      <span>/</span>
+      <span class="text-gray-400">{catLabels[tip.cat]}</span>
+      <span>/</span>
+      <span class="text-gray-600">#{tip.id}</span>
+    </div>
+
+    <div class="max-w-3xl">
+      <!-- ヘッダー -->
+      <div class="mb-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class={`text-[11px] px-2.5 py-0.5 rounded-full ${levelColors[tip.level]}`}>{tip.level}</span>
+          <span class={`text-[11px] px-2.5 py-0.5 rounded-full ${impactColors[tip.impact]}`}>効果: {tip.impact}</span>
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-base-muted text-gray-500">{catLabels[tip.cat]}</span>
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-base-muted text-gray-500">#{tip.id}</span>
+        </div>
+        <h1 class="text-2xl font-semibold text-gray-900 mb-2">{tip.title}</h1>
+        <p class="text-sm text-gray-500">{tip.summary}</p>
+      </div>
+
+      <!-- 概要セクション -->
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">どんな場面で使うか</h2>
+        <div class="space-y-2">
+          {tip.scenes.map((scene: string) => (
+            <div class="flex items-start gap-2">
+              <span class="text-primary mt-0.5 shrink-0">▸</span>
+              <p class="text-sm text-gray-600">{scene}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- 実践セクション -->
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">実践手順</h2>
+        <div class="space-y-3">
+          {tip.steps.map((step: string, i: number) => (
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">{i + 1}</div>
+              <p class="text-sm text-gray-600 pt-1">{step}</p>
+            </div>
+          ))}
+        </div>
+        {tip.code && (
+          <div class="mt-4 bg-gray-900 rounded-lg p-4">
+            <code is:raw class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">{tip.code}</code>
+          </div>
+        )}
+      </section>
+
+      <!-- 応用セクション -->
+      {tip.advanced && (
+        <section class="mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">応用テクニック</h2>
+          <div class="bg-primary-bg rounded-xl p-5">
+            <p class="text-sm text-gray-700">{tip.advanced}</p>
+          </div>
+        </section>
+      )}
+
+      <!-- 関連Tips -->
+      {relatedTips.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">関連Tips</h2>
+          <div class="grid grid-cols-1 gap-2">
+            {relatedTips.map((rt: any) => (
+              <a href={`/tips/tip-${rt.id}`} class="flex items-center gap-3 p-3 bg-white rounded-lg border border-base-border hover:border-primary-pale hover:shadow-sm transition-all no-underline">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-muted text-gray-500">#{rt.id}</span>
+                <span class="text-sm text-gray-900">{rt.title}</span>
+                <span class={`text-[10px] px-2 py-0.5 rounded-full ${levelColors[rt.level]} ml-auto`}>{rt.level}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- 注意事項 -->
+      {tip.caution && (
+        <section class="mb-8">
+          <div class="bg-yellow-50 rounded-xl p-5 border border-yellow-200">
+            <p class="text-sm text-yellow-700 font-medium mb-1">注意事項</p>
+            <p class="text-sm text-gray-700">{tip.caution}</p>
+          </div>
+        </section>
+      )}
+
+      <!-- 練習問題 -->
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">練習問題</h2>
+        <div class="bg-white rounded-xl border border-primary-border p-5">
+          <p class="text-sm text-gray-700 mb-4">{tip.exercise}</p>
+          <button id="complete-btn" class="w-full py-3 bg-primary text-white border-none rounded-lg text-sm font-medium cursor-pointer hover:bg-primary-dark transition-colors">
+            完了する（+10 XP）
+          </button>
+          <div id="completed-msg" class="hidden w-full py-3 bg-success-bg text-success-dark rounded-lg text-sm font-medium text-center">
+            完了済み
+          </div>
+        </div>
+      </section>
+
+      <!-- ナビゲーション -->
+      <div class="flex items-center justify-between pt-6 border-t border-base-border">
+        {prevTip ? (
+          <a href={`/tips/tip-${prevTip.id}`} class="px-5 py-2.5 bg-transparent text-primary border border-primary-border rounded-lg text-sm no-underline hover:bg-primary-bg transition-all">← #{prevTip.id} {prevTip.title.slice(0, 20)}...</a>
+        ) : <div />}
+        <a href="/tips" class="px-4 py-2 text-gray-500 text-sm no-underline hover:text-primary transition-colors">一覧に戻る</a>
+        {nextTip ? (
+          <a href={`/tips/tip-${nextTip.id}`} class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">#{nextTip.id} {nextTip.title.slice(0, 20)}... →</a>
+        ) : <div />}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script define:vars={{ tipId: tip.id }}>
+  const STORAGE_KEY = 'cca-tips-progress';
+  const btn = document.getElementById('complete-btn');
+  const msg = document.getElementById('completed-msg');
+
+  function loadProgress() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; } catch { return {}; }
+  }
+
+  function isCompleted() { return !!loadProgress()[tipId]; }
+
+  function complete() {
+    const data = loadProgress();
+    data[tipId] = { completed: true, at: new Date().toISOString() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // XP加算
+    const xpKey = 'cca-progress';
+    try {
+      const raw = localStorage.getItem(xpKey);
+      const p = raw ? JSON.parse(raw) : { xp: 0, level: 1 };
+      p.xp = (p.xp || 0) + 10;
+      p.level = Math.floor(p.xp / 200) + 1;
+      localStorage.setItem(xpKey, JSON.stringify(p));
+    } catch {}
+  }
+
+  if (isCompleted()) { btn.classList.add('hidden'); msg.classList.remove('hidden'); }
+  btn.addEventListener('click', () => { complete(); btn.classList.add('hidden'); msg.classList.remove('hidden'); });
+</script>
