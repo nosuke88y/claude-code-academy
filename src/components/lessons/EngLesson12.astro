@@ -1,0 +1,183 @@
+---
+// Eng Ch.4 Lesson 1: PR作成・レビューの自動化
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">PR作成・レビューをClaude Codeで自動化する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      PRの作成からレビュー対応まで、Claude Codeで一気通貫で回せる。
+      GitHub CLIとの連携で、ターミナルから離れずにPRワークフローを完結させよう。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">このレッスンのゴール</p>
+      <p class="text-sm text-gray-700">featureブランチ作成 → 実装 → PR作成 → レビュー対応の一連フローをClaude Codeで実行できるようになる</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">1. /review でPRレビュー</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeにはビルトインの <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/review</code> コマンドがある。
+      現在のブランチの差分を自動で分析し、バグ・セキュリティリスク・改善点を指摘してくれる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">ターミナル</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">$ claude
+> /review
+
+# 特定のブランチとの差分をレビュー
+> このブランチのmainとの差分をレビューして。
+  セキュリティ・パフォーマンス・型安全性の観点で。</pre>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">Tips</p>
+      <p class="text-sm text-gray-700"><code class="text-xs bg-white px-1.5 py-0.5 rounded">/review</code> はCIに組み込むこともできる。PR作成時に自動でレビューが走る設定にすると、人間のレビュー前にClaude Codeが一次チェックを済ませてくれる。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">2. PR descriptionの自動生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      コミット履歴とdiffから、構造化されたPR descriptionを自動生成させる。
+      タイトル・サマリー・テスト計画・破壊的変更の有無まで含めて一発。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> この変更のPRを作成して。以下を含めて:
+  - タイトル（70文字以内）
+  - サマリー（箇条書き3点以内）
+  - テスト計画
+  - 破壊的変更の有無
+  gh pr create で実行して。</pre>
+    </div>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeは <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">gh</code> コマンドを直接実行できるので、PRの作成まで自動で完了する。
+      生成されたdescriptionは実行前に確認できる。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm font-semibold text-gray-900 mb-2">生成されるPR descriptionの例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-gray-700 font-mono whitespace-pre-wrap">## Summary
+- ユーザー認証にJWTリフレッシュトークンを追加
+- トークン有効期限切れ時の自動リフレッシュ処理を実装
+- 既存のログインフローとの後方互換性を維持
+
+## Test plan
+- [ ] リフレッシュトークンの発行・検証テスト
+- [ ] トークン期限切れ時の自動更新テスト
+- [ ] 無効なトークンでの401レスポンステスト
+
+## Breaking changes
+なし</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">3. レビューコメントへの対応</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      レビューで指摘を受けたら、その内容をClaude Codeに渡して修正させる。
+      GitHub上のコメントをそのまま貼り付けるだけでOK。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> PRにこのレビューコメントがついた:
+  「このエラーハンドリング、try-catchの粒度が粗すぎる。
+  DB操作とAPI呼び出しは別々にcatchすべき」
+
+  この指摘に対応して修正して。修正後のdiffも見せて。</pre>
+    </div>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">複数コメントの一括対応</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> gh api repos/owner/repo/pulls/42/comments でレビューコメントを取得して、
+  すべての指摘に対応して。修正ごとにコミットを分けて。</pre>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">4. CI/CDとの連携</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      GitHub ActionsにClaude Codeを組み込むことで、PR作成時に自動レビューが走る仕組みを構築できる。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-3">GitHub Actions設定例</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed"># .github/workflows/claude-review.yml
+name: Claude Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Claude Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          review: true</pre>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">メリット</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>人間のレビュー前にClaude Codeが一次スクリーニング</li>
+        <li>コーディング規約違反やバグの見落としを自動検出</li>
+        <li>レビュアーはビジネスロジックに集中できる</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">5. 実践: 一連のPRワークフロー</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      以下のフローをClaude Codeだけで実行してみよう。
+    </p>
+    <div class="space-y-3 mb-4">
+      <div class="bg-white rounded-xl border border-primary-border p-4 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">ブランチ作成</p>
+          <code class="text-xs text-gray-500 font-mono">「feature/add-user-search ブランチを作成して」</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-4 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">実装</p>
+          <code class="text-xs text-gray-500 font-mono">「ユーザー検索APIを実装して。名前・メール・ロールでフィルタリングできるように」</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-4 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">テスト追加</p>
+          <code class="text-xs text-gray-500 font-mono">「この検索APIのユニットテストとインテグレーションテストを書いて」</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-4 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">4</div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">コミット & PR作成</p>
+          <code class="text-xs text-gray-500 font-mono">「変更をコミットして、PRを作成して。テスト計画付きで」</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-4 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">5</div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900">セルフレビュー</p>
+          <code class="text-xs text-gray-500 font-mono">「/review でこのPRをレビューして」</code>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">このフロー全体が1つのClaude Codeセッションで完結する。コンテキストが途切れないので、実装意図を踏まえた的確なPR descriptionやレビューが得られる。</p>
+    </div>
+  </section>
+</div>

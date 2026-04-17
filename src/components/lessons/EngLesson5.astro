@@ -1,0 +1,151 @@
+---
+// Eng Ch.2 Lesson 2: CLAUDE.mdによるプロジェクト設定
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">CLAUDE.mdの設計パターン</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      CLAUDE.mdはClaude Codeの振る舞いを決定する設定ファイル。
+      よく設計されたCLAUDE.mdは、毎回の指示を省略でき、一貫した出力品質を保てる。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">推奨構造</h2>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <p class="text-[10px] text-gray-500 mb-2"># CLAUDE.md のテンプレート</p>
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# プロジェクト概要
+SaaS型タスク管理ツール。TypeScript + Next.js 15 + Prisma + PostgreSQL。
+マルチテナント構成で、Stripe課金機能あり。
+
+# ディレクトリ構成
+src/
+  app/          - App Router ページ
+  components/   - UIコンポーネント（Atomic Design）
+  lib/          - ユーティリティ・ヘルパー
+  server/       - サーバーサイドロジック
+    api/        - APIルート
+    db/         - Prismaクライアント・クエリ
+    auth/       - 認証ロジック（NextAuth.js）
+prisma/
+  schema.prisma - DBスキーマ
+  migrations/   - マイグレーション
+
+# 開発コマンド
+- `npm run dev` - 開発サーバー起動（port 3000）
+- `npm run test` - Vitest実行
+- `npm run test:e2e` - Playwright E2Eテスト
+- `npm run lint` - ESLint + Prettier
+- `npm run db:migrate` - Prismaマイグレーション
+- `npm run db:seed` - シードデータ投入
+
+# コーディング規約
+- 関数コンポーネント + React Server Components優先
+- 状態管理: Zustand（グローバル）、useState（ローカル）
+- スタイリング: Tailwind CSS v4（CSS-in-JS禁止）
+- 命名: camelCase（変数）, PascalCase（コンポーネント・型）
+- ファイル名: kebab-case.ts
+- import順序: React → 外部ライブラリ → 内部モジュール → 型
+
+# テスト方針
+- ユニットテスト: 全ビジネスロジックにVitest
+- E2Eテスト: 主要ユーザーフローにPlaywright
+- カバレッジ目標: 80%以上
+
+# やってはいけないこと
+- any型の使用
+- console.logの残留
+- 環境変数の直接参照（lib/env.tsのconfig経由で）
+- default exportの使用（named export統一）</code>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践: CLAUDE.mdの作成依頼</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      既存プロジェクトに対して、Claude Codeに CLAUDE.md を生成させるのが効率的。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <p class="text-[10px] text-gray-500 mb-2"># 依頼例</p>
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> このプロジェクトのCLAUDE.mdを作って。
+> package.json、tsconfig、ディレクトリ構成を読んで、
+> 技術スタック・ディレクトリ説明・コマンド一覧・コーディング規約を含めて。</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeが自動生成したCLAUDE.mdを、チームのコーディング規約やレビュー基準に合わせて手動で調整するのがベストプラクティス。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">グローバル vs プロジェクト固有</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">~/.claude/CLAUDE.md（グローバル）</h3>
+        <p class="text-xs text-gray-600 mb-2">全プロジェクト共通の設定。個人の作業スタイルを定義する。</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 返答は日本語で
+# コミットメッセージはConventional Commits形式
+# テストを書いたら必ず実行して確認
+# 変更前にgit diffで差分を確認</code>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">プロジェクトルート/CLAUDE.md（プロジェクト固有）</h3>
+        <p class="text-xs text-gray-600 mb-2">そのプロジェクト固有の技術スタック・規約。チームで共有する。</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# プロジェクト固有の設定
+- TypeScript strict mode
+- React Server Components優先
+- Prisma ORM使用（Raw SQL禁止）</code>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mt-3">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">読み込み優先順位</h3>
+      <div class="flex items-center gap-2 text-xs text-gray-600">
+        <span class="bg-gray-100 px-2 py-1 rounded font-mono">~/.claude/CLAUDE.md</span>
+        <span class="text-gray-400">&rarr;</span>
+        <span class="bg-primary-bg px-2 py-1 rounded font-mono text-primary">プロジェクト/CLAUDE.md</span>
+        <span class="text-gray-400">&rarr;</span>
+        <span class="bg-gray-100 px-2 py-1 rounded font-mono">サブディレクトリ/CLAUDE.md</span>
+      </div>
+      <p class="text-[11px] text-gray-500 mt-2">後から読み込まれたものが優先される。プロジェクト固有の設定でグローバル設定を上書き可能。</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">CLAUDE.md運用のベストプラクティス</h2>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">1.</span>
+          <div><strong>Gitで管理する:</strong> CLAUDE.mdをリポジトリに含め、チーム全体で共有。PRでレビューする。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">2.</span>
+          <div><strong>具体的に書く:</strong> 「きれいなコードを書いて」ではなく「ESLintルールに従い、cyclomatic complexityを10以下に」。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">3.</span>
+          <div><strong>禁止事項を明記する:</strong> 「やるべきこと」より「やってはいけないこと」の方が効果が高い。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">4.</span>
+          <div><strong>定期的に更新する:</strong> プロジェクトの成長に合わせてCLAUDE.mdも進化させる。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

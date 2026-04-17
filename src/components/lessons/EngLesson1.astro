@@ -1,0 +1,146 @@
+---
+// Eng Ch.1 Lesson 1: 既存ツールとの違い・優位性
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">AIコーディングツールの進化</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      GitHub Copilot、Cursor、ChatGPTなど、AIコーディングツールは急速に進化してきた。
+      しかしClaude Codeは、これらとは根本的にアプローチが異なる。
+      <strong>「コード補完ツール」から「AIペアプログラマー」への転換</strong>を理解しよう。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ツール比較: 補完型 vs エージェント型</h2>
+    <div class="overflow-x-auto mb-4">
+      <table class="w-full text-xs border-collapse">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="text-left p-3 border border-base-border font-semibold text-gray-700">項目</th>
+            <th class="text-left p-3 border border-base-border font-semibold text-gray-700">Copilot</th>
+            <th class="text-left p-3 border border-base-border font-semibold text-gray-700">Cursor</th>
+            <th class="text-left p-3 border border-base-border font-semibold text-primary">Claude Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-3 border border-base-border font-medium text-gray-700">アプローチ</td>
+            <td class="p-3 border border-base-border text-gray-600">インライン補完</td>
+            <td class="p-3 border border-base-border text-gray-600">エディタ統合AI</td>
+            <td class="p-3 border border-base-border text-primary font-medium">自律型エージェント</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="p-3 border border-base-border font-medium text-gray-700">スコープ</td>
+            <td class="p-3 border border-base-border text-gray-600">現在のファイル中心</td>
+            <td class="p-3 border border-base-border text-gray-600">複数ファイル参照可</td>
+            <td class="p-3 border border-base-border text-primary font-medium">プロジェクト全体</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-base-border font-medium text-gray-700">操作範囲</td>
+            <td class="p-3 border border-base-border text-gray-600">コード提案のみ</td>
+            <td class="p-3 border border-base-border text-gray-600">ファイル編集</td>
+            <td class="p-3 border border-base-border text-primary font-medium">ファイル操作・Git・コマンド実行</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="p-3 border border-base-border font-medium text-gray-700">コンテキスト</td>
+            <td class="p-3 border border-base-border text-gray-600">数百行</td>
+            <td class="p-3 border border-base-border text-gray-600">数万トークン</td>
+            <td class="p-3 border border-base-border text-primary font-medium">最大1Mトークン</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-base-border font-medium text-gray-700">自律性</td>
+            <td class="p-3 border border-base-border text-gray-600">受動的（提案待ち）</td>
+            <td class="p-3 border border-base-border text-gray-600">半自律的</td>
+            <td class="p-3 border border-base-border text-primary font-medium">完全自律（計画→実行→検証）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeの技術的優位性</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🧠</div>
+          <h3 class="text-sm font-semibold text-gray-900">1Mトークン コンテキストウィンドウ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">
+          大規模リポジトリでも、ディレクトリ構造・設定ファイル・関連モジュールをまとめて理解できる。
+          これにより、単一ファイルの編集ではなく、アーキテクチャを理解した上での変更が可能になる。
+        </p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono">
+            # 例: monorepoの複数パッケージにまたがる変更<br>
+            > @packages/api @packages/web @packages/shared<br>
+            > 「SharedモジュールのUser型を変更して、API・Web両方を追従させて」
+          </code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔧</div>
+          <h3 class="text-sm font-semibold text-gray-900">自律的ツール呼び出し</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">
+          Read / Edit / Grep / Bash など、開発に必要なツールを自分で判断して呼び出す。
+          「ファイルを読んで、問題を特定して、修正して、テストを実行」を一気通貫で行える。
+        </p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono">
+            # Claude Codeの内部動作イメージ<br>
+            1. Grep: エラーの原因箇所を検索<br>
+            2. Read: 関連ファイルを読み込み<br>
+            3. Edit: 修正を適用<br>
+            4. Bash: テスト実行で検証
+          </code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">⚡</div>
+          <h3 class="text-sm font-semibold text-gray-900">高度な機能群</h3>
+        </div>
+        <div class="space-y-2 text-xs text-gray-600">
+          <div class="flex items-start gap-2">
+            <span class="text-primary font-bold mt-0.5">▸</span>
+            <div><strong>Sub-agent:</strong> 複雑なタスクを分割し、並列で調査・実行。メインコンテキストを節約。</div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-primary font-bold mt-0.5">▸</span>
+            <div><strong>Git worktree:</strong> 別ブランチでの作業を並行して進める。PRレビュー中に次の機能開発が可能。</div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-primary font-bold mt-0.5">▸</span>
+            <div><strong>Background task:</strong> 長時間かかるビルドやテストをバックグラウンドで実行しながら、他の作業を続行。</div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-primary font-bold mt-0.5">▸</span>
+            <div><strong>Hooks:</strong> pre-commit / post-edit などのフックで、自動lint・自動テストを組み込み。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パラダイムシフト</h2>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">補完ツール → AIペアプログラマー</p>
+      <p class="text-sm text-gray-700 leading-relaxed mb-3">
+        Copilotは「タイプを手伝う」ツール。Claude Codeは「一緒に設計・実装・デバッグする」パートナー。
+        重要なのは、単にコードを速く書くことではなく、
+        <strong>開発プロセス全体を効率化できる</strong>点にある。
+      </p>
+      <div class="bg-white rounded-lg p-3 text-xs text-gray-600 space-y-1">
+        <p><strong>Before:</strong> 自分で設計 → 自分でコード → Copilotが補完 → 自分でデバッグ</p>
+        <p><strong>After:</strong> 要件を伝える → Claude Codeが設計提案 → 実装 → テスト → レビューまで一気通貫</p>
+      </div>
+    </div>
+  </section>
+</div>

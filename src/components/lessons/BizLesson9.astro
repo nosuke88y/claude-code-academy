@@ -1,0 +1,148 @@
+---
+// Biz Ch.3 Lesson 2: Excelデータ分析・グラフ作成依頼
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Excelデータを分析・可視化しよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      CSVデータの集計やグラフ作成は、Claude Codeの得意分野です。
+      Excelの複雑な関数やピボットテーブルに悩む必要はもうありません。
+      日本語で「こう集計して」と伝えるだけで、グラフ付きのレポートが完成します。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 Excelで1時間 → Claude Codeで1分</p>
+      <p class="text-sm text-gray-700">ピボットテーブルの設定、VLOOKUP関数の記述、グラフの体裁調整...これらすべてをClaude Codeが代行します。あなたは「何を知りたいか」を伝えるだけです。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践1: CSVデータの読み込みと集計</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      まずは、CSVデータをClaude Codeに読み込ませて集計してみましょう。
+    </p>
+
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">売上データCSVの例</p>
+      <div class="bg-gray-900 rounded-xl p-4">
+        <code class="text-sm text-green-400 font-mono leading-relaxed">
+          日付,部門,商品名,売上金額,数量<br>
+          2026-01-05,営業,商品A,150000,10<br>
+          2026-01-12,マーケ,商品B,80000,5<br>
+          2026-01-20,営業,商品C,200000,15<br>
+          2026-02-03,開発,商品A,120000,8<br>
+          ...
+        </code>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="space-y-2">
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">この売上CSVを部門別・月別にクロス集計して。合計と前月比も出して</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 コツ: 集計の「軸」を指定する</p>
+      <p class="text-sm text-gray-700">「部門別」「月別」「商品別」など、どの軸で集計したいかを明確に伝えると、期待通りの結果が得られます。「クロス集計して」のように分析手法を指定するのも効果的です。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践2: グラフ付きHTMLレポートの作成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      集計結果をさらにグラフ付きのHTMLレポートにすることもできます。
+      ブラウザで開くだけで見られる、見栄えの良いレポートが自動で作られます。
+    </p>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="space-y-2">
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">この売上データからHTMLレポートを作って。以下を含めて:<br>- 部門別売上の棒グラフ<br>- 月別推移の折れ線グラフ<br>- 上位5商品のランキング表<br>- 全体サマリー（総売上・平均単価・前月比）<br>Chart.jsを使って見やすいデザインで</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-medium text-gray-900 mb-3">完成イメージ</p>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-base-bg">
+          <span class="text-lg">📊</span>
+          <div>
+            <p class="text-xs font-medium text-gray-900">棒グラフ</p>
+            <p class="text-[10px] text-gray-500">部門別の売上を比較</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-base-bg">
+          <span class="text-lg">📈</span>
+          <div>
+            <p class="text-xs font-medium text-gray-900">折れ線グラフ</p>
+            <p class="text-[10px] text-gray-500">月別の売上推移を可視化</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-base-bg">
+          <span class="text-lg">🏆</span>
+          <div>
+            <p class="text-xs font-medium text-gray-900">ランキング表</p>
+            <p class="text-[10px] text-gray-500">売れ筋商品をランク付け</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践3: さらに深掘りする</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      レポートができたら、さらに追加の分析を依頼できます。
+      Claude Codeは会話の流れを覚えているので、続けて依頼するだけでOKです。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">追加の依頼例</p>
+      <div class="space-y-2">
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「売上が落ちている部門と商品を特定して、原因を推測して」</code>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「このデータからABC分析して、A/B/Cランクに分類して」</code>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「来月の売上を過去の傾向から予測して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">やってみよう</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm font-medium text-gray-900 mb-3">実践課題</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <p class="text-xs text-gray-600">Claude Codeにサンプルの売上CSVを作ってもらいましょう（「売上サンプルCSVを作って。部門3つ、6ヶ月分」）</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <p class="text-xs text-gray-600">そのCSVをクロス集計してもらいましょう</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <p class="text-xs text-gray-600">グラフ付きHTMLレポートを作ってもらい、ブラウザで開いてみましょう</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">📌 まとめ</p>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        CSVデータの集計・分析・グラフ化は、Claude Codeに任せれば数分で完了します。
+        ポイントは「集計の軸」と「出力形式」を具体的に伝えること。
+        Excelの複雑な操作を覚える必要はもうありません。
+      </p>
+    </div>
+  </section>
+</div>

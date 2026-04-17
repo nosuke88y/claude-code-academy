@@ -1,0 +1,245 @@
+---
+// Eng Ch.2 Lesson 4: チェックテスト
+---
+
+<div class="max-w-3xl">
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">理解度チェック</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-6">
+      Chapter 2で学んだ内容の確認テストです。全3問に挑戦しましょう。
+    </p>
+    <div id="quiz-container"></div>
+  </section>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: 'コンテキスト効率化のベストプラクティスは？',
+      choices: [
+        'プロジェクト全体を毎回読み込ませる',
+        '必要なファイルだけを@指定し、不要なファイルは.gitignoreで除外',
+        'コンテキストが足りなくなったら新しいセッションを開始する',
+        '/compactを毎回の指示の前に実行する'
+      ],
+      correct: 1,
+      explanation: '必要なファイルだけを@記法で指定し、node_modules等は.claudeignoreで除外することで、コンテキストを効率的に使える。'
+    },
+    {
+      question: 'CLAUDE.mdに書くべきでないものは？',
+      choices: [
+        'プロジェクトの技術スタック',
+        'コーディング規約とスタイルガイド',
+        '機密情報（APIキーやパスワード）',
+        'テスト方針とカバレッジ目標'
+      ],
+      correct: 2,
+      explanation: 'CLAUDE.mdはGitで管理・共有されるため、APIキーやパスワードなどの機密情報を書いてはいけない。環境変数は.envファイルで管理する。'
+    },
+    {
+      question: '複雑な要件の伝え方として最も効果的な方法は？',
+      choices: [
+        '背景→要件→制約→出力形式の順で構造化する',
+        'できるだけ短く一行で伝える',
+        '技術的な詳細は省略してゴールだけ伝える',
+        '全ての実装を一度にまとめて依頼する'
+      ],
+      correct: 0,
+      explanation: '背景（なぜ必要か）→要件（何を実現するか）→制約（技術的制約）→出力形式（どう書くか）の4段階フレームワークで構造化することで、高品質な出力を得られる。'
+    }
+  ];
+
+  const STORAGE_KEY = 'cca-progress-eng';
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch { return null; }
+  }
+
+  function saveProgress(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function getOrCreateProgress() {
+    let data = loadProgress();
+    if (!data) {
+      data = { xp: 0, level: 1, streak: 0, lastStudyDate: null, chapters: {} };
+    }
+    if (!data.chapters) data.chapters = {};
+    if (!data.chapters.ch2) data.chapters.ch2 = { lessons: {} };
+    if (!data.chapters.ch2.lessons) data.chapters.ch2.lessons = {};
+    return data;
+  }
+
+  function updateStreak(data) {
+    const today = new Date().toISOString().split('T')[0];
+    if (data.lastStudyDate === today) return;
+    if (data.lastStudyDate) {
+      const last = new Date(data.lastStudyDate);
+      const now = new Date(today);
+      const diffDays = Math.floor((now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+      if (diffDays === 1) { data.streak = (data.streak || 0) + 1; }
+      else if (diffDays > 1) { data.streak = 1; }
+    } else { data.streak = 1; }
+    data.lastStudyDate = today;
+  }
+
+  function addXP(data, amount) {
+    data.xp = (data.xp || 0) + amount;
+    data.level = Math.floor(data.xp / 200) + 1;
+  }
+
+  const container = document.getElementById('quiz-container');
+  if (!container) throw new Error('quiz-container not found');
+
+  let currentQ = 0;
+  let selectedIdx = -1;
+  let correctCount = 0;
+
+  const savedData = getOrCreateProgress();
+  const isAlreadyCompleted = savedData.chapters?.ch2?.lessons?.l4?.completed === true;
+
+  if (isAlreadyCompleted) {
+    showCompletionScreen();
+  } else {
+    renderQuestion(currentQ);
+  }
+
+  function renderQuestion(qIdx) {
+    const q = quizData[qIdx];
+    selectedIdx = -1;
+    container.innerHTML = `
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs text-gray-400">問題 ${qIdx + 1} / ${quizData.length}</span>
+          <div class="flex gap-1">
+            ${quizData.map((_, i) => `<div class="w-2 h-2 rounded-full ${i < qIdx ? 'bg-primary' : i === qIdx ? 'bg-primary-bg border border-primary-border' : 'bg-gray-200'}"></div>`).join('')}
+          </div>
+        </div>
+        <h3 class="text-base font-semibold text-gray-900 mb-4">Q${qIdx + 1}. ${q.question}</h3>
+        <div class="space-y-2" id="choices">
+          ${q.choices.map((c, i) => `
+            <button class="choice-btn w-full text-left p-4 rounded-xl border border-base-border bg-white text-sm text-gray-700 cursor-pointer hover:bg-base-bg transition-colors" data-idx="${i}">
+              <span class="inline-block w-6 h-6 rounded-full border border-base-border text-center text-xs leading-6 mr-3 font-medium">${String.fromCharCode(65 + i)}</span>
+              ${c}
+            </button>
+          `).join('')}
+        </div>
+        <div class="mt-6 flex justify-end">
+          <button id="submit-btn" class="px-6 py-2.5 rounded-lg text-sm font-medium bg-gray-200 text-gray-400 cursor-not-allowed" disabled>解答する</button>
+        </div>
+        <div id="feedback" class="mt-4 hidden"></div>
+      </div>
+    `;
+
+    container.querySelectorAll('.choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.closest('#choices').classList.contains('answered')) return;
+        selectedIdx = parseInt(btn.dataset.idx);
+        container.querySelectorAll('.choice-btn').forEach(b => {
+          b.classList.remove('border-primary-border', 'bg-primary-bg', 'text-primary');
+          b.classList.add('border-base-border', 'bg-white', 'text-gray-700');
+        });
+        btn.classList.remove('border-base-border', 'bg-white', 'text-gray-700');
+        btn.classList.add('border-primary-border', 'bg-primary-bg', 'text-primary');
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+        submitBtn.classList.add('bg-primary', 'text-white', 'cursor-pointer', 'hover:opacity-90');
+      });
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      if (selectedIdx < 0) return;
+      handleAnswer(qIdx, selectedIdx);
+    });
+  }
+
+  function handleAnswer(qIdx, selIdx) {
+    const q = quizData[qIdx];
+    const isCorrect = selIdx === q.correct;
+    const choicesDiv = document.getElementById('choices');
+    choicesDiv.classList.add('answered');
+
+    if (isCorrect) {
+      correctCount++;
+      const data = getOrCreateProgress();
+      addXP(data, 10);
+      saveProgress(data);
+    }
+
+    container.querySelectorAll('.choice-btn').forEach(btn => {
+      const idx = parseInt(btn.dataset.idx);
+      btn.classList.remove('cursor-pointer', 'hover:bg-base-bg', 'border-primary-border', 'bg-primary-bg', 'text-primary');
+      btn.style.pointerEvents = 'none';
+      if (idx === q.correct) {
+        btn.classList.remove('border-base-border', 'bg-white', 'text-gray-700');
+        btn.classList.add('border-green-300', 'bg-green-50', 'text-green-700');
+      } else if (idx === selIdx && !isCorrect) {
+        btn.classList.remove('border-base-border', 'bg-white', 'text-gray-700');
+        btn.classList.add('border-red-300', 'bg-red-50', 'text-red-600');
+      }
+    });
+
+    document.getElementById('submit-btn').classList.add('hidden');
+
+    const feedback = document.getElementById('feedback');
+    feedback.classList.remove('hidden');
+    feedback.innerHTML = `
+      <div class="rounded-xl p-4 ${isCorrect ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+        <p class="text-sm font-medium ${isCorrect ? 'text-green-700' : 'text-red-600'} mb-1">${isCorrect ? '正解！ XP +10' : '不正解'}</p>
+        <p class="text-xs ${isCorrect ? 'text-green-600' : 'text-red-500'}">${q.explanation}</p>
+      </div>
+      <div class="mt-4 flex justify-end">
+        <button id="next-btn" class="px-6 py-2.5 rounded-lg text-sm font-medium bg-primary text-white cursor-pointer hover:opacity-90">
+          ${qIdx < quizData.length - 1 ? '次の問題へ' : '結果を見る'}
+        </button>
+      </div>
+    `;
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (qIdx < quizData.length - 1) { renderQuestion(qIdx + 1); }
+      else { completeQuiz(); }
+    });
+  }
+
+  function completeQuiz() {
+    const data = getOrCreateProgress();
+    data.chapters.ch2.lessons.l4 = { completed: true, completedAt: new Date().toISOString() };
+    updateStreak(data);
+    saveProgress(data);
+    showCompletionScreen();
+  }
+
+  function showCompletionScreen() {
+    container.innerHTML = `
+      <div class="text-center py-8">
+        <div class="text-5xl mb-4">&#x1F389;</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Ch.2 完了！</h3>
+        <p class="text-sm text-gray-600 mb-6">Chapter 2「プロンプトエンジニアリング実践」をクリアしました。</p>
+        <div class="inline-block bg-primary-bg rounded-xl border border-primary-border px-6 py-4 mb-6">
+          <div class="flex items-center gap-4">
+            <div class="text-center">
+              <p class="text-2xl font-bold text-primary">${(() => { const d = getOrCreateProgress(); return d.xp || 0; })()}</p>
+              <p class="text-[10px] text-gray-500">合計 XP</p>
+            </div>
+            <div class="w-px h-10 bg-primary-border"></div>
+            <div class="text-center">
+              <p class="text-2xl font-bold text-primary">Lv.${(() => { const d = getOrCreateProgress(); return d.level || 1; })()}</p>
+              <p class="text-[10px] text-gray-500">レベル</p>
+            </div>
+            <div class="w-px h-10 bg-primary-border"></div>
+            <div class="text-center">
+              <p class="text-2xl font-bold text-primary">${(() => { const d = getOrCreateProgress(); return d.streak || 0; })()}日</p>
+              <p class="text-[10px] text-gray-500">連続学習</p>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400">次のチャプターに進んで、さらにスキルアップしましょう！</p>
+      </div>
+    `;
+  }
+</script>

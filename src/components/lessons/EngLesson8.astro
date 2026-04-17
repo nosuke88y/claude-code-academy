@@ -1,0 +1,120 @@
+---
+// Eng Ch.3 Lesson 1: TDD（テスト駆動開発）とClaude Code
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">TDDサイクルをClaude Codeで回す</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      TDD（テスト駆動開発）はClaude Codeと相性が極めて良い。
+      テストが「仕様書」となり、Claude Codeに明確なゴールを与えられるからだ。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Red → Green → Refactor</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold">Red</div>
+          <h3 class="text-sm font-semibold text-gray-900">1. 失敗するテストを書く</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「calculateDiscount関数のテストをVitestで書いて。
+>  正常系: 10%割引、20%割引、最大割引50%
+>  異常系: 負の金額、割引率100%超え
+>  境界値: 0円、割引率0%、割引率50%」</code>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-2">まだ実装がないので、テストは全て失敗する（Red状態）。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-green-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-bold">Green</div>
+          <h3 class="text-sm font-semibold text-gray-900">2. テストをパスする実装を書く</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このテストをすべてパスする実装を書いて。
+>  テストを実行して全てグリーンになることを確認して」</code>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-2">Claude Codeがテストを読み、仕様を理解した上で実装を書く。テスト実行まで自動。</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-blue-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">Ref</div>
+          <h3 class="text-sm font-semibold text-gray-900">3. リファクタリング</h3>
+        </div>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「実装をリファクタして。可読性とパフォーマンスを改善して。
+>  リファクタ後もテストが全てパスすることを確認して」</code>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-2">テストがセーフティネットとなり、安全にリファクタリングできる。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">テスト生成の依頼パターン</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">ユニットテスト</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「@src/lib/auth.ts のverifyToken関数のユニットテストを書いて。
+>  正常系: 有効なトークン、admin/userロール
+>  異常系: 期限切れ、不正な署名、空文字
+>  モック: jsonwebtokenをモックして」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">インテグレーションテスト</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「POST /api/users エンドポイントのインテグレーションテストを書いて。
+>  DB接続はテスト用のSQLiteを使って。
+>  201: 正常作成、400: バリデーションエラー、409: 重複エラー」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">テストカバレッジ</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「テストカバレッジを確認して。
+>  カバレッジが80%未満のファイルについて、不足分のテストを追加して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践: ユーティリティ関数のTDD体験</h2>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-2">やってみよう</p>
+      <p class="text-sm text-gray-700 mb-3">以下の手順でTDDを体験してみよう。</p>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex items-start gap-2">
+          <span class="bg-red-100 text-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">1</span>
+          <div>「formatCurrency(amount, currency)関数のテストを書いて。1234.5 → "$1,234.50"、日本円なら "¥1,235"（小数なし）」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-green-100 text-green-600 text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">2</span>
+          <div>「テストをパスする実装を書いて。Intl.NumberFormatを使って」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-blue-100 text-blue-600 text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">3</span>
+          <div>「エッジケースのテストを追加して: NaN、Infinity、負の値。実装も対応させて」</div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">テストファーストでClaude Codeに依頼すると「何を作るか」が明確になり、出力品質が上がる。テストは仕様書であり、セーフティネット。</p>
+    </div>
+  </section>
+</div>

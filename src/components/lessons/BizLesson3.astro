@@ -1,0 +1,316 @@
+---
+// Biz Ch.1 Lesson 3: ビジネス職向けユースケースマップ
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">あなたの職種に合った活用法</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-6">
+      Claude Codeの活用方法は職種によって異なります。
+      あなたの職種に近いタブを選んで、具体的な活用イメージを掴みましょう。
+    </p>
+
+    <!-- タブ -->
+    <div class="flex gap-2 mb-6 flex-wrap" id="biz-tabs">
+      <button
+        class="biz-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-primary-bg text-primary border-primary-border"
+        data-tab="planning"
+      >
+        📈 経営企画
+      </button>
+      <button
+        class="biz-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-transparent text-gray-500 border-base-border hover:bg-primary-bg hover:text-primary hover:border-primary-border"
+        data-tab="marketing"
+      >
+        🎯 マーケティング
+      </button>
+      <button
+        class="biz-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-transparent text-gray-500 border-base-border hover:bg-primary-bg hover:text-primary hover:border-primary-border"
+        data-tab="sales"
+      >
+        🤝 営業
+      </button>
+      <button
+        class="biz-tab-btn flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium cursor-pointer border bg-transparent text-gray-500 border-base-border hover:bg-primary-bg hover:text-primary hover:border-primary-border"
+        data-tab="hr"
+      >
+        👥 人事・総務
+      </button>
+    </div>
+
+    <!-- 経営企画タブ -->
+    <div class="biz-tab-content space-y-4" data-tab-content="planning">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📊</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">経営ダッシュボードの作成</h3>
+            <span class="text-[10px] text-gray-400">KPIを一覧で見える化</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          売上・利益率・顧客数などのKPIデータを読み込み、グラフ付きのHTMLダッシュボードを自動生成。
+          経営会議用の資料がすぐに作れます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この業績CSVから経営ダッシュボードを作って。売上推移・利益率・前年比をグラフで表示」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「四半期ごとの目標達成率を計算して、未達の項目を赤色でハイライトして」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📋</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">事業計画書のドラフト作成</h3>
+            <span class="text-[10px] text-gray-400">構成と骨子を素早く作成</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          事業のコンセプトや数値目標を伝えるだけで、市場分析・収支計画・リスク分析を含む事業計画書のドラフトを生成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「SaaS型人事管理ツールの事業計画書を作って。市場規模・競合分析・3年間の収支計画を含めて」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔢</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">財務シミュレーション</h3>
+            <span class="text-[10px] text-gray-400">What-if分析を簡単に</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          「売上が10%増えたら？」「人件費を5%削減したら？」などのシミュレーションを、パラメータを変えて即座に実行できます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この収支データで、売上+10%/±0%/-10%の3パターンをシミュレーションして比較表を作って」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- マーケティングタブ -->
+    <div class="biz-tab-content space-y-4 hidden" data-tab-content="marketing">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📈</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">キャンペーン効果分析</h3>
+            <span class="text-[10px] text-gray-400">広告データを可視化</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          広告の配信データ（インプレッション・クリック・CV）をCSVで渡すだけで、
+          媒体別・期間別の効果比較レポートを自動生成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この広告データCSVを媒体別にCPA・ROAS・CVRを集計して比較レポートを作って」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「先月と今月のキャンペーン結果を比較するグラフを作って」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">✍️</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">コンテンツ企画・生成</h3>
+            <span class="text-[10px] text-gray-400">ブログ記事やSNS投稿を量産</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          ターゲットやテーマを伝えるだけで、ブログ記事の構成案やSNS投稿のバリエーションを一括生成できます。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「BtoB SaaSのブログ記事タイトル20案を作って。SEOキーワードは『業務効率化』」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「新商品の告知用SNS投稿を5パターン作って。Twitter・Instagram用それぞれ」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔍</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">競合・市場調査の整理</h3>
+            <span class="text-[10px] text-gray-400">情報を構造化して比較</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          集めた競合情報を構造化し、比較表やSWOT分析のフレームワークに整理します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この競合メモをSWOT分析のフレームワークに整理して、HTML形式で出力して」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 営業タブ -->
+    <div class="biz-tab-content space-y-4 hidden" data-tab-content="sales">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📧</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">営業メール・提案書の作成</h3>
+            <span class="text-[10px] text-gray-400">顧客に合わせたカスタマイズ</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          顧客の業種や課題を伝えるだけで、その顧客に最適化された営業メールや提案書のドラフトを作成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「製造業向けの営業メールを作って。課題は在庫管理の効率化。初回アプローチ用」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この顧客リストの各社に合わせた提案メールを10通作って」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📊</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">営業パイプライン分析</h3>
+            <span class="text-[10px] text-gray-400">商談データから傾向を把握</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          商談データのCSVを分析して、受注率・平均商談期間・ボトルネックのステージなどを可視化します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この商談CSVからパイプライン分析して。ステージ別の滞留日数と受注率を出して」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📑</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">見積書・請求書テンプレート</h3>
+            <span class="text-[10px] text-gray-400">定型書類を自動生成</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          商品リストと顧客情報を渡すだけで、フォーマットの整った見積書や請求書のHTMLテンプレートを生成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この商品リストから見積書のHTMLテンプレートを作って。合計・消費税・支払条件を含めて」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 人事・総務タブ -->
+    <div class="biz-tab-content space-y-4 hidden" data-tab-content="hr">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📝</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">求人票・JDの作成</h3>
+            <span class="text-[10px] text-gray-400">魅力的な求人を素早く作成</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          職種・必要スキル・チームの特徴を伝えるだけで、業務内容・必須条件・歓迎条件・福利厚生が整理されたJDを生成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「フロントエンドエンジニアの求人票を作って。React経験3年以上、リモートワーク可」</code>
+          </div>
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この求人票をWantedly用のカジュアルなトーンに書き換えて」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📚</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">社内マニュアル・FAQ作成</h3>
+            <span class="text-[10px] text-gray-400">ナレッジを体系的に整備</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          部門の業務フローや社内規程をもとに、新入社員向けマニュアルやFAQドキュメントを自動生成します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「新入社員向けのオンボーディングマニュアルを作って。初日〜1ヶ月のスケジュール付き」</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📊</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">従業員データの分析</h3>
+            <span class="text-[10px] text-gray-400">人事データを活用した意思決定</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600 mb-3">
+          従業員データのCSVから、部門別の人員構成・平均勤続年数・離職率などを自動集計してレポート化します。
+        </p>
+        <div class="space-y-2">
+          <div class="bg-base-bg rounded-lg px-3 py-2">
+            <code class="text-[11px] text-gray-600 font-mono">「この従業員CSVから部門別の平均年齢・勤続年数・男女比をグラフ付きでレポートにして」</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">📌 まとめ</p>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        どの職種でも、Claude Codeで効率化できる業務がたくさんあります。
+        共通するのは「やりたいことを具体的に伝える」こと。
+        次のレッスンでは、理解度チェックテストに挑戦しましょう。
+      </p>
+    </div>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('.biz-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const activeClasses = ['bg-primary-bg', 'text-primary', 'border-primary-border'];
+      const inactiveClasses = ['bg-transparent', 'text-gray-500', 'border-base-border'];
+
+      document.querySelectorAll('.biz-tab-btn').forEach(b => {
+        b.classList.remove(...activeClasses);
+        b.classList.add(...inactiveClasses);
+      });
+      btn.classList.remove(...inactiveClasses);
+      btn.classList.add(...activeClasses);
+
+      document.querySelectorAll('.biz-tab-content').forEach(c => c.classList.add('hidden'));
+      document.querySelector(`[data-tab-content="${btn.dataset.tab}"]`)?.classList.remove('hidden');
+    });
+  });
+</script>

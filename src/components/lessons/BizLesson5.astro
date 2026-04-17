@@ -1,0 +1,124 @@
+---
+// Biz Ch.2 Lesson 1: インストール手順（簡略版）
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeをインストールしよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeのインストールは3ステップで完了します。
+      プログラミングの知識は一切不要です。手順通りに進めるだけでOKです。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 所要時間の目安</p>
+      <p class="text-sm text-gray-700">インストールは約5〜10分で完了します。うまくいかない場合はトラブルシューティングを確認してください。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: Node.jsのインストール</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Node.jsは、Claude Codeを動かすために必要なソフトウェアです。
+      まずこれをインストールします。
+    </p>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🪟</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">Windows</h3></div>
+        </div>
+        <p class="text-xs text-gray-600">
+          <a href="https://nodejs.org" class="text-primary underline">nodejs.org</a> にアクセス → 緑色の「LTS」ボタンをクリック → ダウンロードしたファイルを実行 → 「Next」を押して完了
+        </p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🍎</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">Mac</h3></div>
+        </div>
+        <div class="bg-gray-900 rounded-xl p-4">
+          <code class="text-sm text-green-400 font-mono">$ brew install node</code>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Homebrewが入っていない場合は nodejs.org から直接ダウンロードしてください。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🐧</div>
+          <div><h3 class="text-sm font-semibold text-gray-900">Linux</h3></div>
+        </div>
+        <div class="bg-gray-900 rounded-xl p-4">
+          <div class="space-y-1">
+            <code class="text-sm text-green-400 font-mono block">$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash</code>
+            <code class="text-sm text-green-400 font-mono block">$ nvm install --lts</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: Claude Codeのインストール</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ターミナル（Windowsは PowerShell、Macは Terminal）を開いて、以下のコマンドを入力してください。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">Claude Codeをインストール</div>
+      <code class="text-sm text-green-400 font-mono">$ npm install -g @anthropic-ai/claude-code</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 $マークについて</p>
+      <p class="text-sm text-gray-700">コマンドの先頭にある <code class="bg-white px-1.5 py-0.5 rounded text-primary text-xs">$</code> は「ここから入力してね」という目印です。<strong>実際に入力するのは $ の後ろの部分だけ</strong>です。$ 自体は入力しないでください。</p>
+    </div>
+    <div class="bg-success-bg rounded-xl p-5">
+      <p class="text-sm text-success-dark font-medium mb-1">✅ 成功の確認</p>
+      <p class="text-sm text-gray-700">エラーなく完了すればインストール成功です。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: 認証（ログイン）</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ターミナルで以下のコマンドを入力すると、ブラウザが開いてログイン画面が表示されます。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">Claude Codeを起動</div>
+      <code class="text-sm text-green-400 font-mono">$ claude</code>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <p class="text-xs text-gray-600">ブラウザが自動で開きます（開かない場合は表示されるURLをコピーしてブラウザに貼り付け）</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <p class="text-xs text-gray-600">Anthropicアカウントでログイン（アカウントがなければ新規作成）</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <p class="text-xs text-gray-600">認証が完了すると、ターミナルに戻ってClaude Codeが使えるようになります</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">料金について</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">💳</div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900">Max Plan（月額 $100〜）</h3>
+          <span class="text-[10px] text-gray-400">Claude Codeを使うための推奨プラン</span>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mb-3">
+        Claude Codeを使うには、AnthropicのMax Plan（月額$100〜）への加入が推奨されます。
+        API利用（従量課金）でも使えますが、Max Planなら定額で安心して使い放題です。
+      </p>
+      <div class="bg-primary-bg rounded-lg px-3 py-2">
+        <p class="text-xs text-gray-600">💡 月$100は高く感じるかもしれませんが、毎日の業務で数時間の時短ができれば、すぐに元が取れます。</p>
+      </div>
+    </div>
+  </section>
+</div>

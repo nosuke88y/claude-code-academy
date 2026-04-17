@@ -1,0 +1,130 @@
+---
+// Biz Ch.3 Lesson 3: プレゼン資料の構成作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プレゼン資料の構成を自動で作ろう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      プレゼン資料を作るとき、一番時間がかかるのは「構成を考える」こと。
+      Claude Codeに依頼すれば、スライドごとの見出し・キーメッセージ・必要なデータまで含めた構成案を数分で作れます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 Claude Codeの役割</p>
+      <p class="text-sm text-gray-700">Claude Codeは資料の「骨組み」を作ります。最終的なデザインはPowerPointやGoogleスライドで仕上げますが、構成と内容のドラフトが自動で出来上がるので、作業時間を大幅に短縮できます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践1: プレゼン構成の自動生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      テーマと目的を伝えるだけで、プレゼンの構成案が完成します。
+    </p>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">新規事業の社内提案プレゼン資料の構成を作って。<br><br>テーマ: AI活用による社内業務効率化サービス<br>対象: 経営会議メンバー<br>スライド数: 10枚<br><br>各スライドに以下を含めて:<br>- スライド番号と見出し<br>- キーメッセージ（1〜2文）<br>- そのスライドに必要なデータや図表<br>- 話すべきポイント（箇条書き3つ）</code>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-medium text-gray-900 mb-3">出力されるスライド構成の例</p>
+      <div class="space-y-3">
+        <div class="bg-base-bg rounded-lg p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded bg-primary-bg flex items-center justify-center text-xs font-bold text-primary">1</span>
+            <span class="text-sm font-semibold text-gray-900">タイトルスライド</span>
+          </div>
+          <p class="text-xs text-gray-600">「AI活用による社内業務効率化の提案」</p>
+        </div>
+        <div class="bg-base-bg rounded-lg p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded bg-primary-bg flex items-center justify-center text-xs font-bold text-primary">2</span>
+            <span class="text-sm font-semibold text-gray-900">課題提起</span>
+          </div>
+          <p class="text-xs text-gray-600">「現在の業務における非効率の実態と損失額」</p>
+        </div>
+        <div class="bg-base-bg rounded-lg p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-6 h-6 rounded bg-primary-bg flex items-center justify-center text-xs font-bold text-primary">3</span>
+            <span class="text-sm font-semibold text-gray-900">解決策の概要</span>
+          </div>
+          <p class="text-xs text-gray-600">「AI活用で実現する3つの業務改革」</p>
+        </div>
+        <div class="text-center text-xs text-gray-400 py-2">...以降のスライドも同様に生成...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践2: HTML形式のスライド原稿を作る</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      構成だけでなく、HTML形式で見栄えの良いスライド原稿を作ることもできます。
+      ブラウザで開いてプレビューしながら内容を確認できます。
+    </p>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">この構成をもとに、HTML形式のスライド原稿を作って。<br>各スライドを1ページとして、矢印キーでページ送りできるようにして。<br>ビジネスプレゼンらしいシンプルなデザインで</code>
+      </div>
+    </div>
+
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 HTMLスライドのメリット</p>
+      <p class="text-sm text-gray-700">HTML形式で作ると、ブラウザで即座にプレビューできます。内容を確認した上で、最終版はPowerPointやGoogleスライドにコピペして仕上げるワークフローが効率的です。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践3: 内容のブラッシュアップ</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      構成ができたら、さらに追加の依頼で内容を磨き上げましょう。
+    </p>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">追加の依頼例</p>
+      <div class="space-y-2">
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「スライド5の競合比較を、表形式でもっと具体的にして」</code>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「想定される質問と回答を5つ用意して。別紙として追加して」</code>
+        </div>
+        <div class="bg-base-bg rounded-lg px-3 py-2">
+          <code class="text-[11px] text-gray-600 font-mono">「経営層が気にする『ROI（投資対効果）』のスライドを追加して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">やってみよう</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm font-medium text-gray-900 mb-3">実践課題</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <p class="text-xs text-gray-600">あなたの業務に関連するプレゼンのテーマを決めて、10スライドの構成を作ってもらいましょう</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <p class="text-xs text-gray-600">その構成をHTML形式のスライド原稿にしてもらいましょう</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <p class="text-xs text-gray-600">ブラウザで開いてプレビューし、「ここをもっと詳しく」「データを追加して」など修正依頼を出してみましょう</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">📌 まとめ</p>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        プレゼン資料の構成作成は、Claude Codeの強みが最も発揮される業務の一つです。
+        テーマ・対象者・スライド数を伝えるだけで、論理的な構成と各スライドのキーメッセージが自動生成されます。
+        「構成を考える」時間をゼロにして、「内容を磨く」ことに集中しましょう。
+      </p>
+    </div>
+  </section>
+</div>

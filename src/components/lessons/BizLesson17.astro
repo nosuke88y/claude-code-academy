@@ -1,0 +1,95 @@
+---
+// Biz Ch.5 Lesson 3: 会議アジェンダ・議事録テンプレ作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">会議アジェンダ・議事録テンプレートを自動生成しよう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      会議のたびにアジェンダや議事録のフォーマットを作るのは地味に手間がかかります。
+      このレッスンでは、Claude Codeにアジェンダ・議事録テンプレートを作ってもらい、さらにWebフォーム化して誰でも簡単に生成できるようにします。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">テンプレートを一度作れば、毎回の会議準備が数分で終わります。フォーム化すればチーム全員が使えるツールになります。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: テンプレートのHTMLを作る</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      まずは基本的なアジェンダ・議事録テンプレートをClaude Codeに作ってもらいましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">依頼例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <code class="text-[11px] text-gray-600 font-mono leading-relaxed block">会議のアジェンダと議事録テンプレートをHTMLで作って。<br>以下の欄を含めてほしい：<br>- 会議名<br>- 日時<br>- 参加者<br>- 議題（複数）<br>- 決定事項<br>- 次のアクション（担当者・期限付き）<br><br>見やすいデザインで、印刷にも対応してほしい。</code>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 テンプレート設計のコツ</p>
+      <p class="text-sm text-gray-700">「決定事項」と「次のアクション」は会議の成果を明確にする重要な欄です。担当者と期限を入れることで、会議後のフォローアップがスムーズになります。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: Webフォーム化する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      テンプレートができたら、入力フォーム付きのHTMLに進化させましょう。
+      フォームに情報を入力するだけで、アジェンダが自動生成されるようになります。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">依頼例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <code class="text-[11px] text-gray-600 font-mono leading-relaxed block">入力フォーム付きのHTMLを作って。<br>フォームに入力するとアジェンダが自動生成される仕組み。<br><br>入力項目：<br>- 会議名（テキスト入力）<br>- 日時（日付ピッカー）<br>- 参加者（カンマ区切りで入力）<br>- 議題（動的に追加できるようにして）<br><br>「生成」ボタンを押すと、下にプレビューが表示されて、<br>印刷ボタンも付けてほしい。</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: 実行して確認する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeが作成したHTMLファイルをブラウザで開いて動作確認しましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6 mb-4">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">HTMLファイルをブラウザで開く</h4><p class="text-xs text-gray-500 mt-0.5">ファイルをダブルクリック、またはブラウザにドラッグ&ドロップ</p></div>
+      </div>
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">フォームに情報を入力</h4><p class="text-xs text-gray-500 mt-0.5">会議名・日時・参加者・議題を入力して「生成」ボタンをクリック</p></div>
+      </div>
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">プレビューを確認</h4><p class="text-xs text-gray-500 mt-0.5">生成されたアジェンダが正しく表示されているか確認</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">4</div>
+        <div><h4 class="text-sm font-medium text-gray-900">印刷・共有</h4><p class="text-xs text-gray-500 mt-0.5">印刷ボタンで印刷、またはPDF保存してチームに共有</p></div>
+      </div>
+    </div>
+    <div class="bg-success-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-success-dark font-medium mb-1">✅ 成功の目安</p>
+      <p class="text-sm text-gray-700">フォームに入力→「生成」ボタンクリック→アジェンダがプレビュー表示→印刷できれば完成です。</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">さらに発展させるアイデア</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">アイデア 1: 議事録モードの追加</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「会議後に決定事項と次のアクションを入力できる議事録モードも追加して」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">アイデア 2: 過去データの保存</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「入力したデータをブラウザに保存して、過去の議事録を一覧表示できるようにして」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">アイデア 3: テンプレートの切り替え</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「定例会議用・ブレスト用・1on1用の3種類のテンプレートを選べるようにして」</p>
+      </div>
+    </div>
+  </section>
+</div>

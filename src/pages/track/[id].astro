@@ -2,45 +2,337 @@
 import Layout from '../../layouts/Layout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 
-interface TrackData {
+interface TrackConfig {
   title: string;
   sub: string;
+  storageKey: string;
+  chapters: { id: string; title: string; meta: string; totalLessons: number; lessons: { id: string; name: string; type: string }[] }[];
+  achievements: { id: string; icon: string; name: string; condition: string; chapterId: string }[];
 }
 
-export function getStaticPaths() {
-  const tracks: Record<string, TrackData> = {
-    business: { title: "ビジネス職コース", sub: "業務効率化 → ノーコード自動化まで" },
-    engineer: { title: "エンジニアコース", sub: "開発ワークフロー → CI/CD統合まで" },
-  };
+const trackConfigs: Record<string, TrackConfig> = {
+  business: {
+    title: "ビジネス職コース",
+    sub: "業務効率化 → ノーコード自動化まで · 5チャプター",
+    storageKey: "cca-progress-biz",
+    chapters: [
+      { id: "ch1", title: "Ch.1 — Claude Codeでできること", meta: "4レッスン · 約30分 · 読み物＋クイズ", totalLessons: 4, lessons: [
+        { id: "l1", name: "非エンジニアこそClaude Codeを使うべき理由", type: "読み物" },
+        { id: "l2", name: "実際の業務活用事例10選", type: "読み物" },
+        { id: "l3", name: "ビジネス職向けユースケースマップ", type: "インタラクティブ" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch2", title: "Ch.2 — 環境構築（簡易版）", meta: "3レッスン · 約20分 · Ch.1完了で解放", totalLessons: 3, lessons: [
+        { id: "l1", name: "インストール手順", type: "ハンズオン" },
+        { id: "l2", name: "最初の10分で試すハンズオン", type: "ハンズオン" },
+        { id: "l3", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch3", title: "Ch.3 — 資料作成・文書作業の自動化", meta: "4レッスン · 約45分 · Ch.2完了で解放", totalLessons: 4, lessons: [
+        { id: "l1", name: "議事録・報告書の自動生成", type: "ハンズオン" },
+        { id: "l2", name: "Excelデータ分析・グラフ作成依頼", type: "ハンズオン" },
+        { id: "l3", name: "プレゼン資料の構成作成", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch4", title: "Ch.4 — リサーチ・情報整理の効率化", meta: "3レッスン · 約30分 · Ch.3完了で解放", totalLessons: 3, lessons: [
+        { id: "l1", name: "競合調査・市場分析レポート作成", type: "ハンズオン" },
+        { id: "l2", name: "大量ドキュメントの要約・整理", type: "ハンズオン" },
+        { id: "l3", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch5", title: "Ch.5 — 実践演習：業務効率化ツール", meta: "4レッスン · 約60分 · Ch.4完了で解放", totalLessons: 4, lessons: [
+        { id: "l1", name: "業務フロー分析とツール設計", type: "読み物" },
+        { id: "l2", name: "日報自動生成ツール", type: "ハンズオン" },
+        { id: "l3", name: "会議アジェンダ・議事録テンプレ作成", type: "ハンズオン" },
+        { id: "l4", name: "最終演習", type: "プロジェクト" },
+      ]},
+    ],
+    achievements: [
+      { id: "biz-intro", icon: "💼", name: "ビジネス入門", condition: "Ch.1完了で解放", chapterId: "ch1" },
+      { id: "biz-env", icon: "🛠️", name: "環境構築完了", condition: "Ch.2完了で解放", chapterId: "ch2" },
+      { id: "biz-doc", icon: "📄", name: "資料作成マスター", condition: "Ch.3完了で解放", chapterId: "ch3" },
+      { id: "biz-research", icon: "🔍", name: "リサーチマスター", condition: "Ch.4完了で解放", chapterId: "ch4" },
+    ],
+  },
+  engineer: {
+    title: "エンジニアコース",
+    sub: "開発ワークフロー → CI/CD統合まで · 5チャプター",
+    storageKey: "cca-progress-eng",
+    chapters: [
+      { id: "ch1", title: "Ch.1 — Claude Codeをエンジニアが使うべき理由", meta: "3レッスン · 約25分 · 読み物＋クイズ", totalLessons: 3, lessons: [
+        { id: "l1", name: "既存ツールとの違い・優位性", type: "読み物" },
+        { id: "l2", name: "実際の開発フローへの組み込み方", type: "解説" },
+        { id: "l3", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch2", title: "Ch.2 — 高度なプロンプト設計", meta: "4レッスン · 約40分 · Ch.1完了で解放", totalLessons: 4, lessons: [
+        { id: "l1", name: "コンテキスト最適化の技法", type: "読み物" },
+        { id: "l2", name: "CLAUDE.mdによるプロジェクト設定", type: "ハンズオン" },
+        { id: "l3", name: "複雑な要件定義の伝え方", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch3", title: "Ch.3 — 実践的な開発ワークフロー", meta: "4レッスン · 約50分 · Ch.2完了で解放", totalLessons: 4, lessons: [
+        { id: "l1", name: "TDD（テスト駆動開発）とClaude Code", type: "ハンズオン" },
+        { id: "l2", name: "リファクタリング・コードレビュー依頼", type: "ハンズオン" },
+        { id: "l3", name: "デバッグの効率化", type: "ハンズオン" },
+        { id: "l4", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch4", title: "Ch.4 — チーム開発での活用", meta: "3レッスン · 約30分 · Ch.3完了で解放", totalLessons: 3, lessons: [
+        { id: "l1", name: "PR作成・レビューの自動化", type: "ハンズオン" },
+        { id: "l2", name: "ドキュメント自動生成", type: "ハンズオン" },
+        { id: "l3", name: "チェックテスト", type: "クイズ" },
+      ]},
+      { id: "ch5", title: "Ch.5 — 実��演習：本格アプリ開発", meta: "4レッスン · 約90分 · Ch.4完了で解放", totalLessons: 4, lessons: [
+        { id: "l1", name: "設計〜実装〜デプロイの一気通貫", type: "読み物" },
+        { id: "l2", name: "REST API開発", type: "ハンズオン" },
+        { id: "l3", name: "フロントエンド実装", type: "ハンズオン" },
+        { id: "l4", name: "最終演習", type: "プロジェクト" },
+      ]},
+    ],
+    achievements: [
+      { id: "eng-intro", icon: "⚡", name: "エンジニア入門", condition: "Ch.1完了で解放", chapterId: "ch1" },
+      { id: "eng-prompt", icon: "🧠", name: "プロンプトマスター", condition: "Ch.2完了で解放", chapterId: "ch2" },
+      { id: "eng-workflow", icon: "🔄", name: "ワークフローマスター", condition: "Ch.3完了で解放", chapterId: "ch3" },
+      { id: "eng-team", icon: "👥", name: "チーム開発マスター", condition: "Ch.4完了で解放", chapterId: "ch4" },
+    ],
+  },
+};
 
-  return Object.entries(tracks).map(([id, data]) => ({
-    params: { id },
-    props: { track: data },
-  }));
+export function getStaticPaths() {
+  return [{ params: { id: "business" } }, { params: { id: "engineer" } }];
 }
 
 const { id } = Astro.params;
-const { track } = Astro.props as { track: TrackData };
+const config = trackConfigs[id!];
+const prefix = id === 'business' ? 'biz' : 'eng';
+const days = ["月", "火", "水", "木", "金", "土", "日"];
 ---
 
-<Layout title={`${track.title} — Claude Code Academy`}>
+<Layout title={`${config.title} — Claude Code Academy`}>
   <Sidebar currentTrack={id!} currentPage="home" />
 
   <main class="ml-[260px] p-8 min-h-screen">
     <div class="flex items-center justify-between mb-7">
       <div>
-        <h1 class="text-[22px] font-semibold text-gray-900">{track.title}</h1>
-        <p class="text-sm text-gray-400 mt-1">{track.sub}</p>
+        <h1 class="text-[22px] font-semibold text-gray-900">{config.title}</h1>
+        <p class="text-sm text-gray-400 mt-1">{config.sub}</p>
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-center py-24">
-      <div class="text-6xl mb-6">🚧</div>
-      <h2 class="text-xl font-semibold text-gray-900 mb-2">コンテンツ準備中</h2>
-      <p class="text-sm text-gray-400 mb-6">「{track.title}」は現在制作中です。もうしばらくお待ちください。</p>
-      <a href="/" class="px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">
-        初心者コースに戻る
-      </a>
+    <!-- ステータスカード -->
+    <div class="grid grid-cols-4 gap-3.5 mb-7" id="stats-grid">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">チャプター</div>
+        <div class="text-lg font-semibold text-gray-900" id="stat-chapters">0 / {config.chapters.length}</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">レッスン</div>
+        <div class="text-lg font-semibold text-gray-900" id="stat-lessons">0 / {config.chapters.reduce((s, c) => s + c.totalLessons, 0)}</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">進捗</div>
+        <div class="text-lg font-semibold text-gray-900" id="stat-percent">0%</div>
+      </div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5">
+        <div class="text-xs text-gray-400 mb-0.5">連続学習</div>
+        <div class="text-lg font-semibold text-gray-900"><span id="stat-streak-fire" class="hidden">🔥</span><span id="stat-streak">0日</span></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-[1fr_320px] gap-5">
+      <!-- チャプター一覧 -->
+      <div id="chapter-list">
+        <div class="flex items-center justify-between mb-3.5">
+          <div class="text-[15px] font-semibold text-gray-900">チャプター一覧</div>
+        </div>
+        {config.chapters.map((ch, idx) => (
+          <div class="bg-white rounded-[10px] border border-base-border mb-2.5 overflow-hidden transition-all hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)]" data-chapter={ch.id} data-total={ch.totalLessons} data-index={idx}>
+            <div class="flex items-center gap-3 px-4 py-3.5 cursor-pointer chapter-toggle">
+              <div class="w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-base-muted">🔒</div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-gray-900 truncate">{ch.title}</div>
+                <div class="text-xs text-gray-400 mt-0.5 ch-meta">{ch.meta}</div>
+              </div>
+              <span class="text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-base-muted text-gray-400">未開放</span>
+            </div>
+            <div class="h-[3px] bg-base-bar mx-4">
+              <div class="h-[3px] rounded-sm bg-gradient-to-r from-primary to-primary-light transition-[width] duration-400 ch-progress" style="width:0%"></div>
+            </div>
+            {ch.lessons.length > 0 && (
+              <div class="px-4 pt-1 pb-3.5 border-t border-base-bar lessons-list hidden">
+                {ch.lessons.map((lesson) => (
+                  <div class="flex items-center gap-2.5 py-2 border-b border-base-bg last:border-b-0" data-lesson={lesson.id}>
+                    <div class="w-5 h-5 rounded-full bg-base-bar border-[1.5px] border-gray-300 shrink-0 lesson-dot"></div>
+                    <span class="text-[13px] flex-1 text-gray-900">{lesson.name}</span>
+                    <a href={`/lesson/${prefix}-${ch.id}-${lesson.id}`} class="px-2.5 py-1 bg-primary-bg text-primary border-none rounded-md text-[11px] font-medium cursor-pointer whitespace-nowrap hover:bg-primary-pale no-underline lesson-action">開始</a>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <!-- 右パネル -->
+      <div>
+        <div class="bg-white rounded-[10px] border border-base-border p-4 mb-3">
+          <div class="text-xs text-gray-400 mb-1.5">現在のステータス</div>
+          <div class="text-sm font-semibold text-gray-900 mb-1" id="status-title">学習を始めましょう！</div>
+          <div class="text-xs text-gray-400 mb-3" id="status-desc">{config.title}で{id === 'business' ? '業務効率化' : '開発速度10倍'}を目指しましょう。</div>
+          <a id="status-btn" href={`/lesson/${prefix}-ch1-l1`} class="block w-full py-2.5 bg-primary text-white rounded-lg text-sm font-medium text-center no-underline hover:bg-primary-dark transition-colors">▶ Ch.1 を始める</a>
+        </div>
+        <div class="bg-gradient-to-br from-primary-bg to-white rounded-[10px] border border-primary-border p-4 mb-3">
+          <div class="text-xs text-gray-400 mb-1">連続学習ストリーク</div>
+          <div class="text-xl font-bold text-primary mb-2" id="streak-num">0日</div>
+          <div class="flex gap-1.5">
+            {days.map((day) => (
+              <div class="w-7 h-7 rounded-full bg-white border border-base-border flex items-center justify-center text-[10px] text-gray-400">{day}</div>
+            ))}
+          </div>
+        </div>
+        <div class="bg-white rounded-[10px] border border-base-border p-4">
+          <div class="text-xs text-gray-400 mb-2.5">実績・バッジ</div>
+          <div class="space-y-2.5">
+            {config.achievements.map((ach) => (
+              <div class="flex items-center gap-2.5" data-ach={ach.chapterId}>
+                <div class="w-8 h-8 rounded-lg bg-base-muted flex items-center justify-center text-sm">{ach.icon}</div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-medium text-gray-900">{ach.name}</div>
+                  <div class="text-[11px] text-gray-400 ach-note">{ach.condition}</div>
+                  <div class="h-[3px] bg-base-bar rounded-sm mt-1 ach-bar"><div class="h-[3px] bg-primary rounded-sm" style="width:0%"></div></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </Layout>
+
+<script define:vars={{ storageKey: config.storageKey, chapterData: config.chapters.map(c => ({ id: c.id, total: c.totalLessons })), trackPrefix: prefix, chapterNames: Object.fromEntries(config.chapters.map(c => [c.id, c.title.replace(/^Ch\.\d+ — /, '')])) }}>
+  const CH_ORDER = chapterData.map(c => c.id);
+  const COURSE = Object.fromEntries(chapterData.map(c => [c.id, { total: c.total }]));
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null };
+      return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null, ...JSON.parse(raw) };
+    } catch { return { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null }; }
+  }
+
+  function chCompleted(data, chId) {
+    const ch = data.chapters[chId];
+    if (!ch) return 0;
+    return Object.values(ch.lessons || {}).filter(l => l.completed).length;
+  }
+
+  function isChDone(data, chId) {
+    return chCompleted(data, chId) >= (COURSE[chId]?.total || 999);
+  }
+
+  function updateUI() {
+    const data = load();
+    let totalDone = 0, chapDone = 0;
+    const totalLessons = Object.values(COURSE).reduce((s, c) => s + c.total, 0);
+
+    CH_ORDER.forEach((chId, idx) => {
+      const card = document.querySelector(`[data-chapter="${chId}"]`);
+      if (!card) return;
+      const done = chCompleted(data, chId);
+      totalDone += done;
+      const total = COURSE[chId].total;
+      const completed = done >= total;
+      if (completed) chapDone++;
+      const prevDone = idx === 0 || isChDone(data, CH_ORDER[idx - 1]);
+      const unlocked = idx === 0 || prevDone;
+      const icon = card.querySelector('.ch-icon');
+      const badge = card.querySelector('.ch-badge');
+      const progress = card.querySelector('.ch-progress');
+
+      if (completed) {
+        icon.textContent = '✅'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-success-bg';
+        badge.textContent = '完了'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-success-bg text-success-dark';
+        card.className = card.className.replace('opacity-70', '');
+      } else if (unlocked) {
+        icon.textContent = '📘'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-primary-bg';
+        badge.textContent = done > 0 ? '進行中' : '未着手'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-primary-bg text-primary';
+        card.className = card.className.replace('opacity-70', '');
+      } else {
+        icon.textContent = '🔒'; icon.className = 'w-[38px] h-[38px] rounded-[9px] flex items-center justify-center text-lg shrink-0 ch-icon bg-base-muted';
+        badge.textContent = '未開放'; badge.className = 'text-[11px] px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap ch-badge bg-base-muted text-gray-400';
+        if (!card.className.includes('opacity-70')) card.className += ' opacity-70';
+      }
+
+      progress.style.width = total > 0 ? `${Math.round(done / total * 100)}%` : '0%';
+
+      card.querySelectorAll('[data-lesson]').forEach(row => {
+        const lid = row.dataset.lesson;
+        const isDone = !!data.chapters[chId]?.lessons?.[lid]?.completed;
+        const dot = row.querySelector('.lesson-dot');
+        if (isDone) {
+          dot.className = 'w-5 h-5 rounded-full bg-success flex items-center justify-center shrink-0 lesson-dot';
+          dot.innerHTML = '<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>';
+        }
+      });
+    });
+
+    const pct = totalLessons > 0 ? Math.round(totalDone / totalLessons * 100) : 0;
+    document.getElementById('stat-chapters').textContent = `${chapDone} / ${CH_ORDER.length}`;
+    document.getElementById('stat-lessons').textContent = `${totalDone} / ${totalLessons}`;
+    document.getElementById('stat-percent').textContent = `${pct}%`;
+    document.getElementById('stat-streak').textContent = `${data.streak}日`;
+    const fire = document.getElementById('stat-streak-fire');
+    if (data.streak > 0) fire.classList.remove('hidden'); else fire.classList.add('hidden');
+
+    // 右パネル
+    const statusTitle = document.getElementById('status-title');
+    const statusDesc = document.getElementById('status-desc');
+    const statusBtn = document.getElementById('status-btn');
+    const chTotals = Object.fromEntries(chapterData.map(c => [c.id, c.total]));
+    const firstLessons = Object.fromEntries(chapterData.map(c => [c.id, `${trackPrefix}-${c.id}-l1`]));
+
+    let currentCh = null;
+    for (const ch of CH_ORDER) { if (!isChDone(data, ch)) { currentCh = ch; break; } }
+
+    if (!currentCh && chapDone === CH_ORDER.length) {
+      statusTitle.textContent = '全チャプター完了！ 🎓';
+      statusDesc.textContent = 'おめでとうございます！コースをすべてクリアしました。';
+      statusBtn.textContent = '🎉 コースを振り返る';
+      statusBtn.href = `/track/${trackPrefix === 'biz' ? 'business' : 'engineer'}`;
+    } else if (currentCh) {
+      const done = chCompleted(data, currentCh);
+      if (done > 0) {
+        statusTitle.textContent = `${currentCh.replace('ch', 'Ch.')} — ${done}/${chTotals[currentCh]} レッスン完了`;
+        statusDesc.textContent = `「${chapterNames[currentCh]}」を進めましょう。`;
+        statusBtn.textContent = '▶ 続きを学習する';
+      } else {
+        statusTitle.textContent = currentCh === 'ch1' ? '学習を始めましょう！' : `${CH_ORDER[CH_ORDER.indexOf(currentCh) - 1].replace('ch', 'Ch.')} 完了！ 🎉`;
+        statusBtn.textContent = `▶ ${currentCh.replace('ch', 'Ch.')} を始める`;
+      }
+      statusBtn.href = `/lesson/${firstLessons[currentCh]}`;
+    }
+
+    document.getElementById('streak-num').textContent = data.streak > 0 ? `🔥 ${data.streak}日` : '0日';
+
+    document.querySelectorAll('[data-ach]').forEach(el => {
+      const chId = el.dataset.ach;
+      if (isChDone(data, chId)) {
+        el.querySelector('.ach-note').textContent = '解放済み';
+        el.querySelector('.ach-note').className = 'text-[11px] text-success font-medium ach-note';
+        const bar = el.querySelector('.ach-bar');
+        if (bar) bar.classList.add('hidden');
+      }
+    });
+  }
+
+  document.querySelectorAll('.chapter-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const card = toggle.closest('[data-chapter]');
+      const list = card?.querySelector('.lessons-list');
+      if (!list) return;
+      document.querySelectorAll('.lessons-list').forEach(l => { if (l !== list) l.classList.add('hidden'); });
+      list.classList.toggle('hidden');
+    });
+  });
+
+  updateUI();
+</script>

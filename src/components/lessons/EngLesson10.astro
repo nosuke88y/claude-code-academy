@@ -1,0 +1,154 @@
+---
+// Eng Ch.3 Lesson 3: デバッグの効率化
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">デバッグの体系的アプローチ</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeのデバッグ能力は、エラーログの解析だけではない。
+      プロジェクト全体をGrepで検索し、関連コードを読み、仮説を立てて検証する
+      ――体系的なデバッグプロセスを自動実行できる。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン1: エラーログからの自動修正</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-3">
+      最もシンプルなパターン。エラーログを貼り付けるだけ。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-3">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> このエラーの原因を特定して修正して:
+
+TypeError: Cannot read properties of undefined (reading 'map')
+    at UserList (src/components/UserList.tsx:23:18)
+    at renderWithHooks (node_modules/react-dom/...)
+    at mountIndeterminateComponent (node_modules/react-dom/...)</code>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-4">
+      <p class="text-xs text-gray-500 mb-2">Claude Codeの動作:</p>
+      <div class="space-y-1 text-xs text-gray-600">
+        <p>1. スタックトレースからUserList.tsx:23を特定</p>
+        <p>2. ファイルを読み、23行目の.map()呼び出しを確認</p>
+        <p>3. データの取得元を追跡（API呼び出し、props、state）</p>
+        <p>4. undefinedになるケースを特定し修正を適用</p>
+        <p>5. 必要に応じてOptional ChainingやNullチェックを追加</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン2: 再現手順の特定</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-3">
+      バグの報告はあるが再現方法がわからない場合。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-3">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「ユーザーから"ログイン後にダッシュボードが表示されない"と報告あり。
+>  1. 認証フローのコードを追跡して再現条件を特定して
+>  2. 最小の再現コード（テストケース）を作って
+>  3. 原因を修正して
+>  4. リグレッションテストを追加して」</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">仮説 → 検証 → 修正</p>
+      <p class="text-sm text-gray-700">Claude Codeは自分で仮説を立て、Grepでコードを検索し、Read/Bashで検証する。人間と同じデバッグプロセスを自律的に実行する。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン3: パフォーマンス問題の特定</h2>
+    <div class="bg-gray-900 rounded-lg p-4 mb-3">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「GET /api/users のレスポンスが5秒以上かかっている。
+>  プロファイリング結果:
+>  - DB Query: 3.2s (getUsersWithPosts)
+>  - Serialization: 1.5s
+>  - Network: 0.3s
+>
+>  DBクエリとシリアライゼーションの最適化案を出して実装して」</code>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <h3 class="text-sm font-semibold text-gray-900 mb-2">よくある原因と対策</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="text-left p-2 border border-base-border font-semibold text-gray-700">原因</th>
+              <th class="text-left p-2 border border-base-border font-semibold text-gray-700">依頼例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border border-base-border text-gray-600">N+1クエリ</td>
+              <td class="p-2 border border-base-border text-gray-600">「includeでJOINに変換して」</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="p-2 border border-base-border text-gray-600">不要なデータ取得</td>
+              <td class="p-2 border border-base-border text-gray-600">「selectで必要なカラムだけ取得して」</td>
+            </tr>
+            <tr>
+              <td class="p-2 border border-base-border text-gray-600">インデックス不足</td>
+              <td class="p-2 border border-base-border text-gray-600">「EXPLAINの結果を分析して必要なインデックスを追加して」</td>
+            </tr>
+            <tr class="bg-gray-50">
+              <td class="p-2 border border-base-border text-gray-600">再レンダリング</td>
+              <td class="p-2 border border-base-border text-gray-600">「React.memo / useMemo / useCallbackの適用箇所を特定して」</td>
+            </tr>
+            <tr>
+              <td class="p-2 border border-base-border text-gray-600">バンドルサイズ</td>
+              <td class="p-2 border border-base-border text-gray-600">「bundle analyzerの結果を分析してtree-shakingを改善して」</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">パターン4: CI/CDの失敗調査</h2>
+    <div class="bg-gray-900 rounded-lg p-4 mb-3">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「CIでこのテストが失敗している。ローカルでは通る。
+>  CI環境: Ubuntu 22.04, Node 20, PostgreSQL 15
+>  ローカル: macOS, Node 20, PostgreSQL 16
+>
+>  環境差分による失敗原因を調査して修正して」</code>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">効果的なデバッグ依頼のコツ</h2>
+    <div class="space-y-2">
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">1.</span>
+          <div><strong>エラーログは全文貼る:</strong> スタックトレースを省略しない。全文があるほど原因特定が速い。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">2.</span>
+          <div><strong>再現条件を伝える:</strong> 「いつ」「どの操作で」「どの環境で」起きるかを明記。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">3.</span>
+          <div><strong>期待する動作を伝える:</strong> 「何が起きるか」だけでなく「何が起きるべきか」も伝える。</div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-4">
+        <div class="flex items-start gap-2 text-xs text-gray-600">
+          <span class="text-primary font-bold mt-0.5">4.</span>
+          <div><strong>修正後の検証も依頼する:</strong> 「修正して、テストを実行して、リグレッションがないことを確認して」まで。</div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mt-3">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeに情報を多く渡すほど、デバッグ精度が上がる。エラーログ + 再現手順 + 環境情報の3点セットが理想的。</p>
+    </div>
+  </section>
+</div>

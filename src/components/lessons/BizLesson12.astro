@@ -1,0 +1,112 @@
+---
+// Biz Ch.4 Lesson 1: 競合調査・市場分析レポート作成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Claude Codeで競合調査レポートを作ろう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      ビジネスの意思決定に欠かせない競合調査・市場分析。Claude Codeを使えば、情報の収集・整理・レポート化までを効率的に行えます。
+      このレッスンでは、分析フレームワーク（3C分析・SWOT分析）を活用したレポート作成を実践します。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeに依頼するとき「分析フレームワーク」を指定すると、情報が体系的に整理されます。漠然と「調べて」ではなく「3C分析で整理して」と伝えるのがコツです。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">分析フレームワークとは？</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      分析フレームワークとは、情報を整理するための「型（テンプレート）」です。決まった視点で整理することで、抜け漏れなく分析できます。
+    </p>
+    <div class="space-y-3 mb-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">📊</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">3C分析</h3>
+            <span class="text-[10px] text-gray-400">Company（自社）・Customer（顧客）・Competitor（競合）</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">自社・顧客・競合の3つの視点で市場環境を整理するフレームワーク。事業戦略の基本として広く使われます。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-lg">🔄</div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900">SWOT分析</h3>
+            <span class="text-[10px] text-gray-400">Strengths（強み）・Weaknesses（弱み）・Opportunities（機会）・Threats（脅威）</span>
+          </div>
+        </div>
+        <p class="text-xs text-gray-600">内部環境（強み・弱み）と外部環境（機会・脅威）を4象限で整理。戦略立案の定番フレームワークです。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: 競合情報を整理してもらう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      まずは手元にある競合情報をClaude Codeに渡して、フレームワークで整理してもらいましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">依頼例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <code class="text-[11px] text-gray-600 font-mono leading-relaxed block">以下の競合3社の情報を整理して、SWOT分析のフレームワークでまとめて。<br>出力はHTMLテーブル形式で、見やすく色分けしてほしい。<br><br>■ A社: クラウド会計ソフト、シェア1位、月額2,980円、サポート遅い<br>■ B社: オンプレ型、大企業向け、高機能、月額19,800円<br>■ C社: 新興、AI機能搭載、月額1,480円、知名度低い</code>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 依頼のコツ</p>
+      <p class="text-sm text-gray-700">「フレームワークの名前」と「出力形式（HTML等）」を明記すると、Claude Codeが的確に構造化してくれます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: 3C分析で深掘りする</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      SWOT分析の結果を踏まえて、3C分析で市場全体の構造を把握しましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">依頼例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <code class="text-[11px] text-gray-600 font-mono leading-relaxed block">先ほどのSWOT分析結果をもとに、3C分析もまとめて。<br>自社の強み: 使いやすいUI、中小企業特化<br>顧客: 従業員50名以下の中小企業<br><br>HTMLレポートに追記して、目次付きの1ページにまとめて。</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: レポートを仕上げる</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeが出力したHTMLレポートをブラウザで開いて、内容を確認・修正しましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6 mb-4">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+        <div><h4 class="text-sm font-medium text-gray-900">HTMLファイルを確認</h4><p class="text-xs text-gray-500 mt-0.5">ブラウザで開いてレイアウトやデータを確認します</p></div>
+      </div>
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+        <div><h4 class="text-sm font-medium text-gray-900">修正を依頼</h4><p class="text-xs text-gray-500 mt-0.5">「A社の売上情報を追加して」「グラフも入れて」など、追加の指示を出します</p></div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+        <div><h4 class="text-sm font-medium text-gray-900">最終版を共有</h4><p class="text-xs text-gray-500 mt-0.5">完成したレポートをチームに共有しましょう</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">調査→構造化→レポート化の流れ</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📝</div><div class="text-xs font-medium text-gray-900">情報を渡す</div><div class="text-[10px] text-gray-400 mt-0.5">手元の生データ</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">🔍</div><div class="text-xs font-medium text-gray-900">構造化する</div><div class="text-[10px] text-gray-400 mt-0.5">フレームワーク適用</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📊</div><div class="text-xs font-medium text-gray-900">レポート化</div><div class="text-[10px] text-gray-400 mt-0.5">HTML出力</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">✅</div><div class="text-xs font-medium text-gray-900">確認・修正</div><div class="text-[10px] text-gray-400 mt-0.5">ブラウザで確認</div></div>
+      </div>
+    </div>
+  </section>
+</div>

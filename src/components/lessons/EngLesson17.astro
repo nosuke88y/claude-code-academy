@@ -1,0 +1,225 @@
+---
+// Eng Ch.5 Lesson 3: フロントエンド実装ハンズオン
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">フロントエンド実装ハンズオン</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      前のレッスンで作ったREST APIに接続するReact + Tailwind CSSのフロントエンドを構築する。
+      コンポーネント設計からAPI接続・状態管理まで、Claude Codeへの効果的な依頼方法を見ていこう。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">このレッスンのゴール</p>
+      <p class="text-sm text-gray-700">ユーザー一覧・詳細・作成・編集画面を持つSPAをClaude Codeで構築する手順を習得する</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 1: プロジェクト初期化とコンポーネント設計</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Vite + React + TypeScript + Tailwind CSSの構成で初期化し、コンポーネントツリーを設計させる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> 先ほどのユーザー管理APIに接続するReactフロントを作って。
+
+  技術スタック:
+  - Vite + React + TypeScript
+  - Tailwind CSS v4
+  - React Router v7
+  - fetch API（axios不要）
+
+  画面構成:
+  - /users       : ユーザー一覧（検索・フィルタ・ページネーション）
+  - /users/:id   : ユーザー詳細
+  - /users/new   : ユーザー作成フォーム
+  - /users/:id/edit : ユーザー編集フォーム
+
+  まずプロジェクト初期化とコンポーネント構成を作って。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm font-semibold text-gray-900 mb-2">コンポーネント構成</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-gray-700 font-mono whitespace-pre-wrap">src/
+├── components/
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   └── Layout.tsx
+│   ├── users/
+│   │   ├── UserList.tsx        # 一覧テーブル
+│   │   ├── UserDetail.tsx      # 詳細表示
+│   │   ├── UserForm.tsx        # 作成/編集フォーム（共用）
+│   │   ├── UserSearch.tsx      # 検索バー
+│   │   └── UserPagination.tsx  # ページネーション
+│   └── ui/
+│       ├── Button.tsx
+│       ├── Input.tsx
+│       ├── Select.tsx
+│       └── Alert.tsx
+├── hooks/
+│   ├── useUsers.ts             # ユーザーCRUD操作
+│   └── usePagination.ts
+├── lib/
+│   └── api.ts                  # APIクライアント
+├── types/
+│   └── user.ts                 # 型定義
+├── pages/
+│   ├── UsersPage.tsx
+│   ├── UserDetailPage.tsx
+│   └── UserFormPage.tsx
+└── App.tsx</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 2: コンポーネント設計の依頼方法</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      コンポーネントの責務と入出力（props）を明示して依頼すると、再利用性の高いコンポーネントが生成される。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例: 共用フォームコンポーネント</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> UserForm コンポーネントを作って。作成と編集で共用する。
+
+  Props:
+  - initialData?: User（編集時のみ）
+  - onSubmit: (data: UserInput) => Promise&lt;void&gt;
+  - isLoading: boolean
+
+  仕様:
+  - name, email, role のフォームフィールド
+  - クライアントサイドバリデーション（zodと共用）
+  - フィールドごとのエラーメッセージ表示
+  - 送信中はボタンをdisabledに
+  - Tailwind CSSでスタイリング</pre>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">コツ: Props型を先に伝える</p>
+      <p class="text-sm text-gray-700">Propsの型定義を先に伝えることで、コンポーネント間のインターフェースが明確になり、後から結合したときに型エラーが起きにくい。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 3: APIクライアントの実装</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      API接続用の共通クライアントとカスタムフックを作らせる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> API接続用のクライアントとカスタムフックを作って。
+
+  lib/api.ts:
+  - ベースURL設定（環境変数から取得）
+  - 共通のfetchラッパー（JSON変換、エラーハンドリング）
+  - リクエスト/レスポンスの型安全性
+
+  hooks/useUsers.ts:
+  - useUsers(): 一覧取得（フィルタ・ページネーション対応）
+  - useUser(id): 詳細取得
+  - useCreateUser(): 作成ミューテーション
+  - useUpdateUser(): 更新ミューテーション
+  - useDeleteUser(): 削除ミューテーション
+  - loading, error 状態も管理</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-2">APIクライアントの例</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">// src/lib/api.ts
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+class ApiError extends Error {
+  constructor(public status: number, public code: string, message: string) {
+    super(message);
+  }
+}
+
+async function fetchApi&lt;T&gt;(path: string, options?: RequestInit): Promise&lt;T&gt; {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options?.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new ApiError(res.status, body.error?.code ?? 'UNKNOWN', body.error?.message ?? 'エラーが発生しました');
+  }
+
+  return res.json();
+}
+
+export const api = {
+  get: &lt;T&gt;(path: string) => fetchApi&lt;T&gt;(path),
+  post: &lt;T&gt;(path: string, data: unknown) => fetchApi&lt;T&gt;(path, { method: 'POST', body: JSON.stringify(data) }),
+  patch: &lt;T&gt;(path: string, data: unknown) => fetchApi&lt;T&gt;(path, { method: 'PATCH', body: JSON.stringify(data) }),
+  delete: (path: string) => fetchApi(path, { method: 'DELETE' }),
+};</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 4: 状態管理の実装</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      このスケールのアプリならReactの組み込み機能（useState + useReducer + Context）で十分。
+      外部ライブラリが必要になるタイミングも押さえておこう。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> ユーザー一覧画面の状態管理を実装して。
+  管理する状態:
+  - users: User[]（一覧データ）
+  - filters: { role?, name? }（フィルタ条件）
+  - pagination: { page, limit, total }
+  - loading, error
+
+  URLのクエリパラメータとフィルタ・ページを同期させて。
+  React Router の useSearchParams を使って。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-3">状態管理ライブラリの選定基準</p>
+      <div class="space-y-2">
+        <div class="flex items-start gap-3">
+          <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-medium shrink-0">今回</span>
+          <p class="text-xs text-gray-600"><strong>useState + useSearchParams</strong> -- CRUD画面程度なら十分。依存なし。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-medium shrink-0">中規模</span>
+          <p class="text-xs text-gray-600"><strong>TanStack Query</strong> -- サーバー状態の管理（キャッシュ・再取得・楽観的更新）が必要な場合。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-medium shrink-0">大規模</span>
+          <p class="text-xs text-gray-600"><strong>Zustand / Jotai</strong> -- グローバル状態が複雑化してきた場合。Reduxより軽量。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 5: 画面を結合して完成</h2>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> 全コンポーネントをReact Routerで結合して。
+  - レイアウト（ヘッダー + サイドバー）
+  - ルーティング設定
+  - 画面遷移時のローディング表示
+  - エラー時のフォールバックUI
+  - CORSの設定もバックエンド側に追加して
+
+  完成したらdev serverを起動して動作確認して。</pre>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">フロントエンド依頼のまとめ</p>
+      <ul class="text-sm text-gray-700 space-y-1 list-disc list-inside">
+        <li>コンポーネントのProps型を先に定義して依頼する</li>
+        <li>UIライブラリの指定（Tailwind等）で見た目のブレを防ぐ</li>
+        <li>APIクライアントは共通化して型安全にする</li>
+        <li>状態管理はアプリの規模に合わせて選定する</li>
+        <li>バックエンドと同一セッションで作ると、API仕様の不整合が起きにくい</li>
+      </ul>
+    </div>
+  </section>
+</div>

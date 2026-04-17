@@ -1,0 +1,142 @@
+---
+// Eng Ch.2 Lesson 3: 複雑な要件定義の伝え方
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">要件を構造化して伝える</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      曖昧な指示は曖昧な出力を生む。
+      Claude Codeのポテンシャルを引き出すには、要件を構造化して伝えるスキルが不可欠。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">プロンプト構造: 4段階フレームワーク</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</div>
+          <h3 class="text-sm font-semibold text-gray-900">背景（Context）</h3>
+        </div>
+        <p class="text-xs text-gray-600">なぜこの作業が必要なのか。既存の状態はどうなっているか。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">2</div>
+          <h3 class="text-sm font-semibold text-gray-900">要件（Requirements）</h3>
+        </div>
+        <p class="text-xs text-gray-600">何を実現したいのか。具体的な機能・振る舞いを列挙。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">3</div>
+          <h3 class="text-sm font-semibold text-gray-900">制約（Constraints）</h3>
+        </div>
+        <p class="text-xs text-gray-600">技術的制約、互換性、パフォーマンス要件、セキュリティ要件。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">4</div>
+          <h3 class="text-sm font-semibold text-gray-900">出力形式（Output Format）</h3>
+        </div>
+        <p class="text-xs text-gray-600">どのファイルに書くか、テストは必要か、ドキュメントは必要か。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践例: 曖昧な指示 → 構造化された指示</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <p class="text-xs text-red-500 font-medium mb-2">NG: 曖昧な指示</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono">「認証機能付きREST APIを作って」</code>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-2">何の認証？どのエンドポイント？レスポンス形式は？テストは？</p>
+      </div>
+      <div class="bg-white rounded-xl border border-green-200 p-5">
+        <p class="text-xs text-green-600 font-medium mb-2">OK: 構造化された指示</p>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+[背景]
+既存のNext.jsプロジェクトにユーザー認証APIを追加する。
+現在はNextAuth.jsでGoogleログインのみ対応。
+APIキー認証を追加して外部サービスからのアクセスに対応したい。
+
+[要件]
+1. APIキーの発行エンドポイント: POST /api/keys
+2. APIキーの一覧取得: GET /api/keys
+3. APIキーの無効化: DELETE /api/keys/:id
+4. APIキー認証ミドルウェア: X-API-Keyヘッダーで検証
+5. レート制限: 1分あたり60リクエスト
+
+[制約]
+- 既存のNextAuth.jsセッション認証と共存させる
+- APIキーはハッシュ化してDBに保存（平文保存禁止）
+- Prismaスキーマに ApiKey モデルを追加
+- エラーレスポンスはRFC 7807形式
+
+[出力]
+- src/server/api/keys/ 配下に実装
+- 全エンドポイントにVitest テスト
+- API仕様をOpenAPI 3.0形式でドキュメント化</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">plan modeの活用</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      大きなタスクはいきなり実装させず、<code class="text-xs bg-gray-100 px-1 rounded">/plan</code>で設計を先に確認する。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> /plan 上記の要件でAPIキー認証を実装したい。
+> 1. 影響するファイルの一覧
+> 2. 実装の順序
+> 3. 注意すべきポイント
+> を整理して。</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">plan → review → execute</p>
+      <p class="text-sm text-gray-700">計画を確認してからGoサインを出す。手戻りを最小化できる。</p>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">大きなタスクのチャンク分割戦略</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      1回のプロンプトで全てをやらせるより、段階的に進める方が品質が高い。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="space-y-3 text-xs text-gray-600">
+        <div class="flex items-start gap-2">
+          <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">Step 1</span>
+          <div>「まずPrismaスキーマにApiKeyモデルを追加して、マイグレーションを実行して」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">Step 2</span>
+          <div>「APIキーの発行・一覧・無効化のCRUDエンドポイントを実装して」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">Step 3</span>
+          <div>「APIキー認証ミドルウェアを作って、既存のエンドポイントに適用して」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">Step 4</span>
+          <div>「レート制限を実装して。Redis使用、1分60リクエスト」</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5">Step 5</span>
+          <div>「全エンドポイントのテストを書いて実行して」</div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5 mt-3">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">各Stepの完了を確認してから次に進む。問題があれば早期に修正でき、手戻りが少ない。</p>
+    </div>
+  </section>
+</div>

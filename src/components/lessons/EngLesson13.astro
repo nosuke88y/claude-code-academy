@@ -1,0 +1,184 @@
+---
+// Eng Ch.4 Lesson 2: ドキュメント自動生成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ドキュメント自動生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      コードは書いたがドキュメントは放置 -- よくある話だ。
+      Claude Codeなら既存のコードベースからAPI仕様書・README・JSDoc・CHANGELOGを一括生成できる。
+      「コードが仕様書」を現実にしよう。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">1. OpenAPI仕様書の自動生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Expressサーバーのルーティングやコントローラーから、OpenAPI 3.0仕様を自動抽出させる。
+      手動でYAMLを書く必要はない。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このExpressサーバーの全エンドポイントからOpenAPI 3.0仕様書を生成して。
+  以下を含めて:
+  - パスパラメータ・クエリパラメータの型定義
+  - リクエスト/レスポンスボディのスキーマ
+  - エラーレスポンス（400, 401, 404, 500）
+  - 認証方式（Bearer token）
+  openapi.yaml として出力して。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-2">生成例（一部抜粋）</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">openapi: 3.0.3
+info:
+  title: User Management API
+  version: 1.0.0
+paths:
+  /api/users:
+    get:
+      summary: ユーザー一覧取得
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'</pre>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">Tips</p>
+      <p class="text-sm text-gray-700">生成後に <code class="text-xs bg-white px-1.5 py-0.5 rounded">「このopenapi.yamlをSwagger UIで確認できるようにdocker-compose.ymlを追加して」</code> と追加依頼すると、ドキュメントの閲覧環境まで一気に構築できる。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">2. README自動生成・更新</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      プロジェクト構造・依存関係・セットアップ手順をコードから自動で読み取ってREADMEを生成する。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このプロジェクトのREADME.mdを生成して。以下の構成で:
+  - プロジェクト概要
+  - 技術スタック
+  - セットアップ手順（前提条件含む）
+  - 環境変数の説明
+  - 開発コマンド一覧
+  - ディレクトリ構造
+  - API概要（主要エンドポイント）
+  - コントリビューションガイド</pre>
+    </div>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">既存READMEの更新</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> README.mdを最新のコードに合わせて更新して。
+  新しく追加されたAPI、変更された環境変数、
+  廃止されたコマンドがあれば反映して。</pre>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">3. JSDoc / TSDocの一括追加</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      既存のコードに型情報やドキュメントコメントを一括で追加させる。
+      IDE上での補完やホバー情報が格段に改善される。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> src/services/ 配下の全ファイルにTSDocコメントを追加して。
+  - 全てのpublicメソッドに @param, @returns, @throws を記載
+  - 非自明なロジックには @remarks で補足
+  - @example でコード例も1つ付けて</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-2">Before → After</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <p class="text-xs text-gray-400 mb-1">Before: コメントなし</p>
+          <div class="bg-gray-900 rounded-lg px-3 py-2">
+            <code class="text-xs text-green-400 font-mono block">findUser(id, opts) → db.user.findUnique</code>
+            <code class="text-xs text-gray-500 font-mono block">ドキュメントなし、引数の型不明</code>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 mb-1">After: JSDoc付き</p>
+          <div class="bg-gray-900 rounded-lg px-3 py-2">
+            <code class="text-xs text-green-400 font-mono block">/** IDでユーザーを取得する</code>
+            <code class="text-xs text-green-400 font-mono block"> * @param id - ユーザーID</code>
+            <code class="text-xs text-green-400 font-mono block"> * @returns ユーザーオブジェクト</code>
+            <code class="text-xs text-green-400 font-mono block"> * @throws NotFoundError */</code>
+            <code class="text-xs text-green-400 font-mono block">findUser(id, opts)</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">4. CHANGELOG自動生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      コミット履歴からCHANGELOGを自動生成する。
+      <a href="https://keepachangelog.com/" class="text-primary underline" target="_blank" rel="noopener">Keep a Changelog</a>形式に準拠させることもできる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> 最近のコミット（v1.2.0以降）からCHANGELOG.mdを生成して。
+  Keep a Changelog形式で。
+  カテゴリ: Added, Changed, Fixed, Removed
+  各項目は利用者視点で書いて（実装詳細ではなく）。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-2">生成例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-gray-700 font-mono whitespace-pre-wrap">## [1.3.0] - 2026-04-16
+
+### Added
+- ユーザー検索でメールアドレスによる部分一致検索に対応
+- APIレスポンスにページネーション情報を追加
+
+### Changed
+- ログインのレート制限を5回/分から10回/分に緩和
+
+### Fixed
+- トークンリフレッシュ時にセッションが切れる問題を修正
+- 日本語ユーザー名でのバリデーションエラーを修正</pre>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">活用パターン</p>
+      <p class="text-sm text-gray-700">リリース前のルーティンとして <code class="text-xs bg-white px-1.5 py-0.5 rounded">「前回リリースからのCHANGELOGを更新して、git tagを打って」</code> まで一気に依頼できる。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">まとめ: ドキュメントをコードと同期させる</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">1</span>
+          <p class="text-sm text-gray-700"><strong>OpenAPI仕様書</strong> -- コードからAPIドキュメントを自動生成。Swagger UIで即確認。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">2</span>
+          <p class="text-sm text-gray-700"><strong>README</strong> -- プロジェクト構造とコードから自動生成。新メンバーのオンボーディングが加速。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">3</span>
+          <p class="text-sm text-gray-700"><strong>JSDoc/TSDoc</strong> -- IDEの補完が改善。コードの可読性が大幅に向上。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">4</span>
+          <p class="text-sm text-gray-700"><strong>CHANGELOG</strong> -- コミット履歴から利用者視点のリリースノートを自動生成。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

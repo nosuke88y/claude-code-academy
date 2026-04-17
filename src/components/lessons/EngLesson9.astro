@@ -1,0 +1,130 @@
+---
+// Eng Ch.3 Lesson 2: リファクタリング・コードレビュー依頼
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">コードレビューをClaude Codeに依頼する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeはプロジェクト全体を理解した上でレビューできるため、
+      単なるlintチェックを超えた、設計レベルのフィードバックが得られる。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">/review コマンド</h2>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 現在のdiffを自動レビュー
+> /review
+
+# 特定のファイルをレビュー
+> @src/api/payment.ts このファイルをレビューして。
+> パフォーマンス、可読性、セキュリティの観点で。
+
+# PRのレビュー
+> gh pr diff 42 | このPRの変更をレビューして</code>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">レビュー観点の指定パターン</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">セキュリティレビュー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このAPIルートをセキュリティ観点でレビューして。
+>  チェック項目: SQLインジェクション、XSS、CSRF、
+>  認証バイパス、レート制限、入力バリデーション」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">パフォーマンスレビュー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このページコンポーネントのパフォーマンスをレビューして。
+>  N+1クエリ、不要な再レンダリング、バンドルサイズ、
+>  メモ化の不足を確認して」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-2">アーキテクチャレビュー</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「src/server/ 配下のアーキテクチャをレビューして。
+>  責務分離、依存関係の方向、テスタビリティ、
+>  SOLID原則への準拠を確認して」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">リファクタリングの依頼パターン</h2>
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">責務分離</h3>
+        <div class="space-y-2">
+          <div class="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p class="text-[10px] text-red-500 font-medium mb-1">Before: 1つの関数に複数の責務</p>
+            <code class="text-[11px] text-gray-700 font-mono whitespace-pre-wrap">
+// 400行の巨大関数
+async function processOrder(order) {
+  // バリデーション（50行）
+  // 在庫チェック（30行）
+  // 決済処理（80行）
+  // メール送信（40行）
+  // ログ記録（20行）
+  // 分析イベント送信（30行）
+}</code>
+          </div>
+          <div class="bg-gray-900 rounded-lg p-3">
+            <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「この関数を責務分離して。単一責任の原則に従って、
+>  validate, checkInventory, processPayment, sendNotification
+>  に分割して。テストも各関数ごとに書いて」</code>
+          </div>
+          <div class="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p class="text-[10px] text-green-600 font-medium mb-1">After: 各関数が単一の責務</p>
+            <div class="bg-gray-900 rounded-lg p-3 mt-1">
+              <code class="text-[11px] text-green-400 font-mono block">processOrder(order) → validateOrder → checkInventory → processPayment → sendNotification</code>
+              <code class="text-[10px] text-gray-500 font-mono block mt-1">各ステップが独立した関数に分離され、個別テスト可能</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">型安全性の向上</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「src/ 配下のany型をすべて適切な型に置き換えて。
+>  1. まずany型の使用箇所を一覧にして
+>  2. 各箇所に適切な型定義を作成
+>  3. 型定義を適用してany型を排除
+>  4. tscで型エラーがないことを確認」</code>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">パターン適用</h3>
+        <div class="bg-gray-900 rounded-lg p-3">
+          <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+> 「このエラーハンドリングをResult型パターンに統一して。
+>  try-catchを排除して、全ての関数がResult&lt;T, E&gt;を返すように。
+>  既存の呼び出し元も対応させて」</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">レビュー依頼時は「観点」を明示する。パフォーマンス、セキュリティ、可読性、テスタビリティなど、何を重視するかを伝えることで、的確なフィードバックが得られる。</p>
+    </div>
+  </section>
+</div>

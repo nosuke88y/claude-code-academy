@@ -1,0 +1,201 @@
+---
+// Eng Ch.5 Lesson 1: 設計〜実装〜デプロイの一気通貫
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">設計からデプロイまで、Claude Codeで一気通貫</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeの真価は、単発のコード生成ではなく「プロジェクト全体を通したワークフロー」にある。
+      要件定義からデプロイまで、1つのセッションの中でコンテキストを保ちながら進められる。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">全体フロー</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="space-y-0">
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">1</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">要件定義</p>
+            <p class="text-xs text-gray-500">ゴール・制約・非機能要件を整理</p>
+          </div>
+        </div>
+        <div class="w-px h-4 bg-gray-200 ml-5"></div>
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">2</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">アーキテクチャ設計</p>
+            <p class="text-xs text-gray-500">技術選定・ディレクトリ構成・DB設計</p>
+          </div>
+        </div>
+        <div class="w-px h-4 bg-gray-200 ml-5"></div>
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">3</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">実装</p>
+            <p class="text-xs text-gray-500">段階的にコードを生成・テスト</p>
+          </div>
+        </div>
+        <div class="w-px h-4 bg-gray-200 ml-5"></div>
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">4</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">テスト</p>
+            <p class="text-xs text-gray-500">ユニット・インテグレーション・E2E</p>
+          </div>
+        </div>
+        <div class="w-px h-4 bg-gray-200 ml-5"></div>
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">5</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">レビュー</p>
+            <p class="text-xs text-gray-500">/review でセルフレビュー → PR作成</p>
+          </div>
+        </div>
+        <div class="w-px h-4 bg-gray-200 ml-5"></div>
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-10 h-10 rounded-lg bg-primary-bg flex items-center justify-center text-sm font-bold text-primary shrink-0">6</div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-gray-900">デプロイ</p>
+            <p class="text-xs text-gray-500">Docker化・CI/CD設定・本番反映</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">各フェーズでの依頼例</h2>
+
+    <div class="space-y-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">フェーズ1: 要件定義</h3>
+        <div class="bg-gray-900 rounded-lg px-4 py-3">
+          <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> ブックマーク管理アプリを作りたい。要件を整理して。
+  - ユーザー認証あり
+  - URL・タイトル・タグでCRUD
+  - タグとキーワードで検索
+  - レスポンシブ対応
+  技術的な制約: TypeScript必須、PostgreSQL使用</pre>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">フェーズ2: アーキテクチャ設計（plan mode）</h3>
+        <div class="bg-gray-900 rounded-lg px-4 py-3 mb-3">
+          <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> plan modeで設計レビューをしたい。
+  この要件に対して以下を提案して:
+  - ディレクトリ構成
+  - DBスキーマ（ER図のテキスト表現）
+  - API設計（エンドポイント一覧）
+  - フロントのコンポーネント構成
+  まだコードは書かないで。設計だけ。</pre>
+        </div>
+        <div class="bg-primary-bg rounded-xl p-4">
+          <p class="text-sm text-primary font-medium mb-1">plan modeとは</p>
+          <p class="text-xs text-gray-700">Shift+Tab でplan modeに切り替えると、Claude Codeはコードを書かず設計・分析だけを行う。実装前の設計レビューに最適。</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">フェーズ3: 段階的な実装</h3>
+        <div class="bg-gray-900 rounded-lg px-4 py-3">
+          <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> 承認した設計に基づいて実装を開始して。
+  まずフェーズ1として:
+  1. プロジェクト初期化（package.json, tsconfig, prisma）
+  2. DBスキーマ定義とマイグレーション
+  3. 認証ミドルウェア（JWT）
+  各ステップの完了後に確認させて。</pre>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">フェーズ4-5: テスト & レビュー</h3>
+        <div class="bg-gray-900 rounded-lg px-4 py-3">
+          <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> 実装したAPIのテストを書いて。
+  - ユニットテスト: サービス層のビジネスロジック
+  - インテグレーションテスト: supertestでAPI呼び出し
+  - カバレッジ80%以上を目標
+
+> テスト通ったら /review して、問題なければPR作成して。</pre>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">フェーズ6: デプロイ</h3>
+        <div class="bg-gray-900 rounded-lg px-4 py-3">
+          <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このアプリをDockerで動かせるようにして。
+  - マルチステージビルドのDockerfile
+  - docker-compose.yml（app + postgres + redis）
+  - 本番用の環境変数テンプレート(.env.example)
+  - GitHub ActionsでのCI/CDパイプライン</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Greenfield vs Brownfield</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      新規プロジェクト（greenfield）と既存プロジェクト（brownfield）では、Claude Codeの使い方が異なる。
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-green-700 mb-3">Greenfield（新規）</h3>
+        <ul class="text-xs text-gray-600 space-y-2">
+          <li class="flex items-start gap-2">
+            <span class="text-green-500 mt-0.5">&#9679;</span>
+            <span>設計段階からClaude Codeに参加させる</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-500 mt-0.5">&#9679;</span>
+            <span>CLAUDE.mdにアーキテクチャ方針を最初に定義</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-500 mt-0.5">&#9679;</span>
+            <span>雛形生成 → 段階的に肉付けの流れ</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-500 mt-0.5">&#9679;</span>
+            <span>最初からテストを書かせる</span>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <h3 class="text-sm font-semibold text-blue-700 mb-3">Brownfield（既存）</h3>
+        <ul class="text-xs text-gray-600 space-y-2">
+          <li class="flex items-start gap-2">
+            <span class="text-blue-500 mt-0.5">&#9679;</span>
+            <span>まず既存コードを読ませて全体把握</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-500 mt-0.5">&#9679;</span>
+            <span>CLAUDE.mdに既存の規約・制約を明記</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-500 mt-0.5">&#9679;</span>
+            <span>影響範囲を確認してから変更</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-500 mt-0.5">&#9679;</span>
+            <span>既存テストが通ることを常に確認</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">まとめ: ワークフローのポイント</h2>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <ul class="text-sm text-gray-700 space-y-2">
+        <li><strong>設計は必ずplan modeで</strong> -- コードを書かせる前に設計をレビューする。手戻りが激減する。</li>
+        <li><strong>段階的に実装</strong> -- 一度に全部作らせず、フェーズを分けて確認しながら進める。</li>
+        <li><strong>テストは実装と同時に</strong> -- 後付けではなく、各フェーズでテストも一緒に書かせる。</li>
+        <li><strong>コンテキストを活かす</strong> -- 同一セッションで設計→実装→テスト→PRを回すと、一貫性のある成果物が得られる。</li>
+      </ul>
+    </div>
+  </section>
+</div>

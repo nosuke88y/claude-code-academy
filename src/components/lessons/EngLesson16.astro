@@ -1,0 +1,217 @@
+---
+// Eng Ch.5 Lesson 2: REST API開発ハンズオン
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">REST API開発ハンズオン</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Express + TypeScript + Prismaで実用的なREST APIを構築する。
+      Claude Codeへの依頼の仕方を段階的に見ていこう。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">このレッスンのゴール</p>
+      <p class="text-sm text-gray-700">ユーザー管理REST API（CRUD + バリデーション + エラーハンドリング + テスト）をClaude Codeで構築する手順を習得する</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 1: プロジェクト初期化とスキーマ設計</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      まず骨格を作る。Claude Codeに技術スタック・ディレクトリ構成・DBスキーマを一括で生成させる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> Express + TypeScript + Prisma でユーザー管理REST APIを作って。
+
+  技術要件:
+  - TypeScript strict mode
+  - Prisma + SQLite（開発用）
+  - zod でバリデーション
+  - エラーハンドリングミドルウェア
+
+  DBスキーマ:
+  - User: id, email(unique), name, role(ADMIN/USER), createdAt, updatedAt
+
+  まずプロジェクト初期化とPrismaスキーマまで。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm font-semibold text-gray-900 mb-2">生成されるディレクトリ構成</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-gray-700 font-mono whitespace-pre-wrap">user-api/
+├── prisma/
+│   └── schema.prisma
+├── src/
+│   ├── routes/
+│   │   └── users.ts
+│   ├── controllers/
+│   │   └── userController.ts
+│   ├── services/
+│   │   └── userService.ts
+│   ├── middleware/
+│   │   ├── errorHandler.ts
+│   │   └── validate.ts
+│   ├── schemas/
+│   │   └── userSchema.ts
+│   ├── lib/
+│   │   └── prisma.ts
+│   └── index.ts
+├── tests/
+├── package.json
+└── tsconfig.json</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 2: ルート定義とコントローラー</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      CRUD操作のルートを定義し、コントローラーとサービス層を分離して実装させる。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <div class="text-xs text-primary font-medium mb-2">Claude Codeへの依頼例</div>
+      <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「次のエンドポイントを実装して: GET /api/users（一覧・ページネーション付き）、GET /api/users/[id]（詳細）、POST /api/users（作成・zodバリデーション付き）、PATCH /api/users/[id]（部分更新）、DELETE /api/users/[id]（削除）。routes → controller → service → prisma のレイヤー分離で」</p>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-sm font-semibold text-gray-900 mb-2">ポイント: zodスキーマの例</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">// src/schemas/userSchema.ts
+import { z } from 'zod';
+
+export const createUserSchema = z.object({
+  email: z.string().email('有効なメールアドレスを入力してください'),
+  name: z.string().min(1, '名前は必須です').max(100),
+  role: z.enum(['ADMIN', 'USER']).default('USER'),
+});
+
+export const updateUserSchema = createUserSchema.partial();
+
+export const querySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
+  role: z.enum(['ADMIN', 'USER']).optional(),
+  name: z.string().optional(),
+});</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 3: エラーハンドリングミドルウェア</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      一貫したエラーレスポンスを返すミドルウェアを実装させる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> エラーハンドリングミドルウェアを追加して。
+  - zodバリデーションエラー → 400 + フィールドごとのエラーメッセージ
+  - NotFoundError → 404
+  - ConflictError（email重複等）→ 409
+  - 予期しないエラー → 500（本番ではスタックトレース非表示）
+  - エラーレスポンス形式: { error: { code, message, details? } }</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm font-semibold text-gray-900 mb-2">エラーレスポンスの例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <pre is:raw class="text-xs text-gray-700 font-mono whitespace-pre-wrap">// 400 バリデーションエラー
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "入力値が不正です",
+    "details": [
+      { "field": "email", "message": "有効なメールアドレスを入力してください" }
+    ]
+  }
+}
+
+// 404 Not Found
+{
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "ユーザーが見つかりません"
+  }
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 4: テスト追加</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      supertestでAPIのE2Eテストを書かせる。正常系・異常系の両方をカバー。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">依頼例</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> このAPIのE2Eテストをsupertest + vitestで書いて。
+  テストケース:
+  - POST /api/users: 正常作成、バリデーションエラー、email重複
+  - GET /api/users: 一覧取得、ページネーション、フィルタリング
+  - GET /api/users/:id: 正常取得、存在しないID
+  - PATCH /api/users/:id: 部分更新、存在しないID
+  - DELETE /api/users/:id: 正常削除、存在しないID
+  テスト用DBはインメモリSQLiteで。</pre>
+    </div>
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <p class="text-sm font-semibold text-gray-900 mb-2">テストで確認するポイント</p>
+      <div class="space-y-2">
+        <div class="flex items-start gap-2"><span class="text-success text-xs">✓</span><span class="text-xs text-gray-600">POST /api/users: 正常なデータで201を返し、作成されたユーザーを返す</span></div>
+        <div class="flex items-start gap-2"><span class="text-success text-xs">✓</span><span class="text-xs text-gray-600">POST /api/users: 不正なメールで400 + VALIDATION_ERRORを返す</span></div>
+        <div class="flex items-start gap-2"><span class="text-success text-xs">✓</span><span class="text-xs text-gray-600">GET /api/users: ページネーションが正しく動作する</span></div>
+        <div class="flex items-start gap-2"><span class="text-success text-xs">✓</span><span class="text-xs text-gray-600">DELETE /api/users/[id]: 存在しないIDで404を返す</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Step 5: 動作確認</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      curlコマンドで実際にAPIを叩いて動作確認する。Claude Codeに実行させることもできる。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2 font-mono">curlでの確認</p>
+      <pre is:raw class="text-sm text-green-400 font-mono whitespace-pre-wrap leading-relaxed"># ユーザー作成
+$ curl -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"tanaka@example.com","name":"田中太郎","role":"ADMIN"}'
+
+# 一覧取得（フィルタ付き）
+$ curl "http://localhost:3000/api/users?role=ADMIN&page=1&limit=10"
+
+# 更新
+$ curl -X PATCH http://localhost:3000/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name":"田中一郎"}'
+
+# 削除
+$ curl -X DELETE http://localhost:3000/api/users/1</pre>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">Claude Codeで一括確認</p>
+      <p class="text-sm text-gray-700"><code class="text-xs bg-white px-1.5 py-0.5 rounded">「サーバーを起動して、全エンドポイントをcurlで叩いて動作確認して」</code>と依頼すれば、起動→テスト→結果表示まで自動で行える。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">まとめ: API開発の依頼パターン</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5">
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">1</span>
+          <p class="text-sm text-gray-700"><strong>技術スタックと構成を最初に明示</strong> -- 使用技術・ディレクトリ構成・命名規則を最初に伝えることで、一貫性のあるコードが生成される。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">2</span>
+          <p class="text-sm text-gray-700"><strong>レイヤー分離を指定</strong> -- routes/controller/service/repository の責務を明示すると、保守性の高い構造になる。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">3</span>
+          <p class="text-sm text-gray-700"><strong>正常系と異常系を両方指定</strong> -- バリデーション・エラーハンドリング・エッジケースも一緒に依頼する。</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-primary font-bold text-sm">4</span>
+          <p class="text-sm text-gray-700"><strong>テストは実装と同時に</strong> -- テストケースを具体的にリストアップして依頼すると、カバレッジの高いテストが得られる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

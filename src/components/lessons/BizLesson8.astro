@@ -1,0 +1,127 @@
+---
+// Biz Ch.3 Lesson 1: 議事録・報告書の自動生成
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">議事録・報告書を自動で作ろう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      会議のメモを整形された議事録に変換したり、定型フォーマットの報告書を自動生成したり。
+      Claude Codeを使えば、これまで30分〜1時間かかっていた作業が数分で完了します。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 このレッスンで学ぶこと</p>
+      <p class="text-sm text-gray-700">会議メモ → 議事録への変換、報告書テンプレートの生成、実際のワークフローの組み立て方を学びます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践1: 会議メモから議事録を作る</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      会議中にざっくり取ったメモがあれば、Claude Codeに議事録への変換を依頼できます。
+      まずは以下のような会議メモがあるとしましょう。
+    </p>
+
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">会議メモの例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3 text-xs text-gray-600 font-mono leading-relaxed">
+        ・4/15 マーケ定例 10:00-11:00<br>
+        ・出席: 田中、佐藤、鈴木、高橋<br>
+        ・Q1の広告費が予算超過 → Q2は10%カット<br>
+        ・SNS施策が好調、フォロワー+30%<br>
+        ・新商品LP → 佐藤が来週金曜までにワイヤー作成<br>
+        ・次回: 4/22 同じ時間
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">以下の会議メモから正式な議事録を作って。<br>フォーマット: 会議名・日時・出席者・議題・決定事項・アクションアイテム（担当・期限付き）で整理して。<br>HTML形式のファイルで出力して。<br><br>[ここにメモを貼り付け]</code>
+      </div>
+    </div>
+
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 コツ: フォーマットを指定する</p>
+      <p class="text-sm text-gray-700">「出席者・決定事項・アクションアイテム」のように、出力に含めてほしい項目を具体的に指定すると、期待通りの議事録が得られます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実践2: 報告書テンプレートの生成</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      毎月作成する定型の報告書も、テンプレートを自動生成できます。
+      一度テンプレートを作れば、毎月のデータを入れ替えるだけで完成します。
+    </p>
+
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">Claude Codeへの依頼例</p>
+      <div class="bg-base-bg rounded-lg px-3 py-2">
+        <code class="text-[11px] text-gray-600 font-mono">月次営業報告書のHTMLテンプレートを作って。<br>セクション構成:<br>1. 今月のサマリー（売上・達成率・前月比）<br>2. 部門別実績（表形式）<br>3. トピックス（3件程度）<br>4. 来月の注力事項<br>見やすいデザインで、印刷にも対応して</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">実際のワークフロー</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      議事録作成の実際の流れを整理しましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📝</div>
+          <div class="text-xs font-medium text-gray-900">メモを取る</div>
+          <div class="text-[10px] text-gray-400 mt-0.5">会議中に箇条書き</div>
+        </div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">🤖</div>
+          <div class="text-xs font-medium text-gray-900">Claude Codeに依頼</div>
+          <div class="text-[10px] text-gray-400 mt-0.5">メモを貼り付けて変換</div>
+        </div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">👀</div>
+          <div class="text-xs font-medium text-gray-900">確認・修正</div>
+          <div class="text-[10px] text-gray-400 mt-0.5">内容をチェック</div>
+        </div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center">
+          <div class="w-14 h-14 rounded-full bg-success-bg flex items-center justify-center text-2xl mx-auto mb-2">✅</div>
+          <div class="text-xs font-medium text-gray-900">共有</div>
+          <div class="text-[10px] text-gray-400 mt-0.5">チームに送付</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">やってみよう</h2>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-sm font-medium text-gray-900 mb-3">実践課題</p>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">1</div>
+          <p class="text-xs text-gray-600">最近の会議メモ（なければ架空のメモでOK）をClaude Codeに貼り付けて、議事録に変換してみましょう</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">2</div>
+          <p class="text-xs text-gray-600">出力された議事録を確認して、「もう少し詳しくして」「アクションアイテムに期限を追加して」など追加の指示を出してみましょう</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-primary-bg flex items-center justify-center text-xs font-bold text-primary shrink-0">3</div>
+          <p class="text-xs text-gray-600">普段使っている報告書のフォーマットを伝えて、テンプレートを作ってもらいましょう</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-2">📌 まとめ</p>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        議事録や報告書の作成は、Claude Codeが最も得意とする業務の一つです。
+        大切なのは「どんなフォーマットで」「何を含めてほしいか」を具体的に伝えること。
+        繰り返し使うテンプレートは一度作れば、毎回の作成が一瞬になります。
+      </p>
+    </div>
+  </section>
+</div>

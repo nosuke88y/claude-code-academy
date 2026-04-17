@@ -1,0 +1,262 @@
+---
+// Eng Ch.5 Lesson 4: 最終演習 - フルスタックアプリケーション開発
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">最終演習: フルスタックアプリケーション開発</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      これまで学んだスキルの総仕上げ。以下の3つの課題から1つ以上を選び、Claude Codeを使って開発してみよう。
+      各課題にはチェックリストがあるので、すべてクリアを目指すこと。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">進め方</p>
+      <p class="text-sm text-gray-700">
+        plan modeで設計 → 段階的に実装 → テスト → /review → PR作成 の一連フローで取り組む。
+        CLAUDE.mdにプロジェクトの規約を定義してから始めるのがベストプラクティス。
+      </p>
+    </div>
+  </section>
+
+  <!-- 課題A -->
+  <section class="mb-8">
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-lg font-bold text-blue-600">A</div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900">ブックマーク管理アプリ</h3>
+          <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">中級</span>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mb-4">
+        URLをタグ付きで保存・管理するWebアプリ。CRUD操作 + タグ機能 + 全文検索を実装する。
+      </p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3 mb-4">
+        <p class="text-xs text-gray-400 mb-1 font-mono">Claude Codeへの初手</p>
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> ブックマーク管理アプリを作りたい。
+  バック: Express + TypeScript + Prisma + SQLite
+  フロント: React + Tailwind CSS
+  機能: URL・タイトル・メモ・タグでCRUD、タグフィルタ、キーワード検索
+  まずplan modeで設計して。</pre>
+      </div>
+      <div class="border border-base-border rounded-lg p-4">
+        <p class="text-xs font-semibold text-gray-700 mb-2">チェックリスト</p>
+        <div class="space-y-1.5">
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>CRUD操作（作成・一覧・更新・削除）が動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>タグの追加・削除・フィルタリングが動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>キーワード検索（タイトル + URL + メモ）が動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>バリデーション（URL形式、必須フィールド）が実装されている</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>APIのユニットテスト / E2Eテストがある</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>TypeScriptのstrictモードでエラーなし</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 課題B -->
+  <section class="mb-8">
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-lg font-bold text-orange-600">B</div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900">チーム用タスクボード</h3>
+          <span class="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">上級</span>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mb-4">
+        Kanban風のタスク管理ボード。ドラッグ&ドロップでステータス変更、リアルタイム更新、ユーザー認証を実装する。
+      </p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3 mb-4">
+        <p class="text-xs text-gray-400 mb-1 font-mono">Claude Codeへの初手</p>
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> Kanban風タスクボードを作りたい。
+  バック: Express + TypeScript + Prisma + PostgreSQL + Socket.io
+  フロント: React + Tailwind CSS + dnd-kit
+  認証: JWT（登録・ログイン・リフレッシュトークン）
+  カラム: Todo / In Progress / Done
+  リアルタイム: タスク移動時に他ユーザーに即反映
+  まずplan modeで設計して。</pre>
+      </div>
+      <div class="border border-base-border rounded-lg p-4">
+        <p class="text-xs font-semibold text-gray-700 mb-2">チェックリスト</p>
+        <div class="space-y-1.5">
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>ユーザー登録・ログイン・ログアウトが動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>タスクのCRUD操作が動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>ドラッグ&ドロップでカラム間移動ができる</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>WebSocketでリアルタイム更新される</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>JWTリフレッシュトークンが実装されている</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>認証・タスクAPIのテストがある</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>TypeScriptのstrictモードでエラーなし</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 課題C -->
+  <section class="mb-8">
+    <div class="bg-white rounded-xl border border-base-border p-5">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center text-lg font-bold text-purple-600">C</div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900">API連携ダッシュボード</h3>
+          <span class="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">上級</span>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mb-4">
+        外部APIからデータを取得してグラフで可視化するダッシュボード。キャッシュ戦略とエラーハンドリングが鍵。
+      </p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3 mb-4">
+        <p class="text-xs text-gray-400 mb-1 font-mono">Claude Codeへの初手</p>
+        <pre is:raw class="text-xs text-green-400 font-mono whitespace-pre-wrap leading-relaxed">> API連携ダッシュボードを作りたい。
+  バック: Express + TypeScript + Redis（キャッシュ）
+  フロント: React + Tailwind CSS + Recharts
+  データ源: GitHub API（リポジトリ統計）、OpenWeatherMap（天気）
+  機能: ウィジェット追加/削除、自動リフレッシュ、キャッシュTTL設定
+  まずplan modeで設計して。</pre>
+      </div>
+      <div class="border border-base-border rounded-lg p-4">
+        <p class="text-xs font-semibold text-gray-700 mb-2">チェックリスト</p>
+        <div class="space-y-1.5">
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>外部APIからデータを取得して表示できる</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>Rechartsでグラフ（折れ線・棒・円）が表示される</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>Redisキャッシュが動作しAPIレート制限を回避できる</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>ウィジェットの追加・削除・並び替えができる</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>外部APIのエラー時にフォールバック表示がある</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>自動リフレッシュ（ポーリング）が動作する</span>
+          </label>
+          <label class="flex items-start gap-2 text-xs text-gray-600">
+            <input type="checkbox" class="mt-0.5 accent-primary" />
+            <span>TypeScriptのstrictモードでエラーなし</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- コース完了 -->
+  <section class="mb-8">
+    <div class="bg-gradient-to-br from-primary-bg to-white rounded-xl border border-primary-border p-6 text-center">
+      <div class="text-5xl mb-4">&#127942;</div>
+      <h3 class="text-xl font-bold text-gray-900 mb-2">エンジニアコース完了おめでとうございます！</h3>
+      <p class="text-sm text-gray-600 mb-6">
+        全5チャプターを通じて、Claude Codeを使ったプロフェッショナルな開発ワークフローを習得しました。
+      </p>
+      <div class="inline-block bg-white rounded-xl border border-primary-border px-6 py-4 mb-6">
+        <div class="grid grid-cols-3 gap-6">
+          <div class="text-center">
+            <p class="text-2xl font-bold text-primary">5</p>
+            <p class="text-[10px] text-gray-500">Chapters</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold text-primary">18</p>
+            <p class="text-[10px] text-gray-500">Lessons</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold text-primary">3</p>
+            <p class="text-[10px] text-gray-500">Projects</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-left bg-white rounded-xl border border-base-border p-5 mb-4">
+        <p class="text-sm font-semibold text-gray-900 mb-3">習得したスキル</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>Claude Codeの基本操作とCLAUDE.md設計</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>効果的なプロンプトエンジニアリング</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>リファクタリング・テスト・デバッグ</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>レガシーコード分析・マイグレーション</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>PR作成・レビュー・CI/CD連携</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>ドキュメント自動生成</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>設計からデプロイまでの一気通貫ワークフロー</span>
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <span class="text-green-500">&#10003;</span>
+            <span>フルスタックアプリケーション開発</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary-bg rounded-xl p-4">
+        <p class="text-sm text-gray-700">
+          <strong>Next Step:</strong> 実際のプロジェクトでClaude Codeを活用しよう。
+          まずは小さなタスクから始めて、徐々にワークフロー全体に組み込んでいくのがおすすめ。
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,83 @@
+---
+// Biz Ch.5 Lesson 2: 日報自動生成ツール
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">日報を自動生成するツールを作ろう</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      毎日の日報作成、面倒ではありませんか？このレッスンでは、タスクのメモを入力するだけで
+      きれいに整形された日報HTMLを自動生成するツールをClaude Codeに作ってもらいます。
+    </p>
+    <div class="bg-primary-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-primary font-medium mb-1">💡 ポイント</p>
+      <p class="text-sm text-gray-700">プログラムを自分で書く必要はありません。Claude Codeに「何が欲しいか」を伝えるだけで、実行可能なスクリプトを作ってくれます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: ツールの仕様を伝える</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      まずは日報のフォーマットと必要な項目をClaude Codeに伝えましょう。
+    </p>
+    <div class="bg-white rounded-xl border border-primary-border p-5 mb-4">
+      <p class="text-xs text-gray-400 mb-2">依頼例</p>
+      <div class="bg-base-bg rounded-lg px-4 py-3">
+        <code class="text-[11px] text-gray-600 font-mono leading-relaxed block">以下のタスクメモから日報を自動生成するNode.jsスクリプトを作って。<br>日付・実施内容・所感・明日の予定の形式で。<br>出力はHTMLファイルにしてほしい。<br><br>■ タスクメモの例：<br>- 午前: A社提案書作成（完了）<br>- 午後: チームMTG、B社見積もり確認<br>- 所感: 提案書のデザインに時間かかった<br>- 明日: C社訪問準備、週次レポート</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ2: スクリプトを実行する</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeがスクリプトを作成したら、ターミナルで実行してみましょう。
+    </p>
+    <div class="bg-gray-900 rounded-xl p-5 mb-4">
+      <div class="text-xs text-gray-400 mb-2">実行コマンド</div>
+      <div class="space-y-1">
+        <code class="text-sm text-green-400 font-mono block">node daily-report.js</code>
+      </div>
+    </div>
+    <div class="bg-success-bg rounded-xl p-5 mb-4">
+      <p class="text-sm text-success-dark font-medium mb-1">✅ 成功の目安</p>
+      <p class="text-sm text-gray-700">HTMLファイルが生成され、ブラウザで開くときれいな日報が表示されます。</p>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ3: テンプレートをカスタマイズする</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      基本の日報ができたら、自分の業務に合わせてカスタマイズしましょう。
+    </p>
+    <div class="space-y-3 mb-4">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">カスタマイズ例 1: 項目の追加</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「日報に『進捗率（%）』と『課題・リスク』の欄も追加して」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">カスタマイズ例 2: デザインの変更</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「会社のコーポレートカラー（#003366）を使ったデザインにして」</p>
+      </div>
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="text-xs text-primary font-medium mb-2">カスタマイズ例 3: 入力方法の変更</div>
+        <p class="text-sm text-gray-700 font-mono bg-base-bg rounded-lg p-3">「タスクメモをテキストファイルから読み込むように変更して。tasks.txt から読み込んで」</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">日報ツール作成の流れ</h2>
+    <div class="bg-white rounded-xl border border-base-border p-6">
+      <div class="flex items-center justify-between">
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">📝</div><div class="text-xs font-medium text-gray-900">仕様を伝える</div><div class="text-[10px] text-gray-400 mt-0.5">フォーマット指定</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">⚙️</div><div class="text-xs font-medium text-gray-900">スクリプト生成</div><div class="text-[10px] text-gray-400 mt-0.5">Claude Codeが作成</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">▶️</div><div class="text-xs font-medium text-gray-900">実行・確認</div><div class="text-[10px] text-gray-400 mt-0.5">node で実行</div></div>
+        <div class="text-gray-300 text-lg mx-3">→</div>
+        <div class="text-center"><div class="w-14 h-14 rounded-full bg-primary-bg flex items-center justify-center text-2xl mx-auto mb-2">🎨</div><div class="text-xs font-medium text-gray-900">カスタマイズ</div><div class="text-[10px] text-gray-400 mt-0.5">項目・デザイン調整</div></div>
+      </div>
+    </div>
+  </section>
+</div>

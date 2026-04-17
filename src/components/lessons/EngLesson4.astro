@@ -1,0 +1,145 @@
+---
+// Eng Ch.2 Lesson 1: コンテキスト最適化の技法
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">コンテキストウィンドウの仕組み</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeの性能を最大化するには、コンテキストウィンドウの効率的な使い方が鍵になる。
+      1Mトークンは巨大だが、無限ではない。戦略的にコンテキストを管理しよう。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <h3 class="text-sm font-semibold text-gray-900 mb-3">トークン数の目安</h3>
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex justify-between items-center py-1 border-b border-base-border">
+          <span>一般的なソースファイル（200行）</span>
+          <span class="font-mono text-primary font-medium">~2,000 tokens</span>
+        </div>
+        <div class="flex justify-between items-center py-1 border-b border-base-border">
+          <span>package.json + tsconfig</span>
+          <span class="font-mono text-primary font-medium">~500 tokens</span>
+        </div>
+        <div class="flex justify-between items-center py-1 border-b border-base-border">
+          <span>README.md（標準的）</span>
+          <span class="font-mono text-primary font-medium">~1,500 tokens</span>
+        </div>
+        <div class="flex justify-between items-center py-1 border-b border-base-border">
+          <span>node_modules/内の1ファイル</span>
+          <span class="font-mono text-red-500 font-medium">無駄</span>
+        </div>
+        <div class="flex justify-between items-center py-1">
+          <span>1Mトークンで読めるファイル数</span>
+          <span class="font-mono text-primary font-medium">~500ファイル</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">/compact の使いどころ</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      会話が長くなるとコンテキストが圧迫される。<code class="text-xs bg-gray-100 px-1 rounded">/compact</code>で会話履歴を圧縮し、コンテキストを解放できる。
+    </p>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-green-500 font-bold text-sm">OK</span>
+          <h3 class="text-sm font-semibold text-gray-900">使うべきタイミング</h3>
+        </div>
+        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+          <li>コンテキスト使用率が60-80%に達したとき</li>
+          <li>タスクの区切り目（機能Aが完了→機能Bに着手）</li>
+          <li>大量のファイルを読み込んだ後</li>
+          <li>デバッグの試行錯誤で会話が膨らんだとき</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-xl border border-base-border p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-red-500 font-bold text-sm">NG</span>
+          <h3 class="text-sm font-semibold text-gray-900">使わない方がよいタイミング</h3>
+        </div>
+        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+          <li>複雑なタスクの途中（文脈が失われるリスク）</li>
+          <li>まだコンテキストに余裕があるとき</li>
+          <li>直前の会話内容を参照する必要があるとき</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">不要なファイルを読ませない工夫</h2>
+    <div class="space-y-3">
+      <div class="bg-gray-900 rounded-lg p-4">
+        <p class="text-[10px] text-gray-500 mb-2"># .claudeignore（.gitignoreと同様のフォーマット）</p>
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+node_modules/
+dist/
+build/
+.next/
+coverage/
+*.lock
+*.log</code>
+      </div>
+      <div class="bg-gray-900 rounded-lg p-4">
+        <p class="text-[10px] text-gray-500 mb-2"># CLAUDE.md での指示</p>
+        <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# 読まなくてよいファイル
+- generated/ ディレクトリは自動生成コードなので読まない
+- *.test.snapshot.ts はスナップショットなので内容確認不要
+- vendor/ はサードパーティコードなので変更しない</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">大規模リポジトリでの効率的な作業</h2>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <div class="space-y-3 text-xs text-gray-600">
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">1.</span>
+          <div><strong>スコープを絞る:</strong> 「プロジェクト全体」ではなく「src/api/auth/」のように対象ディレクトリを限定。</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">2.</span>
+          <div><strong>Sub-agentに調査を委任:</strong> 「まずsrc/以下でUserモデルを使っている箇所を調べて」→ 結果を元に本体が作業。</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">3.</span>
+          <div><strong>段階的に読み込む:</strong> 最初にディレクトリ構造だけ確認 → 必要なファイルだけ@指定で読み込み。</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">4.</span>
+          <div><strong>worktreeを活用:</strong> 複数タスクを並行する場合、worktreeで作業ディレクトリを分離。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">@記法の高度な使い方</h2>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# ファイル指定
+> @src/lib/auth.ts この関数をリファクタして
+
+# ディレクトリ指定（配下全体をコンテキストに）
+> @src/components/ コンポーネントの命名規則を統一して
+
+# 複数ファイル
+> @src/types/user.ts @src/api/user.ts @prisma/schema.prisma
+> User型の変更に合わせてAPI・スキーマを更新して
+
+# URL（ドキュメント参照）
+> @https://docs.example.com/api この仕様に合わせて実装して
+
+# Git diff
+> @git:diff HEAD~3 直近3コミットの変更をレビューして</code>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">コンテキストは有限リソース。必要なものだけを必要なタイミングで読み込む「Lazy Loading」の発想で使おう。</p>
+    </div>
+  </section>
+</div>

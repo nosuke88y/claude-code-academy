@@ -1,0 +1,164 @@
+---
+// Eng Ch.1 Lesson 2: 実際の開発フローへの組み込み方
+---
+
+<div class="max-w-3xl">
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">開発フローのどこにClaude Codeを入れるか</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeは特定のフェーズだけでなく、開発ライフサイクル全体で活用できる。
+      各フェーズでの具体的な活用ポイントを押さえよう。
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">フェーズ別活用マップ</h2>
+    <div class="space-y-3">
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">1</div>
+          <h3 class="text-sm font-semibold text-gray-900">設計フェーズ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">issueやPRDを貼り付けて、設計方針を議論できる。</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-2">
+          <code class="text-[11px] text-green-400 font-mono">
+            > /plan このissueを実装したい。設計方針を提案して<br>
+            > @docs/prd.md この仕様書に基づいてAPI設計をレビューして
+          </code>
+        </div>
+        <div class="bg-primary-bg rounded-lg px-3 py-2">
+          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> plan modeを使うと、実装前に設計を確認できる。いきなりコードを書かせない。</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">2</div>
+          <h3 class="text-sm font-semibold text-gray-900">実装フェーズ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">機能単位でタスクを分割して依頼する。</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-2">
+          <code class="text-[11px] text-green-400 font-mono">
+            > 「認証ミドルウェアを実装して。JWT検証、ロール判定、エラーハンドリングを含む」<br>
+            > 「このGraphQLスキーマに合わせてリゾルバを実装して」
+          </code>
+        </div>
+        <div class="bg-primary-bg rounded-lg px-3 py-2">
+          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> 既存のコードスタイルに合わせるよう、CLAUDE.mdにスタイルガイドを書いておく。</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">3</div>
+          <h3 class="text-sm font-semibold text-gray-900">テストフェーズ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">テストコードの生成からカバレッジ確認まで。</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-2">
+          <code class="text-[11px] text-green-400 font-mono">
+            > 「この関数のユニットテストを書いて。正常系・異常系・境界値を含む」<br>
+            > 「テストカバレッジを確認して、不足している箇所のテストを追加して」
+          </code>
+        </div>
+        <div class="bg-primary-bg rounded-lg px-3 py-2">
+          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> テスト失敗のログをそのまま貼り付ければ、原因特定→修正まで自動実行。</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">4</div>
+          <h3 class="text-sm font-semibold text-gray-900">レビューフェーズ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">PRレビューの自動化・品質チェック。</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-2">
+          <code class="text-[11px] text-green-400 font-mono">
+            > /review （現在のdiffを自動レビュー）<br>
+            > 「このPRのセキュリティリスクを洗い出して」
+          </code>
+        </div>
+        <div class="bg-primary-bg rounded-lg px-3 py-2">
+          <p class="text-[11px] text-gray-600"><strong>Tips:</strong> GitHub ActionsにClaude Codeを組み込めば、PR作成時に自動レビューが走る。</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-primary-border p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">5</div>
+          <h3 class="text-sm font-semibold text-gray-900">デプロイ・運用フェーズ</h3>
+        </div>
+        <p class="text-xs text-gray-600 mb-2">CI/CD設定、デプロイスクリプト、障害対応。</p>
+        <div class="bg-gray-900 rounded-lg p-3 mb-2">
+          <code class="text-[11px] text-green-400 font-mono">
+            > 「GitHub Actionsのワークフローを作って。lint→test→build→deployの順で」<br>
+            > 「本番でこのエラーが出ている。ログ: [スタックトレース]。原因を調査して」
+          </code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">CLAUDE.mdの設計戦略</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      CLAUDE.mdはClaude Codeへの「プロジェクト設定ファイル」。
+      ここに書いた内容がClaude Codeの振る舞いを決める。
+    </p>
+    <div class="bg-gray-900 rounded-lg p-4 mb-4">
+      <p class="text-[10px] text-gray-500 mb-2"># CLAUDE.md の推奨構成</p>
+      <code class="text-[11px] text-green-400 font-mono leading-relaxed whitespace-pre-wrap">
+# プロジェクト概要
+TypeScript + Next.js 15 (App Router) + Prisma + PostgreSQL
+
+# ディレクトリ構成
+src/app/       - ページ・ルーティング
+src/lib/       - ユーティリティ・DB接続
+src/components/ - UIコンポーネント
+prisma/        - スキーマ・マイグレーション
+
+# コマンド
+- dev: npm run dev
+- test: npm run test
+- lint: npm run lint
+- build: npm run build
+
+# コーディング規約
+- 関数コンポーネントのみ使用（classコンポーネント禁止）
+- 命名: camelCase（変数・関数）, PascalCase（コンポーネント・型）
+- エラーハンドリング: try-catchではなくResult型パターン
+- テスト: 全public関数にユニットテスト必須
+
+# やってはいけないこと
+- any型の使用禁止
+- console.logをプロダクションコードに残さない
+- 環境変数を直接参照しない（config経由で）</code>
+    </div>
+  </section>
+
+  <section class="mb-4">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">Hooks機能</h2>
+    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+      Claude Codeの操作にフックを仕掛けて、自動化を組み込める。
+    </p>
+    <div class="bg-white rounded-xl border border-base-border p-5 mb-4">
+      <div class="space-y-3 text-xs text-gray-600">
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">▸</span>
+          <div><strong>PreToolUse:</strong> ツール実行前に介入。例: Bashコマンド実行前にdry-runを挟む。</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">▸</span>
+          <div><strong>PostToolUse:</strong> ツール実行後に自動処理。例: ファイル編集後に自動でlintを実行。</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-primary font-bold mt-0.5">▸</span>
+          <div><strong>Notification:</strong> 長時間タスク完了時に通知。例: ビルド完了をSlackに通知。</div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary-bg rounded-xl p-5">
+      <p class="text-sm text-primary font-medium mb-1">ポイント</p>
+      <p class="text-sm text-gray-700">Claude Codeは「ツール」ではなく「開発プロセスのインフラ」として位置づけると最大限活用できる。CLAUDE.mdとHooksで開発チーム全体の生産性を底上げしよう。</p>
+    </div>
+  </section>
+</div>
