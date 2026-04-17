@@ -30,26 +30,14 @@ import Sidebar from '../components/Sidebar.astro';
 
 <script>
   const EX = [
-    {id:"ch3-l1",c:"初心者",ch:"Ch.3",t:"CLIの基本操作",tp:"ハンズオン",k:"cca-progress",ci:"ch3",li:"l1"},
-    {id:"ch3-l2",c:"初心者",ch:"Ch.3",t:"ファイル生成・編集・削除",tp:"ハンズオン",k:"cca-progress",ci:"ch3",li:"l2"},
-    {id:"ch4-l3",c:"初心者",ch:"Ch.4",t:"コミットメッセージの自動生成",tp:"ハンズオン",k:"cca-progress",ci:"ch4",li:"l3"},
-    {id:"ch5-l2",c:"初心者",ch:"Ch.5",t:"TODOアプリのHTML/CSS作成",tp:"ハンズオン",k:"cca-progress",ci:"ch5",li:"l2"},
-    {id:"ch5-l6",c:"初心者",ch:"Ch.5",t:"実践演習課題I",tp:"プロジェクト",k:"cca-progress",ci:"ch5",li:"l6"},
-    {id:"ch6-l2",c:"初心者",ch:"Ch.6",t:"CSVデータ処理スクリプト",tp:"ハンズオン",k:"cca-progress",ci:"ch6",li:"l2"},
-    {id:"ch6-l6",c:"初心者",ch:"Ch.6",t:"最終演習課題",tp:"プロジェクト",k:"cca-progress",ci:"ch6",li:"l6"},
-    {id:"biz-ch3-l1",c:"ビジネス",ch:"Ch.3",t:"議事録・報告書の自動生成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch3",li:"l1"},
-    {id:"biz-ch3-l2",c:"ビジネス",ch:"Ch.3",t:"Excelデータ分析・グラフ作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch3",li:"l2"},
-    {id:"biz-ch4-l3",c:"ビジネス",ch:"Ch.4",t:"分析フレームワーク実践",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch4",li:"l3"},
-    {id:"biz-ch6-l1",c:"ビジネス",ch:"Ch.6",t:"HTMLダッシュボード作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch6",li:"l1"},
-    {id:"biz-ch6-l2",c:"ビジネス",ch:"Ch.6",t:"定期実行スクリプト化",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch6",li:"l2"},
-    {id:"biz-ch7-l1",c:"ビジネス",ch:"Ch.7",t:"社内Webアプリ作成",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch7",li:"l1"},
-    {id:"biz-ch7-l2",c:"ビジネス",ch:"Ch.7",t:"Slack通知・チャット連携",tp:"ハンズオン",k:"cca-progress-biz",ci:"ch7",li:"l2"},
-    {id:"biz-ch8-l4",c:"ビジネス",ch:"Ch.8",t:"最終演習",tp:"プロジェクト",k:"cca-progress-biz",ci:"ch8",li:"l4"},
-    {id:"eng-ch3-l1",c:"エンジニア",ch:"Ch.3",t:"既存プロジェクトへの導入",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch3",li:"l1"},
-    {id:"eng-ch4-l1",c:"エンジニア",ch:"Ch.4",t:"TDDとClaude Code",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch4",li:"l1"},
-    {id:"eng-ch6-l1",c:"エンジニア",ch:"Ch.6",t:"デプロイ自動化",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch6",li:"l1"},
-    {id:"eng-ch7-l1",c:"エンジニア",ch:"Ch.7",t:"Hooksの設定と活用",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch7",li:"l1"},
-    {id:"eng-ch8-l2",c:"エンジニア",ch:"Ch.8",t:"MCPサーバーのセットアップ",tp:"ハンズオン",k:"cca-progress-eng",ci:"ch8",li:"l2"},
+    // 初心者コース — プロジェクト・演習のみ
+    {id:"ch5-l6",c:"初心者",ch:"Ch.5",t:"実践演習課題I：Webアプリ開発",tp:"プロジェクト",k:"cca-progress",ci:"ch5",li:"l6"},
+    {id:"ch6-l6",c:"初心者",ch:"Ch.6",t:"最終演習課題：業務自動化ツール",tp:"プロジェクト",k:"cca-progress",ci:"ch6",li:"l6"},
+    // ビジネス職コース — プロジェクト・演習のみ
+    {id:"biz-ch5-l3",c:"ビジネス",ch:"Ch.5",t:"実践演習：会議アジェンダ・議事録テンプレ作成",tp:"プロジェクト",k:"cca-progress-biz",ci:"ch5",li:"l3"},
+    {id:"biz-ch8-l2",c:"ビジネス",ch:"Ch.8",t:"実践演習：業務自動化ツール実装",tp:"プロジェクト",k:"cca-progress-biz",ci:"ch8",li:"l2"},
+    {id:"biz-ch8-l4",c:"ビジネス",ch:"Ch.8",t:"最終演習：自分の業務を自動化",tp:"プロジェクト",k:"cca-progress-biz",ci:"ch8",li:"l4"},
+    // エンジニアコース — プロジェクト・演習のみ
     {id:"eng-ch9-l4",c:"エンジニア",ch:"Ch.9",t:"最終演習：フルスタック開発",tp:"プロジェクト",k:"cca-progress-eng",ci:"ch9",li:"l4"},
   ];
   const CC={"初心者":"bg-primary-bg text-primary","ビジネス":"bg-success-bg text-success-dark","エンジニア":"bg-yellow-50 text-yellow-700"};
