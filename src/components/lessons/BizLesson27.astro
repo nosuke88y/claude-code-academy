@@ -15,11 +15,13 @@
     <h2 class="text-lg font-semibold text-gray-900 mb-3">ステップ1: Slack Webhookを取得</h2>
     <div class="bg-white rounded-xl border border-base-border p-5">
       <div class="space-y-2 text-xs text-gray-600">
-        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>Slack API（api.slack.com）にアクセス</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>「Incoming Webhooks」を有効化</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">3.</span><span>通知先チャンネルを選択</span></div>
-        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">4.</span><span>Webhook URLをコピー</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">1.</span><span>ブラウザで <strong>api.slack.com/apps</strong> を開く</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">2.</span><span>「Create New App」→「From scratch」→アプリ名とワークスペースを選択</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">3.</span><span>左メニューの「Incoming Webhooks」をクリック→「Activate」をONに</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">4.</span><span>「Add New Webhook to Workspace」→通知先チャンネルを選択→「許可する」</span></div>
+        <div class="flex items-start gap-2"><span class="text-primary font-bold mt-0.5">5.</span><span>表示された Webhook URL（https://hooks.slack.com/...）をコピーして保存</span></div>
       </div>
+      <p class="text-xs text-gray-500 mt-2">Slack無料プランでも利用可能です。Webhook URLは秘密情報なので他人に共有しないでください。</p>
     </div>
   </section>
 

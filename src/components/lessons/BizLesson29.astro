@@ -63,11 +63,30 @@
   }
 
   function showResult() {
-    quizContainer.classList.add('hidden'); resultDiv.classList.remove('hidden');
+    quizContainer.classList.add('hidden');
+    resultDiv.classList.remove('hidden');
     document.getElementById('quiz-score').textContent = `${score} / ${quizData.length} 正解`;
     document.getElementById('quiz-message').textContent = score === quizData.length ? '満点！社内ツール作成をマスターしました！' : score >= 3 ? 'よくできました！' : '復習してみましょう。';
-    const K = 'cca-progress-biz';
-    try { const raw = localStorage.getItem(K); const d = raw ? {chapters:{},xp:0,level:1,streak:0,lastStudyDate:null,...JSON.parse(raw)} : {chapters:{},xp:0,level:1,streak:0,lastStudyDate:null}; if(!d.chapters['ch7'])d.chapters['ch7']={lessons:{}}; d.chapters['ch7'].lessons['l4']={completed:true,completedAt:new Date().toISOString()}; d.xp+=score*10; d.level=Math.floor(d.xp/200)+1; const today=new Date().toISOString().slice(0,10); if(d.lastStudyDate!==today){const y=new Date(Date.now()-86400000).toISOString().slice(0,10);d.streak=d.lastStudyDate===y?d.streak+1:1;d.lastStudyDate=today;} localStorage.setItem(K,JSON.stringify(d)); } catch(e){}
+    completeQuiz();
+  }
+
+  function completeQuiz() {
+    const STORAGE_KEY = 'cca-progress-biz';
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const data = raw ? { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null, ...JSON.parse(raw) } : { chapters: {}, xp: 0, level: 1, streak: 0, lastStudyDate: null };
+      if (!data.chapters['ch7']) data.chapters['ch7'] = { lessons: {} };
+      data.chapters['ch7'].lessons['l4'] = { completed: true, completedAt: new Date().toISOString() };
+      data.xp += score * 10;
+      data.level = Math.floor(data.xp / 200) + 1;
+      const today = new Date().toISOString().slice(0, 10);
+      if (data.lastStudyDate !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        data.streak = data.lastStudyDate === yesterday ? data.streak + 1 : 1;
+        data.lastStudyDate = today;
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch(e) {}
   }
   renderQuestion();
 </script>
