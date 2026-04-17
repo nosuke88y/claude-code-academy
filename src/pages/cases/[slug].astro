@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+
+const D=[
+{id:1,t:"税理士事務所の自動仕訳処理",job:"non",cat:"auto",lv:"中級",b:"60社分の仕訳処理に毎日5時間かかっていた。手作業のため転記ミスも頻発。",h:"Claude CodeをMCPで5つの外部サービス（会計ソフト、銀行API等）と接続。CLAUDE.mdに仕訳ルール・税区分・セキュリティポリシーを定義。毎晩21時にcronで自動実行するワークフローを構築。",a:"処理時間5時間→50分（83%削減）。スタッフゼロで60社対応を実現。転記ミスもほぼゼロに。",p:83,tags:["MCP","CLAUDE.md","Custom Commands"],src:"税理士事務所",dt:"2026-03",app:"自分の定型業務をMCP連携で自動化するパターン。会計以外にも、受発注処理・在庫管理・顧客対応など、外部システムとのデータ連携が必要な業務に応用可能。",rel:[4,7,10]},
+{id:2,t:"営業のExcel月次集計を93%削減",job:"biz",cat:"auto",lv:"初級",b:"月次集計に平均3.2時間。部門別・商品別・前月比など複数の切り口で集計が必要。",h:"Claude Codeに集計ルール（部門別×月別×前月比）を指示し、PythonスクリプトまたはNode.jsスクリプトを自動生成。CSVを読み込んで集計結果をHTMLレポートで出力。",a:"3.2時間→14分（93%削減）。毎月定型的に実行可能。",p:93,tags:["基本操作"],src:"一般企業・営業部門",dt:"2026-01",app:"Excelの定型集計は全てClaude Codeで自動化できる。月次・週次・日次のどの頻度でも、CSVエクスポート→スクリプト実行→HTMLレポートのパターンで対応可能。",rel:[10,28]},
+{id:3,t:"CS返信作成時間を80%削減",job:"biz",cat:"auto",lv:"初級",b:"1通の返信作成に15分。テンプレートはあるが、個別カスタマイズが必要。",h:"問い合わせ内容を自動分類し、カテゴリに応じた返信ドラフトを自動生成。担当者は確認・微調整のみ。",a:"15分→3分（80%削減）、月間60時間削減。",p:80,tags:["基本操作"],src:"EC企業・CS部門",dt:"2026-01",app:"カスタマーサポート以外にも、社内問い合わせ対応、FAQ回答、定型メール返信など、テンプレート+カスタマイズが必要な文書作成全般に応用可能。",rel:[5,34]},
+{id:4,t:"経理の請求書確認を87%削減",job:"biz",cat:"auto",lv:"初級",b:"請求書確認に毎月4.5時間。金額・日付・取引先の照合が手作業。",h:"請求書データの読み取り・照合・差異検出をClaude Codeで自動化。異常値のみ人間がチェック。",a:"4.5時間→35分（87%削減）。",p:87,tags:["基本操作"],src:"一般企業・経理部門",dt:"2026-01",app:"経理業務全般（経費精算チェック、入金消込、月次決算の前処理等）に同じパターンで応用可能。",rel:[1,62]},
+{id:5,t:"商談準備を30分→2分に短縮",job:"biz",cat:"auto",lv:"初級",b:"商談前の顧客情報収集・競合分析・提案シナリオ準備に30分。",h:"顧客情報を自動検索・要約し、商談シナリオを自動生成。",a:"30分→2分（93%削減）。",p:93,tags:["基本操作"],src:"営業担当者",dt:"2026-02",app:"商談以外にも、面接準備、プレゼン準備、会議の事前調査など、情報収集+構造化のパターンに応用可能。",rel:[6,31]},
+{id:6,t:"ServiceNow 29,000人展開・営業準備95%削減",job:"biz",cat:"auto",lv:"中級",b:"営業担当者が商談前準備に多大な時間を費やしていた。全社29,000人規模。",h:"Claude Enterpriseを全社29,000人に展開し、商談準備の情報収集・分析を自動化。",a:"営業準備時間を最大95%削減。導入実装時間50%短縮も目標。",p:95,tags:["基本操作"],src:"ServiceNow",dt:"2025-12",app:"大企業での全社展開のモデルケース。部門別のユースケース設計→パイロット→全社展開のステップが参考になる。",rel:[41,61]},
+{id:7,t:"非エンジニアが21業務を統合・実働60分/日",job:"non",cat:"auto",lv:"上級",b:"調査・執筆・画像生成・会計処理など21の業務を個別に処理。",h:"CLAUDE.md+Skillsで業務ルールを定義し1つのClaude Code環境に統合。",a:"1日の実働が60分に短縮。",p:88,tags:["Skills","CLAUDE.md","MCP"],src:"個人事業主",dt:"2026-03",app:"個人事業主・フリーランスの業務統合パターン。複数の定型業務をSkills化して1環境に集約する発想が鍵。",rel:[1,72]},
+{id:8,t:"データ入力60-70%削減・年$80,000コスト削減",job:"biz",cat:"auto",lv:"初級",b:"チームが週40時間データ入力に費やし年$80,000以上の人件費。",h:"入力フォーム・バリデーション・データ変換を自動化。",a:"60-70%削減、年$48,000-56,000コスト削減。",p:65,tags:["基本操作"],src:"バックオフィス",dt:"2026-01",app:"データ入力が多い部門（経理・人事・営業事務）に直接応用可能。ROI計算のモデルケースとしても参考になる。",rel:[4,10]},
+{id:9,t:"Eコマース事業者が週15-25時間削減",job:"non",cat:"auto",lv:"中級",b:"商品タグ付け・注文分析・価格調査に毎週40時間以上。",h:"商品タグ自動化、競合価格スクレイピング、注文データ分析を自動化。",a:"週15-25時間削減、年間フルタイム1人分相当。",p:50,tags:["基本操作"],src:"Eコマース事業者",dt:"2026-02",app:"ECに限らず、定期的なデータ収集+加工+分析のパターンに応用可能。",rel:[53,58]},
+{id:10,t:"Excel週次集計を92%削減",job:"biz",cat:"auto",lv:"初級",b:"Excelの集計に毎週4時間。",h:"集計スクリプト自動生成でデータ処理を自動化。",a:"4時間→20分（92%削減）。",p:92,tags:["基本操作"],src:"バックオフィス",dt:"2026-01",app:"週次集計パターン。一度スクリプトを作れば毎週使い回せる。",rel:[2,28]},
+{id:11,t:"ソロ開発者が24人月を2人月で完了",job:"eng",cat:"dev",lv:"上級",b:"4人×6ヶ月=24人月の見積もり。",h:"Claude Codeで1人で設計・実装・テストを一貫実施。",a:"12倍の工数削減（24人月→2人月）。",p:92,tags:["基本操作"],src:"ソロエンジニア",dt:"2026-02",app:"グリーンフィールド（新規）プロジェクトでの活用パターン。設計→実装→テストの一気通貫が鍵。",rel:[47,60]},
+{id:12,t:"Anthropic社内PRマージ率67%向上",job:"eng",cat:"dev",lv:"中級",b:"コード作成・レビュー・マージのサイクルが遅い。",h:"全社的にClaude Code導入、コードの70-90%をAI作成。",a:"1日のPRマージ数67%増加。",p:67,tags:["基本操作"],src:"Anthropic",dt:"2025-11",app:"開発チーム全体の生産性向上パターン。",rel:[13,70]},
+{id:13,t:"Claude Code採用チームでPR47%増",job:"eng",cat:"dev",lv:"中級",b:"チーム間の開発速度ばらつき。",h:"Faros AIで採用率とPR生産性を計測比較。",a:"採用率60%チームはPR47%多い。",p:47,tags:["基本操作"],src:"Faros AI",dt:"2026-03",app:"Claude CodeのROI計測パターン。導入効果の可視化に。",rel:[12,64]},
+{id:14,t:"LINEヤフーPRレビュー自動化・週6時間削減",job:"eng",cat:"dev",lv:"上級",b:"PRレビュー準備に手動情報収集。",h:"Claude Code + GitHub MCP + GitHub CLIで自動収集。",a:"週6時間の業務効率化。",p:75,tags:["MCP","Custom Commands"],src:"LINEヤフー",dt:"2026-01",app:"PRレビュー準備の自動化パターン。MCP連携でJira/Confluence等の情報を自動収集。",rel:[15,40]},
+{id:15,t:"3人で週30PRを安定処理",job:"eng",cat:"dev",lv:"中級",b:"3人チームがPRレビューに追われていた。",h:"Skillsでレビューワークフロー構築・標準化。",a:"3人で週30PRを安定処理。",p:60,tags:["Skills"],src:"Tokium",dt:"2026-02",app:"少人数チームのレビュー効率化パターン。Skills活用が鍵。",rel:[14,21]},
+{id:16,t:"テストコード拡充を2ヶ月前倒し",job:"eng",cat:"dev",lv:"中級",b:"テスト拡充が半年計画。",h:"サブエージェント活用のテスト半自動化。",a:"2ヶ月前倒し完了。",p:33,tags:["Custom Commands"],src:"セーフィー",dt:"2025-12",app:"テスト拡充の自動化パターン。",rel:[22,51]},
+{id:17,t:"在庫管理システム開発40%削減",job:"eng",cat:"dev",lv:"中級",b:"開発に約200時間の見込み。",h:"DB設計・ER図・コード生成をClaude Codeで支援。",a:"200→120時間（40%削減）。",p:40,tags:["基本操作"],src:"受託開発企業",dt:"2026-01",app:"受託開発の工数削減パターン。",rel:[18,43]},
+{id:18,t:"REST API開発を45%削減",job:"eng",cat:"dev",lv:"中級",b:"API開発に100時間の見積もり。",h:"エンドポイント設計・コード生成・テスト作成を支援。",a:"100→55時間（45%削減）。",p:45,tags:["基本操作"],src:"IT企業",dt:"2026-01",app:"API開発の効率化パターン。",rel:[17,25]},
+{id:19,t:"バグ修正を半日→1.5時間に短縮",job:"eng",cat:"dev",lv:"初級",b:"原因特定から修正・テストに4-5時間。",h:"エラーログからの原因特定→修正→テストを一気通貫。",a:"約1.5時間で完了（70%削減）。",p:70,tags:["基本操作"],src:"エンジニア個人",dt:"2026-02",app:"バグ修正の効率化パターン。エラーログを渡すだけで原因特定まで自動化。",rel:[40,51]},
+{id:20,t:"Intercom開発チーム30名の工数40%削減",job:"eng",cat:"dev",lv:"中級",b:"30名チームでレビュー・バグ修正に工数過大。",h:"Claude Code30名展開。",a:"40%削減。",p:40,tags:["基本操作"],src:"Intercom",dt:"2025-12",app:"中規模チームへの展開パターン。",rel:[12,44]},
+{id:21,t:"HooksでQAチェック工数40%削減",job:"eng",cat:"dev",lv:"中級",b:"QAチェックに工数過大。",h:"Hooksでlint自動実行・コミット前チェック。",a:"40%削減。",p:40,tags:["Hooks"],src:"企業開発チーム",dt:"2026-02",app:"Hooks活用パターン。自動lint・自動テストの設定に。",rel:[15,22]},
+{id:22,t:"テスト自動生成で95%カバレッジ",job:"eng",cat:"dev",lv:"中級",b:"カバレッジ40%、バグ見落とし多い。",h:"テストコード自動生成でエッジケースも網羅。",a:"40%→95%、バグ70%減。",p:70,tags:["基本操作"],src:"開発チーム",dt:"2026-01",app:"テストカバレッジ向上パターン。",rel:[16,51]},
+{id:23,t:"Firecracker社で生産性10倍",job:"eng",cat:"dev",lv:"中級",b:"AI非使用時の生産性に限界。",h:"約50名で全社導入。",a:"10倍以上の生産性向上。",p:90,tags:["基本操作"],src:"Firecracker",dt:"2026-02",app:"中規模企業の全社導入パターン。",rel:[75,80]},
+{id:24,t:"CS学生がSaaSを3日で構築",job:"eng",cat:"dev",lv:"中級",b:"SaaS構築に数週間〜数ヶ月。",h:"Claude Codeで全機能を自律実装、MCP連携。",a:"3日間で完全なSaaSを完成。",p:90,tags:["MCP"],src:"CS学生",dt:"2026-01",app:"学生・初心者でもフルSaaSを構築できるパターン。",rel:[25,59]},
+{id:25,t:"請求書管理MVPを1日・$3.65で構築",job:"eng",cat:"dev",lv:"中級",b:"MVP開発に数週間の見込み。",h:"Claude Code + MCP（PostgreSQL等）で一気通貫実装。",a:"1日完成、API費用$3.65。",p:95,tags:["MCP"],src:"エンジニア個人",dt:"2026-02",app:"MVP高速構築パターン。MCP連携で外部サービスも統合。",rel:[24,48]},
+{id:26,t:"広告分析を3-5時間→7分に短縮",job:"biz",cat:"data",lv:"中級",b:"広告分析に3〜5時間。",h:"BigQuery/GA4をMCP接続し自動集計・分析。",a:"3-5時間→7分（97%削減）。",p:97,tags:["MCP"],src:"Rimo",dt:"2026-03",app:"広告分析の自動化パターン。MCP+BIツール連携。",rel:[27,66]},
+{id:27,t:"マーケ分析レポート95%短縮",job:"biz",cat:"data",lv:"初級",b:"レポート作成に半日。",h:"データ集計・可視化・レポート生成を自動化。",a:"半日→3分（95%短縮）。",p:95,tags:["基本操作"],src:"マーケアナリスト",dt:"2026-01",app:"定型レポートの自動化パターン。",rel:[26,49]},
+{id:28,t:"経理レポート6時間→12分",job:"biz",cat:"data",lv:"初級",b:"月次財務レポートに6時間。",h:"スプレッドシート上でAIが集計・整形を自動化。",a:"6時間→12分（97%短縮）。",p:97,tags:["基本操作"],src:"経理担当者",dt:"2026-01",app:"経理レポートの自動化パターン。",rel:[2,10]},
+{id:29,t:"7時間の自律作業で精度99.9%",job:"eng",cat:"data",lv:"上級",b:"複雑なデータ処理に人手で数日。",h:"自律モードで複雑なデータ処理を委任。",a:"7時間で完了、精度99.9%。",p:95,tags:["基本操作"],src:"データエンジニア",dt:"2025-12",app:"長時間の自律処理パターン。",rel:[39,70]},
+{id:30,t:"マーケターが事業KPI4ヶ月で300%成長",job:"non",cat:"content",lv:"中級",b:"広告データ集計30分、少人数で対応。",h:"定型作業自動化。データ集計→分析→打ち手提案まで一気通貫。",a:"集計30分→1-2分、KPI300%成長。",p:97,tags:["Custom Commands"],src:"スマートバンク",dt:"2026-02",app:"マーケティングの一気通貫自動化パターン。",rel:[34,67]},
+{id:31,t:"営業提案書の作成78%削減",job:"biz",cat:"content",lv:"中級",b:"提案書に平均4.2時間、月間220時間。",h:"テンプレートをSkills登録し自動生成。",a:"4.2→45分（78%削減）。",p:78,tags:["Skills"],src:"IT/コンサル",dt:"2026-02",app:"提案書のテンプレート化+自動生成パターン。",rel:[5,32]},
+{id:32,t:"提案書5分・LP30分で完成",job:"non",cat:"content",lv:"中級",b:"提案書やLP制作に多大な時間。",h:"構成・デザイン・コーディングを一気通貫自動生成。",a:"提案書5分、LP30分（96%削減）。",p:96,tags:["基本操作"],src:"小規模IT企業",dt:"2026-01",app:"提案書+LP高速作成パターン。",rel:[31,50]},
+{id:33,t:"1人で全マーケティングチャネル運用",job:"non",cat:"content",lv:"上級",b:"複数チャネルを複数人で担当。",h:"サブエージェントで並列処理、MCP自作。",a:"1名で全チャネル運用、コピー10倍。",p:90,tags:["MCP","Skills"],src:"Anthropic社内マーケ",dt:"2026-01",app:"ひとりマーケチーム構築パターン。",rel:[30,67]},
+{id:34,t:"非エンジニアのマーケターが週15時間自動化",job:"non",cat:"content",lv:"初級",b:"レポート作成に大量の手作業。",h:"レポートワークフロー自動化、ツール3つを8週で構築。",a:"週15時間以上の節約。",p:75,tags:["基本操作"],src:"デジタルマーケター",dt:"2026-03",app:"非エンジニアのツール自作パターン。",rel:[30,59]},
+{id:35,t:"技術リサーチ時間を80%削減",job:"eng",cat:"data",lv:"初級",b:"新技術の調査に1時間以上。",h:"自然言語でリサーチ依頼、自動要約。",a:"1時間→10-20分（80%削減）。",p:80,tags:["基本操作"],src:"Anthropic全職種",dt:"2025-11",app:"技術調査の効率化パターン。",rel:[27,70]},
+{id:36,t:"Stripe Scala→Java 10,000行移行を4日で完了",job:"eng",cat:"dev",lv:"上級",b:"10,000行のScala→Java移行に10エンジニア週の見積もり。",h:"Claude Codeで自動移行、Anthropicと協力してエンタープライズ版展開。",a:"4日間で完了（96%削減）。",p:96,tags:["コード移行"],src:"Stripe",dt:"2026-03",app:"大規模コード移行パターン。言語変換の自動化に。",rel:[37,38]},
+{id:37,t:"Wiz Python→Go 5万行移行を20時間で完了",job:"eng",cat:"dev",lv:"上級",b:"50,000行のPython→Go移行に2-3ヶ月。",h:"1エンジニアが500テストで検証しながら反復開発。",a:"20時間で完了、PDF処理2倍高速。",p:97,tags:["コード移行"],src:"Wiz",dt:"2026-02",app:"テスト駆動の言語移行パターン。",rel:[36,38]},
+{id:38,t:"Wiz C++→Goアセンブリ移行を2日で完了",job:"eng",cat:"dev",lv:"上級",b:"20,000行のC++→Go移行。",h:"Goアセンブリ含む完全移行を実行。",a:"2日で5,434行に変換、テスト100%合格。",p:98,tags:["コード移行"],src:"Wiz",dt:"2026-02",app:"低レベルコードの移行パターン。",rel:[36,37]},
+{id:39,t:"Rakuten 機能デリバリー79%短縮",job:"eng",cat:"dev",lv:"中級",b:"新機能デリバリーに平均24営業日。",h:"複数Claude Codeセッション並列実行、TDD導入。",a:"24日→5日（79%削減）、精度99.9%。",p:79,tags:["並列実行","TDD"],src:"Rakuten",dt:"2026-04",app:"エンタープライズでの並列開発パターン。",rel:[40,57]},
+{id:40,t:"Ramp インシデント調査時間80%削減",job:"eng",cat:"dev",lv:"中級",b:"本番障害の初期トリアージに多大な時間。",h:"Claude Codeをインシデント対応ワークフローに統合。",a:"調査80%削減、30日で100万行AI生成。",p:80,tags:["基本操作"],src:"Ramp",dt:"2026-01",app:"インシデント対応の効率化パターン。",rel:[14,19]},
+{id:41,t:"Zapier 800+AIエージェント展開・週10時間節約",job:"biz",cat:"auto",lv:"中級",b:"360人リモートチーム効率化。",h:"全社展開、Slack絵文字トリガーでコード→MR自動化。",a:"89%採用率、営業1人あたり週10時間節約。",p:89,tags:["Slack連携"],src:"Zapier",dt:"2025-12",app:"リモートチームの全社AI展開パターン。",rel:[6,61]},
+{id:42,t:"TELUS 50万時間節約・9,000万ドル効果",job:"biz",cat:"auto",lv:"上級",b:"大規模テレコムでボトルネック多発。",h:"独自AI基盤構築、47のGenAIソリューション展開。",a:"50万時間節約、コード出荷30%高速化。",p:30,tags:["独自基盤"],src:"TELUS",dt:"2026-01",app:"大企業の独自AI基盤構築パターン。",rel:[44,75]},
+{id:43,t:"Augment Code 4-8ヶ月→2週間に短縮",job:"eng",cat:"dev",lv:"上級",b:"CTO見積もり4-8ヶ月。",h:"Claude on Vertex AI経由で開発。",a:"2週間で完了（最大94%短縮）。",p:94,tags:["Vertex AI"],src:"Augment Code",dt:"2025-11",app:"クラウドAI連携の開発効率化パターン。",rel:[17,76]},
+{id:44,t:"Cognizant 35万人展開・欠陥14%削減",job:"eng",cat:"dev",lv:"上級",b:"35万人にAI開発ツール展開。",h:"Agent SDKとフレームワーク統合。",a:"欠陥14%削減、レガシー移行18%高速化。",p:18,tags:["Agent SDK"],src:"Cognizant",dt:"2026-03",app:"超大規模展開パターン。",rel:[42,75]},
+{id:45,t:"Tobeva 2ヶ月で500PR作成",job:"eng",cat:"dev",lv:"上級",b:"手作業では1年以上。",h:"3-5個のエージェントを並列実行。",a:"2ヶ月で500PR作成。",p:90,tags:["並列エージェント"],src:"Tobeva",dt:"2026-03",app:"大量PR並列作成パターン。",rel:[47,77]},
+{id:46,t:"Googleエンジニア 1年の設計を1時間で再現",job:"eng",cat:"dev",lv:"上級",b:"分散システム設計に1年。",h:"Claude Codeで同等のシステム生成。",a:"1時間で再現。",p:99,tags:["アーキテクチャ"],src:"Google",dt:"2026-01",app:"アーキテクチャ設計の自動化パターン。",rel:[43,52]},
+{id:47,t:"ソロ開発者 38,632行SaaSを8週間で構築",job:"eng",cat:"dev",lv:"中級",b:"フルSaaSに通常数人月。",h:"Claude Codeのみで36日間開発、727コミット。",a:"38,632行・657ファイルを1人で完成。",p:75,tags:["基本操作"],src:"個人開発者",dt:"2026-02",app:"ソロSaaS構築パターン。",rel:[11,24]},
+{id:48,t:"PointFive コンテンツワークフロー月額$5で自動化",job:"biz",cat:"auto",lv:"中級",b:"手動のフォーム→Docs→メール→CMSの非効率プロセス。",h:"1週間でAWS Lambda+DynamoDBシステム構築。",a:"月額$5未満で運用。",p:90,tags:["AWS Lambda"],src:"PointFive",dt:"2026-02",app:"コンテンツワークフロー自動化パターン。",rel:[25,68]},
+{id:49,t:"BIダッシュボードでレポート98%短縮",job:"biz",cat:"data",lv:"中級",b:"レポート生成に3日。",h:"6つのインタラクティブダッシュボード構築。",a:"3日→30分（98%削減）、230万ドルのコスト削減機会特定。",p:98,tags:["BI","ダッシュボード"],src:"Kaizen AI",dt:"2026-01",app:"BIダッシュボード構築パターン。",rel:[26,27]},
+{id:50,t:"Stanford研究 コンテンツ制作127%向上",job:"biz",cat:"content",lv:"初級",b:"コンテンツ制作がスケール不可。",h:"制作ワークフロー自動化。",a:"速度127%向上、メール開封率52%。",p:56,tags:["基本操作"],src:"Stanford GSB研究",dt:"2026-01",app:"コンテンツマーケティング効率化パターン。",rel:[30,34]},
+{id:51,t:"エンジニアチーム スプリント40時間節約",job:"eng",cat:"dev",lv:"中級",b:"デバッグ・オンボーディング・レビューに多大な時間。",h:"7つのClaude Codeワークフロー導入。",a:"スプリント40時間節約、デバッグ60%削減。",p:70,tags:["基本操作"],src:"Medium記事",dt:"2026-02",app:"スプリント効率化パターン。",rel:[19,22]},
+{id:52,t:"COBOL→Java レガシー移行を自動化",job:"eng",cat:"dev",lv:"上級",b:"数十年前のCOBOLアプリ移行に年単位。",h:"検出→ドキュメント化→移行→検証を自動実行。",a:"25タスク全完了、バイト精度で検証済み。",p:90,tags:["レガシー移行"],src:"Anthropicデモ",dt:"2025-10",app:"レガシーモダナイゼーションパターン。",rel:[36,46]},
+{id:53,t:"Eコマース在庫管理の日次作業を自動化",job:"biz",cat:"auto",lv:"初級",b:"在庫確認に毎日45-90分。",h:"Shopify/WooCommerce連携、Slackアラート。",a:"日次作業を完全自動化。",p:85,tags:["Slack通知"],src:"AdventurePPC",dt:"2026-02",app:"EC在庫管理の自動化パターン。",rel:[9,58]},
+{id:54,t:"YC W25 スタートアップの25%がAI生成コード95%",job:"eng",cat:"dev",lv:"中級",b:"限られたリソースでプロダクト出荷。",h:"Claude Code等で95%を自動生成。",a:"開発コスト約$1,000。",p:95,tags:["基本操作"],src:"Y Combinator",dt:"2025-03",app:"スタートアップのAIファースト開発パターン。",rel:[24,47]},
+{id:55,t:"RevOps ワークフローをスプリント→午後に短縮",job:"biz",cat:"auto",lv:"中級",b:"データクリーンアップ・リードルーティングに工数大。",h:"データクリーンアップ・リードルーティング自動化。",a:"スプリント→午後に短縮。",p:80,tags:["基本操作"],src:"Landbase",dt:"2026-02",app:"RevOps自動化パターン。",rel:[56,65]},
+{id:56,t:"PMのPRD→チケット自動生成で月160時間確保",job:"biz",cat:"auto",lv:"中級",b:"PRDからチケット手動作成に時間。",h:"PRD読み込みでチケット自動生成。",a:"PRD1件→19チケット自動生成。",p:80,tags:["基本操作"],src:"Sachin Rekhi",dt:"2026-03",app:"PM業務の自動化パターン。",rel:[55]},
+{id:57,t:"CRED フィンテック 開発速度2倍",job:"eng",cat:"dev",lv:"中級",b:"1,500万ユーザーの金融アプリ開発加速。",h:"Claude Sonnetでコーディング・テスト自動化。",a:"デリバリー速度2倍。",p:50,tags:["基本操作"],src:"CRED",dt:"2025-12",app:"フィンテック開発の効率化パターン。",rel:[39,71]},
+{id:58,t:"Vulcan Technologies 非技術者2名で州政府契約獲得",job:"non",cat:"auto",lv:"中級",b:"非技術系の共同創業者2名でプロトタイプが必要。",h:"Claude Codeのみで規制分析AIを構築。",a:"州契約獲得、$10.9Mシード調達。",p:27,tags:["基本操作"],src:"Vulcan Technologies",dt:"2025-07",app:"非技術者のプロトタイプ構築パターン。",rel:[59,74]},
+{id:59,t:"非技術者が4時間・$20でSaaSアプリ構築",job:"non",cat:"dev",lv:"初級",b:"非技術者でアプリ開発経験なし。",h:"自然言語で要件指示しWebアプリ構築。",a:"4時間・$20で完成。",p:95,tags:["基本操作"],src:"Steve Glaveski",dt:"2026-01",app:"非技術者のアプリ構築パターン。",rel:[58,74]},
+{id:60,t:"ソロ開発者 3週間分を4日で完了",job:"eng",cat:"dev",lv:"中級",b:"ソロプロジェクトが遅延。",h:"ストーリーポイント消化を加速。",a:"SP14→37（164%向上）、デバッグ60%削減。",p:60,tags:["基本操作"],src:"個人開発者",dt:"2026-02",app:"ソロ開発のリカバリパターン。",rel:[11,47]},
+{id:61,t:"HUB International 2万人展開・85%生産性向上",job:"biz",cat:"auto",lv:"中級",b:"2万人以上が手作業に時間。",h:"Claude Enterprise全社導入。",a:"85%生産性向上、週2.5時間/人節約。",p:85,tags:["全社展開"],src:"HUB International",dt:"2026-02",app:"保険業界の全社展開パターン。",rel:[6,41]},
+{id:62,t:"ゴールドマン・サックス 経理・コンプライアンス自動化",job:"biz",cat:"auto",lv:"上級",b:"取引記録処理・KYC/AMLに膨大な手作業。",h:"Anthropicエンジニア6ヶ月常駐で共同開発。",a:"オンボーディング時間約30%削減見込み。",p:30,tags:["コンプライアンス"],src:"Goldman Sachs",dt:"2026-02",app:"金融業界のコンプライアンス自動化パターン。",rel:[4,42]},
+{id:63,t:"Faros AI 技術的負債解消・Docker50%削減",job:"eng",cat:"dev",lv:"中級",b:"Dockerイメージ752MB、200ファイル修正必要。",h:"依存関係整理とマルチステージビルド変換。",a:"Docker50%削減、200ファイル数分で完了。",p:50,tags:["基本操作"],src:"Faros AI",dt:"2026-01",app:"技術的負債解消パターン。",rel:[21,64]},
+{id:64,t:"Faros AI測定 PR1件あたり$37.50のROI",job:"eng",cat:"data",lv:"中級",b:"PR1件あたりのコストが高い。",h:"ROIを定量計測。",a:"4:1のROI、追加PR1件あたり$37.50。",p:75,tags:["ROI分析"],src:"Faros AI",dt:"2026-03",app:"Claude CodeのROI計測パターン。",rel:[13,70]},
+{id:65,t:"顧客類似リード自動発掘エージェント",job:"biz",cat:"auto",lv:"中級",b:"CRM分析→リード発掘→メール作成に時間。",h:"HubSpot+Clay+Slack+メールをMCP連携。",a:"毎週10社×3-5名を自動特定。",p:80,tags:["MCP","HubSpot"],src:"Elaine Zelby",dt:"2026-03",app:"営業リード自動発掘パターン。",rel:[5,55]},
+{id:66,t:"LinkedIn広告競合分析を5分で自動化",job:"biz",cat:"data",lv:"中級",b:"競合LinkedIn広告を手動監視。",h:"Ad Libraryスクレイピング→PDF生成。",a:"5分でブランドPDFレポート。",p:90,tags:["スクレイピング"],src:"Kamil Rextin",dt:"2026-03",app:"競合広告分析の自動化パターン。",rel:[26,49]},
+{id:67,t:"Animalz スタイルガイド自動チェック",job:"biz",cat:"content",lv:"中級",b:"スタイルガイド遵守チェックが手作業。",h:"8つの並列エージェントで自動チェック。",a:"20-30分でワークフロー構築。",p:80,tags:["並列エージェント"],src:"Animalz",dt:"2026-03",app:"コンテンツ品質管理の自動化パターン。",rel:[30,33]},
+{id:68,t:"デジタル広告代理店 月次レポート2日→40分",job:"biz",cat:"auto",lv:"初級",b:"月次レポート作成に毎月2日。",h:"カスタムレポートパイプライン構築。",a:"2日→40分（97%削減）。",p:97,tags:["基本操作"],src:"AdventurePPC",dt:"2026-02",app:"代理店のレポート自動化パターン。",rel:[26,49]},
+{id:69,t:"Ambral ソロCTOでAIアカウント管理システム構築",job:"eng",cat:"auto",lv:"上級",b:"AM1人が50-100アカウント担当で質低下。",h:"Agent SDKでマルチサブエージェント構築。",a:"離脱兆候を自動検知。",p:80,tags:["Agent SDK"],src:"Ambral (YC W25)",dt:"2025-12",app:"AIアカウント管理パターン。",rel:[72]},
+{id:70,t:"Anthropic調査 中央値84%の時間削減",job:"eng",cat:"data",lv:"中級",b:"ナレッジワーク全般に多大な時間。",h:"10万件会話ログ分析。",a:"中央値84%削減、平均12倍。",p:84,tags:["データ分析"],src:"Anthropic Research",dt:"2025-11",app:"生産性調査の参考データ。",rel:[12,35]},
+{id:71,t:"Fountain 開発速度50%向上",job:"eng",cat:"dev",lv:"中級",b:"新機能に数週間。",h:"Claude Code+APIでAI搭載OS構築。",a:"開発速度50%向上。",p:50,tags:["基本操作"],src:"Fountain",dt:"2025-12",app:"HR Tech開発の効率化パターン。",rel:[57,76]},
+{id:72,t:"AIプロジェクトマネージャーで週15時間節約",job:"non",cat:"auto",lv:"中級",b:"メール・Docs・会議記録からダッシュボード手動更新。",h:"オーケストレーター+サブエージェント構成のAI PM構築。",a:"週15時間節約。",p:37,tags:["サブエージェント"],src:"Every.to",dt:"2026-03",app:"AI PM構築パターン。",rel:[7,69]},
+{id:73,t:"MindStudio 請求書処理をComputer Useで自動化",job:"biz",cat:"auto",lv:"初級",b:"請求書の手動入力（API非対応ソフト）。",h:"Computer Use機能で画面操作自動化。",a:"処理時間半分以下、旧式ソフトにも対応。",p:50,tags:["Computer Use"],src:"MindStudio",dt:"2026-01",app:"API非対応ソフトの自動化パターン。",rel:[4,62]},
+{id:74,t:"非技術者が1時間で見積もりツール構築",job:"non",cat:"dev",lv:"初級",b:"建設業オーナーが手作業で見積もり計算。",h:"自然言語で要件指示。",a:"1時間でプロ品質ツール完成。",p:90,tags:["基本操作"],src:"Kaizen AI",dt:"2026-02",app:"非技術者のツール構築パターン。",rel:[58,59]},
+{id:75,t:"Accenture 3万人にClaude Code訓練",job:"eng",cat:"dev",lv:"中級",b:"大規模デジタル変革加速。",h:"複数年パートナーシップ。",a:"史上最大のClaude Code展開。",p:50,tags:["全社展開"],src:"Accenture",dt:"2025-12",app:"超大規模展開パターン。",rel:[42,44]},
+{id:76,t:"Altana サプライチェーン開発2-10倍高速化",job:"eng",cat:"dev",lv:"中級",b:"AI/MLシステム開発に時間。",h:"チーム全体にClaude Code導入。",a:"2-10倍高速化。",p:80,tags:["AI/ML"],src:"Altana",dt:"2026-02",app:"サプライチェーンAI開発パターン。",rel:[43,71]},
+{id:77,t:"Sanity上級エンジニア 並列インスタンスで生産性向上",job:"eng",cat:"dev",lv:"上級",b:"AI支援開発の実用性を検証。",h:"6週間フルAI委任、複数Claude並列。",a:"月$1,000-1,500で上級エンジニアレベル出力。",p:60,tags:["並列実行"],src:"Sanity",dt:"2025-12",app:"上級エンジニアのAI活用パターン。",rel:[45,79]},
+{id:78,t:"Behavox 全社go-toペアプログラマーに選定",job:"eng",cat:"dev",lv:"中級",b:"数百人にAIペアプログラマーが必要。",h:"他AIと比較評価しClaude Code選定。",a:"一貫して他を上回る性能。",p:50,tags:["基本操作"],src:"Behavox",dt:"2026-02",app:"AIツール選定の評価パターン。",rel:[20]},
+{id:79,t:"HumanLayer チーム全体でAI開発をスケール",job:"eng",cat:"dev",lv:"上級",b:"個人のClaude Code活用をチーム展開する課題。",h:"worktreeで複数エージェント並列実行。",a:"組織全体でAIファースト開発。",p:70,tags:["worktree"],src:"HumanLayer (YC F24)",dt:"2025-12",app:"チームスケーリングパターン。",rel:[45,77]},
+{id:80,t:"全社導入2週間で採用基準が変わった",job:"biz",cat:"auto",lv:"中級",b:"業務効率化と採用基準の再定義が必要。",h:"Claude Codeを全社導入。",a:"採用基準が「AI活用力」に変化。",p:50,tags:["全社展開"],src:"malna株式会社",dt:"2026-02",app:"組織変革パターン。",rel:[23,75]},
+];
+
+export function getStaticPaths() {
+  return Array.from({length:80},(_,i)=>({params:{slug:`case-${i+1}`}}));
+}
+
+const { slug } = Astro.params;
+const c = D.find(x => `case-${x.id}` === slug) || D[0];
+const prev = D.find(x => x.id === c.id - 1);
+const next = D.find(x => x.id === c.id + 1);
+const related = (c.rel || []).map(id => D.find(x => x.id === id)).filter(Boolean);
+
+const CL: Record<string,string> = {"dev":"開発効率化","auto":"業務自動化","data":"データ分析","content":"コンテンツ"};
+const CC: Record<string,string> = {"dev":"bg-blue-100 text-blue-700","auto":"bg-green-100 text-green-700","data":"bg-purple-100 text-purple-700","content":"bg-orange-100 text-orange-700"};
+const JL: Record<string,string> = {"eng":"エンジニア","biz":"ビジネス職","non":"非エンジニア"};
+const JC: Record<string,string> = {"eng":"bg-yellow-50 text-yellow-700","biz":"bg-primary-bg text-primary","non":"bg-pink-50 text-pink-700"};
+const LC: Record<string,string> = {"初級":"bg-green-100 text-green-700","中級":"bg-blue-100 text-blue-700","上級":"bg-purple-100 text-purple-700"};
+---
+
+<Layout title={`${c.t} — 事例集 — Claude Code Academy`}>
+  <Sidebar currentPage="cases" />
+  <main class="ml-[260px] p-8 min-h-screen">
+    <div class="flex items-center gap-2 text-xs text-gray-400 mb-6">
+      <a href="/cases" class="hover:text-primary transition-colors no-underline text-gray-400">事例集</a>
+      <span>/</span>
+      <span class="text-gray-400">{CL[c.cat]}</span>
+      <span>/</span>
+      <span class="text-gray-600">#{c.id}</span>
+    </div>
+
+    <div class="max-w-3xl">
+      <div class="mb-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class={`text-[11px] px-2.5 py-0.5 rounded-full ${CC[c.cat]}`}>{CL[c.cat]}</span>
+          <span class={`text-[11px] px-2.5 py-0.5 rounded-full ${JC[c.job]}`}>{JL[c.job]}</span>
+          <span class={`text-[11px] px-2.5 py-0.5 rounded-full ${LC[c.lv]}`}>{c.lv}</span>
+          <span class="text-[11px] text-gray-400">{c.dt}</span>
+          <span class="text-[11px] text-gray-400">· {c.src}</span>
+        </div>
+        <h1 class="text-2xl font-semibold text-gray-900 mb-2">{c.t}</h1>
+        {c.p > 0 && <div class="text-3xl font-bold text-success-dark">-{c.p}% 削減</div>}
+      </div>
+
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">背景・課題（Before）</h2>
+        <div class="bg-red-50 rounded-xl p-5 border border-red-100">
+          <p class="text-sm text-gray-700">{c.b}</p>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">解決方法（How）</h2>
+        <div class="bg-white rounded-xl border border-base-border p-5">
+          <p class="text-sm text-gray-700">{c.h}</p>
+          <div class="flex items-center gap-1 flex-wrap mt-3">
+            {c.tags.map((tag: string) => (
+              <span class="text-[10px] px-2 py-0.5 rounded bg-base-muted text-gray-500">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">成果（After）</h2>
+        <div class="bg-green-50 rounded-xl p-5 border border-green-100">
+          <p class="text-sm text-gray-700 font-medium">{c.a}</p>
+        </div>
+      </section>
+
+      {c.app && (
+        <section class="mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">応用アイデア</h2>
+          <div class="bg-primary-bg rounded-xl p-5">
+            <p class="text-sm text-gray-700">{c.app}</p>
+          </div>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">関連事例</h2>
+          <div class="space-y-2">
+            {related.map((r: any) => (
+              <a href={`/cases/case-${r.id}`} class="flex items-center gap-3 p-3 bg-white rounded-lg border border-base-border hover:border-primary-pale transition-all no-underline">
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-base-muted text-gray-500">#{r.id}</span>
+                <span class="text-sm text-gray-900 flex-1">{r.t}</span>
+                {r.p > 0 && <span class="text-xs font-bold text-success-dark">-{r.p}%</span>}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="mb-8">
+        <div class="bg-white rounded-xl border border-primary-border p-5 text-center">
+          <p class="text-sm text-gray-700 mb-3">この事例を参考に学ぶ</p>
+          <div class="flex justify-center gap-3">
+            {c.job === 'eng' && <a href="/track/engineer" class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">エンジニアコースへ</a>}
+            {c.job === 'biz' && <a href="/track/business" class="px-5 py-2.5 bg-success text-white rounded-lg text-sm font-medium no-underline hover:opacity-90 transition-colors">ビジネスコースへ</a>}
+            {c.job === 'non' && <a href="/track/business" class="px-5 py-2.5 bg-success text-white rounded-lg text-sm font-medium no-underline hover:opacity-90 transition-colors">ビジネスコースへ</a>}
+            <a href="/tips" class="px-5 py-2.5 bg-transparent text-primary border border-primary-border rounded-lg text-sm no-underline hover:bg-primary-bg transition-colors">Tips集を見る</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex items-center justify-between pt-6 border-t border-base-border">
+        {prev ? (
+          <a href={`/cases/case-${prev.id}`} class="px-4 py-2 bg-transparent text-primary border border-primary-border rounded-lg text-sm no-underline hover:bg-primary-bg transition-all">← 前の事例</a>
+        ) : <div />}
+        <a href="/cases" class="px-4 py-2 text-gray-500 text-sm no-underline hover:text-primary transition-colors">一覧に戻る</a>
+        {next ? (
+          <a href={`/cases/case-${next.id}`} class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium no-underline hover:bg-primary-dark transition-colors">次の事例 →</a>
+        ) : <div />}
+      </div>
+    </div>
+  </main>
+</Layout>

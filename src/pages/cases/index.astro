@@ -1,0 +1,206 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+---
+
+<Layout title="活用事例集 — Claude Code Academy">
+  <Sidebar currentPage="cases" />
+  <main class="ml-[260px] p-8 min-h-screen">
+    <div class="mb-7">
+      <h1 class="text-[22px] font-semibold text-gray-900">活用事例集</h1>
+      <p class="text-sm text-gray-400 mt-1">実際の企業・個人によるClaude Code活用事例 · Web検索で収集</p>
+    </div>
+
+    <div class="grid grid-cols-4 gap-3.5 mb-7">
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5"><div class="text-xs text-gray-400 mb-0.5">事例数</div><div class="text-lg font-semibold text-gray-900" id="s-total">0</div></div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5"><div class="text-xs text-gray-400 mb-0.5">表示中</div><div class="text-lg font-semibold text-primary" id="s-show">0</div></div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5"><div class="text-xs text-gray-400 mb-0.5">平均削減率</div><div class="text-lg font-semibold text-success-dark" id="s-avg">0%</div></div>
+      <div class="bg-white rounded-[10px] border border-base-border px-4 py-3.5"><div class="text-xs text-gray-400 mb-0.5">海外事例</div><div class="text-lg font-semibold text-blue-600" id="s-intl">0</div></div>
+    </div>
+
+    <div class="bg-white rounded-[10px] border border-base-border p-4 mb-5">
+      <div class="flex items-center gap-3 mb-3">
+        <input type="text" id="search" placeholder="キーワードで検索..." class="flex-1 px-3 py-2 border border-base-border rounded-lg text-sm focus:outline-none focus:border-primary" />
+        <select id="sort" class="px-3 py-2 border border-base-border rounded-lg text-xs bg-white cursor-pointer">
+          <option value="new">新しい順</option>
+          <option value="old">古い順</option>
+          <option value="pct">削減率順</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">カテゴリ:</span>
+        <button class="cf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="all">すべて</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="dev">開発効率化</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="auto">業務自動化</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="data">データ分析</button>
+        <button class="cf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="content">コンテンツ</button>
+      </div>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">職種:</span>
+        <button class="jf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="all">すべて</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="eng">エンジニア</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="biz">ビジネス職</button>
+        <button class="jf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="non">非エンジニア</button>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-gray-400 w-16 shrink-0">難易度:</span>
+        <button class="lf active px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="all">すべて</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="初級">初級</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="中級">中級</button>
+        <button class="lf px-2.5 py-1 rounded-full text-[11px] border cursor-pointer transition-all" data-v="上級">上級</button>
+      </div>
+    </div>
+
+    <div id="list" class="grid grid-cols-1 gap-3"></div>
+    <div id="empty" class="hidden text-center py-16"><p class="text-sm text-gray-400">条件に一致する事例がありません</p></div>
+  </main>
+</Layout>
+
+<style>
+  .cf.active,.jf.active,.lf.active{background-color:var(--color-primary-bg);color:var(--color-primary);border-color:var(--color-primary-border)}
+  .cf:not(.active),.jf:not(.active),.lf:not(.active){background-color:white;color:#6b7280;border-color:var(--color-base-border)}
+</style>
+
+<script>
+const D=[
+// === 既存35件（日本語中心）===
+{id:1,t:"税理士事務所の自動仕訳処理",job:"non",cat:"auto",lv:"中級",b:"60社分の仕訳処理に毎日5時間",h:"MCP×5外部サービス連携、CLAUDE.mdに仕訳ルール定義",a:"5時間→50分（83%削減）",p:83,tags:["MCP","CLAUDE.md"],src:"税理士事務所",dt:"2026-03",intl:false},
+{id:2,t:"営業のExcel月次集計を93%削減",job:"biz",cat:"auto",lv:"初級",b:"月次集計に平均3.2時間",h:"集計ルール指示でスクリプト自動生成",a:"3.2時間→14分（93%削減）",p:93,tags:["基本操作"],src:"一般企業",dt:"2026-01",intl:false},
+{id:3,t:"CS返信作成時間を80%削減",job:"biz",cat:"auto",lv:"初級",b:"1通の返信作成に15分",h:"問い合わせ自動分類＋返信ドラフト自動生成",a:"15分→3分（80%削減）",p:80,tags:["基本操作"],src:"EC企業",dt:"2026-01",intl:false},
+{id:4,t:"経理の請求書確認を87%削減",job:"biz",cat:"auto",lv:"初級",b:"請求書確認に毎月4.5時間",h:"請求書データの読み取り・照合・差異検出を自動化",a:"4.5時間→35分（87%削減）",p:87,tags:["基本操作"],src:"一般企業",dt:"2026-01",intl:false},
+{id:5,t:"商談準備を30分→2分に短縮",job:"biz",cat:"auto",lv:"初級",b:"商談前の顧客情報収集に30分",h:"顧客情報を自動検索・要約し商談シナリオ生成",a:"30分→2分（93%削減）",p:93,tags:["基本操作"],src:"営業担当者",dt:"2026-02",intl:false},
+{id:6,t:"ServiceNow 29,000人展開・営業準備95%削減",job:"biz",cat:"auto",lv:"中級",b:"営業担当者が商談前準備に多大な時間",h:"全社29,000人にClaude展開",a:"営業準備時間を最大95%削減",p:95,tags:["基本操作"],src:"ServiceNow",dt:"2025-12",intl:true},
+{id:7,t:"非エンジニアが21業務を統合・実働60分/日",job:"non",cat:"auto",lv:"上級",b:"21の業務を個別に処理",h:"CLAUDE.md+Skillsで業務ルール定義し1環境に統合",a:"1日の実働が60分に短縮",p:88,tags:["Skills","CLAUDE.md","MCP"],src:"個人事業主",dt:"2026-03",intl:false},
+{id:8,t:"データ入力60-70%削減・年$80,000コスト削減",job:"biz",cat:"auto",lv:"初級",b:"チームが週40時間データ入力に費やす",h:"入力フォーム・バリデーション・データ変換を自動化",a:"60-70%削減、年$48,000-56,000コスト削減",p:65,tags:["基本操作"],src:"バックオフィス",dt:"2026-01",intl:true},
+{id:9,t:"Eコマース事業者が週15-25時間削減",job:"non",cat:"auto",lv:"中級",b:"商品タグ付け・注文分析に毎週40時間以上",h:"商品タグ自動化、競合価格スクレイピング、注文データ分析",a:"週15-25時間削減",p:50,tags:["基本操作"],src:"Eコマース事業者",dt:"2026-02",intl:true},
+{id:10,t:"Excel週次集計を92%削減",job:"biz",cat:"auto",lv:"初級",b:"Excelの集計に毎週4時間",h:"集計スクリプト自動生成",a:"4時間→20分（92%削減）",p:92,tags:["基本操作"],src:"バックオフィス",dt:"2026-01",intl:false},
+{id:11,t:"ソロ開発者が24人月を2人月で完了",job:"eng",cat:"dev",lv:"上級",b:"4人×6ヶ月=24人月の見積もり",h:"Claude Codeで1人で設計・実装・テストを一貫実施",a:"12倍の工数削減（24人月→2人月）",p:92,tags:["基本操作"],src:"ソロエンジニア",dt:"2026-02",intl:true},
+{id:12,t:"Anthropic社内PRマージ率67%向上",job:"eng",cat:"dev",lv:"中級",b:"コード作成・レビュー・マージのサイクルが遅い",h:"全社的にClaude Code導入、コードの70-90%をAI作成",a:"1日のPRマージ数67%増加",p:67,tags:["基本操作"],src:"Anthropic",dt:"2025-11",intl:true},
+{id:13,t:"Claude Code採用チームでPR47%増",job:"eng",cat:"dev",lv:"中級",b:"チーム間の開発速度ばらつき",h:"Faros AIで採用率とPR生産性を計測比較",a:"採用率60%チームはPR47%多い",p:47,tags:["基本操作"],src:"Faros AI",dt:"2026-03",intl:true},
+{id:14,t:"LINEヤフーPRレビュー自動化・週6時間削減",job:"eng",cat:"dev",lv:"上級",b:"PRレビュー準備に手動情報収集",h:"Claude Code + GitHub MCP + GitHub CLIで自動収集",a:"週6時間の業務効率化",p:75,tags:["MCP","Custom Commands"],src:"LINEヤフー",dt:"2026-01",intl:false},
+{id:15,t:"3人で週30PRを安定処理",job:"eng",cat:"dev",lv:"中級",b:"3人チームがPRレビューに追われていた",h:"Skillsでレビューワークフロー構築・標準化",a:"3人で週30PRを安定処理",p:60,tags:["Skills"],src:"Tokium",dt:"2026-02",intl:false},
+{id:16,t:"テストコード拡充を2ヶ月前倒し",job:"eng",cat:"dev",lv:"中級",b:"テスト拡充が半年計画",h:"サブエージェント活用のテスト半自動化",a:"2ヶ月前倒し完了（33%期間短縮）",p:33,tags:["Custom Commands"],src:"セーフィー",dt:"2025-12",intl:false},
+{id:17,t:"在庫管理システム開発40%削減",job:"eng",cat:"dev",lv:"中級",b:"開発に約200時間の見込み",h:"DB設計・ER図・コード生成をClaude Codeで支援",a:"200時間→120時間（40%削減）",p:40,tags:["基本操作"],src:"受託開発企業",dt:"2026-01",intl:false},
+{id:18,t:"REST API開発を45%削減",job:"eng",cat:"dev",lv:"中級",b:"API開発に100時間の見積もり",h:"エンドポイント設計・コード生成・テスト作成を支援",a:"100時間→55時間（45%削減）",p:45,tags:["基本操作"],src:"IT企業",dt:"2026-01",intl:false},
+{id:19,t:"バグ修正を半日→1.5時間に短縮",job:"eng",cat:"dev",lv:"初級",b:"原因特定から修正・テストに4-5時間",h:"エラーログからの原因特定→修正→テストを一気通貫",a:"約1.5時間で完了（70%削減）",p:70,tags:["基本操作"],src:"エンジニア個人",dt:"2026-02",intl:false},
+{id:20,t:"Intercom開発チーム30名の工数40%削減",job:"eng",cat:"dev",lv:"中級",b:"30名チームでレビュー・バグ修正に工数過大",h:"Claude Code30名展開",a:"コードレビュー・バグ修正40%削減",p:40,tags:["基本操作"],src:"Intercom",dt:"2025-12",intl:true},
+{id:21,t:"HooksでQAチェック工数40%削減",job:"eng",cat:"dev",lv:"中級",b:"QAチェックに工数過大",h:"Hooksでファイル保存時lint実行・コミット前チェック",a:"QA工数40%削減",p:40,tags:["Hooks"],src:"企業開発チーム",dt:"2026-02",intl:true},
+{id:22,t:"テスト自動生成で95%カバレッジ",job:"eng",cat:"dev",lv:"中級",b:"テストカバレッジ40%、バグ見落とし多い",h:"テストコード自動生成でエッジケースも網羅",a:"カバレッジ40%→95%、バグ70%減",p:70,tags:["基本操作"],src:"開発チーム",dt:"2026-01",intl:true},
+{id:23,t:"Firecracker社で生産性10倍",job:"eng",cat:"dev",lv:"中級",b:"AI非使用時の生産性に限界",h:"約50名で全社導入",a:"10倍以上の生産性向上",p:90,tags:["基本操作"],src:"Firecracker",dt:"2026-02",intl:false},
+{id:24,t:"CS学生がSaaSを3日で構築",job:"eng",cat:"dev",lv:"中級",b:"SaaS構築に数週間〜数ヶ月",h:"Claude Codeで全機能を自律実装、MCP連携",a:"3日間で完全なSaaSを完成",p:90,tags:["MCP"],src:"CS学生",dt:"2026-01",intl:true},
+{id:25,t:"請求書管理MVPを1日・$3.65で構築",job:"eng",cat:"dev",lv:"中級",b:"MVP開発に数週間の見込み",h:"Claude Code + MCP（PostgreSQL等）で一気通貫実装",a:"1日完成、API費用$3.65",p:95,tags:["MCP"],src:"エンジニア個人",dt:"2026-02",intl:true},
+{id:26,t:"広告分析を3-5時間→7分に短縮",job:"biz",cat:"data",lv:"中級",b:"広告分析に3〜5時間",h:"BigQuery/GA4をMCP接続し自動集計・分析",a:"3-5時間→7分（97%削減）",p:97,tags:["MCP"],src:"Rimo",dt:"2026-03",intl:false},
+{id:27,t:"マーケ分析レポート95%短縮",job:"biz",cat:"data",lv:"初級",b:"レポート作成に半日",h:"データ集計・可視化・レポート生成を自動化",a:"半日→3分（95%短縮）",p:95,tags:["基本操作"],src:"マーケアナリスト",dt:"2026-01",intl:true},
+{id:28,t:"経理レポート6時間→12分",job:"biz",cat:"data",lv:"初級",b:"月次財務レポートに6時間",h:"スプレッドシート上でAIが集計・整形を自動化",a:"6時間→12分（97%短縮）",p:97,tags:["基本操作"],src:"経理担当者",dt:"2026-01",intl:true},
+{id:29,t:"7時間の自律作業で精度99.9%",job:"eng",cat:"data",lv:"上級",b:"複雑なデータ処理に人手で数日",h:"自律モードで複雑なデータ処理を委任",a:"7時間で完了、精度99.9%",p:95,tags:["基本操作"],src:"データエンジニア",dt:"2025-12",intl:true},
+{id:30,t:"マーケターが事業KPI4ヶ月で300%成長",job:"non",cat:"content",lv:"中級",b:"広告データ集計30分、少人数で対応",h:"定型作業自動化。データ集計→分析→打ち手提案まで一気通貫",a:"集計30分→1-2分、KPI300%成長",p:97,tags:["Custom Commands"],src:"スマートバンク",dt:"2026-02",intl:false},
+{id:31,t:"営業提案書の作成78%削減",job:"biz",cat:"content",lv:"中級",b:"提案書に平均4.2時間、月間220時間",h:"テンプレートをSkills登録し自動生成",a:"4.2時間→45分（78%削減）",p:78,tags:["Skills"],src:"IT/コンサル",dt:"2026-02",intl:false},
+{id:32,t:"提案書5分・LP30分で完成",job:"non",cat:"content",lv:"中級",b:"提案書やLP制作に多大な時間",h:"構成・デザイン・コーディングを一気通貫自動生成",a:"提案書5分、LP30分（96%削減）",p:96,tags:["基本操作"],src:"小規模IT企業",dt:"2026-01",intl:false},
+{id:33,t:"1人で全マーケティングチャネル運用",job:"non",cat:"content",lv:"上級",b:"複数チャネルを複数人で担当",h:"広告コピーをサブエージェントで並列処理、FigmaプラグインやカスタムMCP自作",a:"1名で全チャネル運用、コピー生産量10倍",p:90,tags:["MCP","Skills"],src:"Anthropic社内マーケ",dt:"2026-01",intl:true},
+{id:34,t:"非エンジニアのマーケターが週15時間自動化",job:"non",cat:"content",lv:"初級",b:"レポート作成・データ集計に大量の手作業",h:"レポートワークフロー自動化、ツール3つを8週で構築",a:"週15時間以上の節約",p:75,tags:["基本操作"],src:"デジタルマーケター",dt:"2026-03",intl:true},
+{id:35,t:"技術リサーチ時間を80%削減",job:"eng",cat:"data",lv:"初級",b:"新技術の調査に1時間以上のGoogle検索",h:"自然言語でリサーチ依頼、ドキュメント自動要約",a:"1時間→10-20分（80%削減）",p:80,tags:["基本操作"],src:"Anthropic全職種",dt:"2025-11",intl:true},
+// === 海外事例（新規追加45件）===
+{id:36,t:"Stripe Scala→Java 10,000行移行を4日で完了",job:"eng",cat:"dev",lv:"上級",b:"10,000行のScala→Java移行に10エンジニア週の見積もり",h:"Claude Codeで自動移行、Anthropicと協力してエンタープライズ版展開",a:"4日間で完了（96%削減）",p:96,tags:["コード移行"],src:"Stripe",dt:"2026-03",intl:true},
+{id:37,t:"Wiz Python→Go 5万行移行を20時間で完了",job:"eng",cat:"dev",lv:"上級",b:"50,000行Python→Go移行に2-3ヶ月の見積もり",h:"1エンジニアが500テストケースで検証しながら反復開発",a:"20時間で完了、PDF処理速度2倍",p:97,tags:["コード移行"],src:"Wiz",dt:"2026-02",intl:true},
+{id:38,t:"Wiz C++→Goアセンブリ移行を2日で完了",job:"eng",cat:"dev",lv:"上級",b:"20,000行のC++→Go移行（アセンブリ含む）",h:"Goアセンブリを含む完全な移行をClaude Codeで実行",a:"2日間で5,434行のGoに変換、テスト100%合格",p:98,tags:["コード移行"],src:"Wiz",dt:"2026-02",intl:true},
+{id:39,t:"Rakuten 機能デリバリー79%短縮",job:"eng",cat:"dev",lv:"中級",b:"新機能デリバリーに平均24営業日",h:"複数Claude Codeセッション並列実行、TDD導入",a:"24日→5日（79%削減）、精度99.9%",p:79,tags:["並列実行","TDD"],src:"Rakuten",dt:"2026-04",intl:true},
+{id:40,t:"Ramp インシデント調査時間80%削減",job:"eng",cat:"dev",lv:"中級",b:"本番障害の初期トリアージに多大な時間",h:"Claude Codeをインシデント対応ワークフローに統合",a:"調査時間80%削減、30日で100万行以上のAIコード",p:80,tags:["基本操作"],src:"Ramp",dt:"2026-01",intl:true},
+{id:41,t:"Zapier 800+AIエージェント展開・週10時間節約",job:"biz",cat:"auto",lv:"中級",b:"360人リモートチームの効率化が必要",h:"全社展開、Slack絵文字トリガーでコード生成→MR自動化",a:"89%の全社採用率、営業1人あたり週10時間節約",p:89,tags:["Slack連携"],src:"Zapier",dt:"2025-12",intl:true},
+{id:42,t:"TELUS 50万時間節約・9,000万ドル効果",job:"biz",cat:"auto",lv:"上級",b:"大規模テレコムでボトルネック多発",h:"独自AI基盤Fuel iXを構築、47のGenAIソリューション展開",a:"50万時間以上節約、コード出荷30%高速化",p:30,tags:["独自基盤"],src:"TELUS",dt:"2026-01",intl:true},
+{id:43,t:"Augment Code 4-8ヶ月→2週間に短縮",job:"eng",cat:"dev",lv:"上級",b:"CTO見積もりで4-8ヶ月のプロジェクト",h:"Claude on Vertex AI経由で開発",a:"2週間で完了（最大94%短縮）",p:94,tags:["Vertex AI"],src:"Augment Code",dt:"2025-11",intl:true},
+{id:44,t:"Cognizant 35万人展開・欠陥14%削減",job:"eng",cat:"dev",lv:"上級",b:"35万人にAI開発ツールを展開する必要",h:"Agent SDKとCognizantのフレームワークを統合",a:"欠陥密度14%削減、レガシー移行18%高速化",p:18,tags:["Agent SDK"],src:"Cognizant",dt:"2026-03",intl:true},
+{id:45,t:"Tobeva 2ヶ月で500PR作成",job:"eng",cat:"dev",lv:"上級",b:"手作業では1年以上かかるタスク",h:"3-5個のClaude Codeエージェントを並列実行",a:"2ヶ月で500PR作成",p:90,tags:["並列エージェント"],src:"Tobeva Software",dt:"2026-03",intl:true},
+{id:46,t:"Googleエンジニア 1年の設計を1時間で再現",job:"eng",cat:"dev",lv:"上級",b:"分散エージェントシステムの設計に1年",h:"Claude Codeで同等のシステムを生成",a:"1時間で1年分のアーキテクチャを再現",p:99,tags:["アーキテクチャ"],src:"Google",dt:"2026-01",intl:true},
+{id:47,t:"ソロ開発者 38,632行SaaSを8週間で構築",job:"eng",cat:"dev",lv:"中級",b:"フルSaaS構築に通常数ヶ月-数人月",h:"Claude Codeのみで36日間開発、727コミット",a:"38,632行・657ファイルを1人で完成",p:75,tags:["基本操作"],src:"個人開発者",dt:"2026-02",intl:true},
+{id:48,t:"PointFive コンテンツワークフロー月額$5で自動化",job:"biz",cat:"auto",lv:"中級",b:"手動のフォーム→Docs→メール→CMSの非効率プロセス",h:"1週間でAWS Lambda+DynamoDBの自動化システム構築",a:"月額$5未満で運用、手動プロセス完全自動化",p:90,tags:["AWS Lambda"],src:"PointFive",dt:"2026-02",intl:true},
+{id:49,t:"BIダッシュボードでレポート生成98%短縮",job:"biz",cat:"data",lv:"中級",b:"レポート生成に3日かかり意思決定が遅延",h:"6つのインタラクティブダッシュボード構築",a:"3日→30分（98%削減）、230万ドルのコスト削減機会特定",p:98,tags:["BI","ダッシュボード"],src:"Kaizen AI",dt:"2026-01",intl:true},
+{id:50,t:"Stanford研究 コンテンツ制作127%向上",job:"biz",cat:"content",lv:"初級",b:"コンテンツ制作がスケールできない",h:"制作ワークフローを自動化、SEO・SNS・メール一括対応",a:"制作速度127%向上、メール開封率52%",p:56,tags:["基本操作"],src:"Stanford GSB研究",dt:"2026-01",intl:true},
+{id:51,t:"エンジニアチーム スプリント40時間節約",job:"eng",cat:"dev",lv:"中級",b:"デバッグ・オンボーディング・レビューに多大な時間",h:"7つのClaude Codeワークフロー導入",a:"スプリント40時間節約、デバッグ60%削減、オンボーディング18日→4日",p:70,tags:["基本操作"],src:"Medium記事",dt:"2026-02",intl:true},
+{id:52,t:"COBOL→Java レガシー移行を自動化",job:"eng",cat:"dev",lv:"上級",b:"数十年前のCOBOLアプリの移行に年単位",h:"検出・ドキュメント化→移行・検証を自動実行",a:"25の定義タスク全完了、バイト精度で検証済み",p:90,tags:["レガシー移行"],src:"Anthropicデモ",dt:"2025-10",intl:true},
+{id:53,t:"Eコマース在庫管理の日次作業を自動化",job:"biz",cat:"auto",lv:"初級",b:"在庫ダッシュボード確認に毎日45-90分",h:"Shopify/WooCommerce API連携、Slackアラート自動化",a:"日次45-90分の作業を完全自動化",p:85,tags:["Slack通知"],src:"AdventurePPC",dt:"2026-02",intl:true},
+{id:54,t:"YC W25 スタートアップの25%がAI生成コード95%",job:"eng",cat:"dev",lv:"中級",b:"限られたリソースで迅速にプロダクト出荷が必要",h:"Claude Code等でコードベースの95%を自動生成",a:"YC W25の25%が95%以上AI生成コード、開発コスト約$1,000",p:95,tags:["基本操作"],src:"Y Combinator",dt:"2025-03",intl:true},
+{id:55,t:"RevOps ワークフローをスプリント→午後に短縮",job:"biz",cat:"auto",lv:"中級",b:"データクリーンアップ・リードルーティングに工数大",h:"データクリーンアップ、リードルーティング、レポートを自動化",a:"スプリント単位→午後単位に短縮",p:80,tags:["基本操作"],src:"Landbase",dt:"2026-02",intl:true},
+{id:56,t:"PMのPRD→チケット自動生成で月160時間確保",job:"biz",cat:"auto",lv:"中級",b:"PRDからチケット手動作成に時間",h:"Claude CodeにPRD読み込みでチケット自動生成",a:"PRD1件から19チケット自動生成、月160時間以上確保",p:80,tags:["基本操作"],src:"Sachin Rekhi",dt:"2026-03",intl:true},
+{id:57,t:"CRED フィンテック 開発速度2倍",job:"eng",cat:"dev",lv:"中級",b:"1,500万ユーザーの金融アプリ開発加速が課題",h:"Claude Sonnet活用でコーディングとテスト自動化",a:"機能デリバリー速度2倍、テストカバレッジ10%向上",p:50,tags:["基本操作"],src:"CRED",dt:"2025-12",intl:true},
+{id:58,t:"Vulcan Technologies 非技術者2名で州政府契約獲得",job:"non",cat:"auto",lv:"中級",b:"非技術系の共同創業者2名でプロトタイプ開発が必要",h:"Claude Codeのみで規制分析AIプロトタイプを構築",a:"州契約獲得、年12億ドルの節約効果、$10.9Mシード調達",p:27,tags:["基本操作"],src:"Vulcan Technologies",dt:"2025-07",intl:true},
+{id:59,t:"非技術者が4時間・$20でSaaSアプリ構築",job:"non",cat:"dev",lv:"初級",b:"非技術者でアプリ開発経験なし",h:"Claude Codeに自然言語で要件指示しWebアプリ構築",a:"4時間・$20で完成、月額$30で運用",p:95,tags:["基本操作"],src:"Steve Glaveski",dt:"2026-01",intl:true},
+{id:60,t:"ソロ開発者 3週間分を4日で完了・納品1ヶ月前倒し",job:"eng",cat:"dev",lv:"中級",b:"ソロプロジェクトが遅延、3週間分の作業が溜まる",h:"Claude Codeでストーリーポイント消化を加速",a:"週SP14→37（164%向上）、デバッグ60%削減",p:60,tags:["基本操作"],src:"個人開発者",dt:"2026-02",intl:true},
+{id:61,t:"HUB International 2万人展開・85%生産性向上",job:"biz",cat:"auto",lv:"中級",b:"2万人以上が様々な業務で手作業に時間",h:"Claude Enterprise全社導入、部門別ユースケース設計",a:"85%生産性向上、週2.5時間/人節約、90%以上満足度",p:85,tags:["全社展開"],src:"HUB International",dt:"2026-02",intl:true},
+{id:62,t:"ゴールドマン・サックス 経理・コンプライアンス自動化",job:"biz",cat:"auto",lv:"上級",b:"取引記録処理・KYC/AMLに膨大な手作業",h:"Anthropicエンジニア6ヶ月常駐で共同開発",a:"オンボーディング時間約30%削減見込み",p:30,tags:["コンプライアンス"],src:"Goldman Sachs",dt:"2026-02",intl:true},
+{id:63,t:"Faros AI 技術的負債解消・Dockerイメージ50%削減",job:"eng",cat:"dev",lv:"中級",b:"テスト依存が本番混在、Dockerイメージ752MB",h:"200ファイルの依存関係整理とマルチステージビルド変換",a:"Dockerイメージ50%削減、200ファイル修正を数分で完了",p:50,tags:["基本操作"],src:"Faros AI",dt:"2026-01",intl:true},
+{id:64,t:"Faros AI測定 PR1件あたり$37.50のROI",job:"eng",cat:"data",lv:"中級",b:"PR1件あたりのコストが高い",h:"Faros AIでClaude CodeのROIを計測",a:"4:1のROI、追加PR1件あたり$37.50",p:75,tags:["ROI分析"],src:"Faros AI",dt:"2026-03",intl:true},
+{id:65,t:"顧客類似リード自動発掘エージェント",job:"biz",cat:"auto",lv:"中級",b:"CRM分析→リード発掘→メール作成に膨大な時間",h:"HubSpot+Clay+Slack+メールをMCPで連携",a:"毎週10社×3-5名を自動特定、メールシーケンス自動生成",p:80,tags:["MCP","HubSpot"],src:"Elaine Zelby",dt:"2026-03",intl:true},
+{id:66,t:"LinkedIn広告競合分析を5分で自動化",job:"biz",cat:"data",lv:"中級",b:"競合のLinkedIn広告を手動で監視・分析",h:"Ad Libraryスクレイピング→分析→PDF生成を自動化",a:"約5分でブランドPDFレポート自動生成",p:90,tags:["スクレイピング"],src:"Kamil Rextin",dt:"2026-03",intl:true},
+{id:67,t:"Animalz ブランドスタイルガイド自動チェック",job:"biz",cat:"content",lv:"中級",b:"スタイルガイド遵守チェックが手作業で時間がかかる",h:"8つの並列エージェントで文体・文法・句読点等を自動チェック",a:"20-30分でワークフロー構築、新記事を8観点から自動チェック",p:80,tags:["並列エージェント"],src:"Animalz",dt:"2026-03",intl:true},
+{id:68,t:"デジタル広告代理店 月次レポート2日→40分",job:"biz",cat:"auto",lv:"初級",b:"月次レポート作成に毎月2日",h:"カスタムレポートパイプライン構築",a:"2日→40分（97%削減）",p:97,tags:["基本操作"],src:"AdventurePPC",dt:"2026-02",intl:true},
+{id:69,t:"Ambral ソロCTOでAIアカウント管理システム構築",job:"eng",cat:"auto",lv:"上級",b:"B2BでAM1人が50-100アカウントを担当し質が低下",h:"Agent SDKでマルチサブエージェント研究エンジンを構築",a:"ソロでプロダクション品質システム構築、離脱兆候を自動検知",p:80,tags:["Agent SDK"],src:"Ambral (YC W25)",dt:"2025-12",intl:true},
+{id:70,t:"Anthropic調査 中央値84%の時間削減",job:"eng",cat:"data",lv:"中級",b:"ナレッジワーク全般に多大な時間",h:"10万件の会話ログ分析でAIなし時の作業時間を推定比較",a:"中央値84%時間削減、平均12倍スピードアップ",p:84,tags:["データ分析"],src:"Anthropic Research",dt:"2025-11",intl:true},
+{id:71,t:"Fountain 開発速度50%向上",job:"eng",cat:"dev",lv:"中級",b:"新機能開発に数週間",h:"Claude Code+APIでAI搭載フロントラインOS構築",a:"開発速度50%向上、数日でプロダクション機能リリース",p:50,tags:["基本操作"],src:"Fountain",dt:"2025-12",intl:true},
+{id:72,t:"AIプロジェクトマネージャーで週15時間節約",job:"non",cat:"auto",lv:"中級",b:"メール・Docs・会議記録からダッシュボード手動更新",h:"オーケストレーター+サブエージェント構成のAI PMを構築",a:"週15時間節約、全プロジェクト状態を自動追跡",p:37,tags:["サブエージェント"],src:"Every.to",dt:"2026-03",intl:true},
+{id:73,t:"MindStudio 請求書処理をComputer Useで自動化",job:"biz",cat:"auto",lv:"初級",b:"請求書を手動で読み取り・入力・照合（API非対応ソフト）",h:"Computer Use機能で画面操作を自動化",a:"処理時間半分以下、API非対応の旧式ソフトにも対応",p:50,tags:["Computer Use"],src:"MindStudio",dt:"2026-01",intl:true},
+{id:74,t:"非技術者が1時間で見積もりツール構築",job:"non",cat:"dev",lv:"初級",b:"建設業オーナーが手作業で見積もり計算",h:"Claude Codeに自然言語で要件指示",a:"1時間でプロフェッショナルな見積もりツール完成",p:90,tags:["基本操作"],src:"Kaizen AI",dt:"2026-02",intl:true},
+{id:75,t:"Accenture 3万人にClaude Code訓練",job:"eng",cat:"dev",lv:"中級",b:"大規模コンサルのデジタル変革加速が必要",h:"複数年パートナーシップで専門ビジネスグループ設立",a:"史上最大のClaude Code展開",p:50,tags:["全社展開"],src:"Accenture",dt:"2025-12",intl:true},
+{id:76,t:"Altana サプライチェーン開発2-10倍高速化",job:"eng",cat:"dev",lv:"中級",b:"グローバルサプライチェーンのAI/MLシステム開発に時間",h:"Claude Codeを開発チーム全体に導入",a:"開発速度2-10倍に向上",p:80,tags:["AI/ML"],src:"Altana",dt:"2026-02",intl:true},
+{id:77,t:"Sanity上級エンジニア 並列インスタンスで生産性向上",job:"eng",cat:"dev",lv:"上級",b:"AI支援開発の実用性を検証したい",h:"6週間フルAI委任実験、複数Claude並列運用",a:"月$1,000-1,500で上級エンジニアレベルの出力",p:60,tags:["並列実行"],src:"Sanity",dt:"2025-12",intl:true},
+{id:78,t:"Behavox 全社go-toペアプログラマーに選定",job:"eng",cat:"dev",lv:"中級",b:"数百人の開発者にAIペアプログラマーが必要",h:"Claude Codeを全開発者に展開、他AIと比較評価",a:"他エージェントを一貫して上回る性能",p:50,tags:["基本操作"],src:"Behavox",dt:"2026-02",intl:true},
+{id:79,t:"HumanLayer チーム全体でAI開発をスケール",job:"eng",cat:"dev",lv:"上級",b:"個人のClaude Code活用のチーム展開が課題",h:"CodeLayerで複数エージェントをworktreeで並列実行",a:"組織全体でAIファースト開発をスケール",p:70,tags:["worktree"],src:"HumanLayer (YC F24)",dt:"2025-12",intl:true},
+{id:80,t:"全社導入2週間で採用基準が変わった",job:"biz",cat:"auto",lv:"中級",b:"業務効率化とAI時代の人材採用基準の再定義が必要",h:"Claude Codeを全社導入",a:"採用重視ポイントが「AIを使いこなせるか」に変化",p:50,tags:["全社展開"],src:"malna株式会社",dt:"2026-02",intl:false},
+];
+
+const CL={"dev":"開発効率化","auto":"業務自動化","data":"データ分析","content":"コンテンツ"};
+const CC={"dev":"bg-blue-100 text-blue-700","auto":"bg-green-100 text-green-700","data":"bg-purple-100 text-purple-700","content":"bg-orange-100 text-orange-700"};
+const JL={"eng":"エンジニア","biz":"ビジネス職","non":"非エンジニア"};
+const JC={"eng":"bg-yellow-50 text-yellow-700","biz":"bg-primary-bg text-primary","non":"bg-pink-50 text-pink-700"};
+const LC={"初級":"bg-green-100 text-green-700","中級":"bg-blue-100 text-blue-700","上級":"bg-purple-100 text-purple-700"};
+let fC='all',fJ='all',fL='all',q='',srt='new';
+
+function render(){
+  let f=D.filter(c=>{
+    if(fC!=='all'&&c.cat!==fC)return false;if(fJ!=='all'&&c.job!==fJ)return false;if(fL!=='all'&&c.lv!==fL)return false;
+    if(q){const s=q.toLowerCase();return c.t.toLowerCase().includes(s)||c.b.toLowerCase().includes(s)||c.h.toLowerCase().includes(s)||c.a.toLowerCase().includes(s)||c.src.toLowerCase().includes(s);}
+    return true;
+  });
+  if(srt==='new')f.sort((a,b)=>b.dt.localeCompare(a.dt));
+  else if(srt==='old')f.sort((a,b)=>a.dt.localeCompare(b.dt));
+  else if(srt==='pct')f.sort((a,b)=>b.p-a.p);
+
+  document.getElementById('s-total').textContent=D.length;
+  document.getElementById('s-show').textContent=f.length;
+  const avg=Math.round(D.reduce((s,c)=>s+c.p,0)/D.length);
+  document.getElementById('s-avg').textContent=avg+'%';
+  document.getElementById('s-intl').textContent=D.filter(c=>c.intl).length;
+
+  const el=document.getElementById('list'),no=document.getElementById('empty');
+  if(!f.length){el.innerHTML='';no.classList.remove('hidden');return;}
+  no.classList.add('hidden');
+  el.innerHTML=f.map(c=>`<a href="/cases/case-${c.id}" class="block bg-white rounded-[10px] border border-base-border p-5 hover:border-primary-pale hover:shadow-[0_2px_8px_rgba(83,74,183,0.08)] transition-all no-underline">
+    <div class="flex items-start justify-between gap-3 mb-2">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${CC[c.cat]}">${CL[c.cat]}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${JC[c.job]}">${JL[c.job]}</span>
+        <span class="text-[10px] px-2 py-0.5 rounded-full ${LC[c.lv]}">${c.lv}</span>
+        <span class="text-[10px] text-gray-400">${c.dt}</span>
+      </div>
+      ${c.p?`<div class="text-lg font-bold text-success-dark shrink-0">-${c.p}%</div>`:''}
+    </div>
+    <h3 class="text-sm font-semibold text-gray-900 mb-2">${c.t}</h3>
+    <div class="grid grid-cols-[1fr_auto_1fr] gap-2 mb-2 text-xs">
+      <div class="bg-red-50 rounded-lg p-2 border border-red-100"><div class="text-[10px] text-red-400 font-medium mb-0.5">Before</div><div class="text-gray-700">${c.b}</div></div>
+      <div class="flex items-center text-gray-300">→</div>
+      <div class="bg-green-50 rounded-lg p-2 border border-green-100"><div class="text-[10px] text-green-500 font-medium mb-0.5">After</div><div class="text-gray-700 font-medium">${c.a}</div></div>
+    </div>
+    <div class="flex items-center gap-1 flex-wrap">
+      ${c.tags.map(tag=>`<span class="text-[9px] px-1.5 py-0.5 rounded bg-base-muted text-gray-500">${tag}</span>`).join('')}
+      <span class="text-[10px] text-gray-400 ml-1">${c.src}</span>
+      ${c.intl?'<span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 ml-auto">海外</span>':''}
+    </div>
+  </a>`).join('');
+}
+
+document.querySelectorAll('.cf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.cf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fC=b.dataset.v;render();});});
+document.querySelectorAll('.jf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.jf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fJ=b.dataset.v;render();});});
+document.querySelectorAll('.lf').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.lf').forEach(x=>x.classList.remove('active'));b.classList.add('active');fL=b.dataset.v;render();});});
+document.getElementById('sort').addEventListener('change',e=>{srt=e.target.value;render();});
+let st;document.getElementById('search').addEventListener('input',e=>{clearTimeout(st);st=setTimeout(()=>{q=e.target.value.trim();render();},200);});
+render();
+</script>
